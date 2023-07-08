@@ -3,11 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33627.172
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dangl.SchneidModbus", "src\Dangl.SchneidModbus\Dangl.SchneidModbus.csproj", "{081DD94F-4632-4FF9-BDC9-B19D0334F307}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dangl.SchneidControl", "src\Dangl.SchneidModbus\Dangl.SchneidControl.csproj", "{081DD94F-4632-4FF9-BDC9-B19D0334F307}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{3BE723FA-8507-4485-BEDA-67F3EF29A7B4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "_build", "build\_build.csproj", "{C4FBCDE7-A119-4877-8A2E-E271BFC52F21}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B6A5F937-0522-4DC4-9B8F-F39B54385B7C}"
+	ProjectSection(SolutionItems) = preProject
+		CHANGELOG.md = CHANGELOG.md
+		docfx.json = docfx.json
+		GitVersion.yml = GitVersion.yml
+		LICENSE.md = LICENSE.md
+		README.md = README.md
+		toc.yml = toc.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,12 +25,12 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C4FBCDE7-A119-4877-8A2E-E271BFC52F21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C4FBCDE7-A119-4877-8A2E-E271BFC52F21}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{081DD94F-4632-4FF9-BDC9-B19D0334F307}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{081DD94F-4632-4FF9-BDC9-B19D0334F307}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{081DD94F-4632-4FF9-BDC9-B19D0334F307}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{081DD94F-4632-4FF9-BDC9-B19D0334F307}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4FBCDE7-A119-4877-8A2E-E271BFC52F21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4FBCDE7-A119-4877-8A2E-E271BFC52F21}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

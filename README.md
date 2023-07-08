@@ -1,1 +1,1 @@
-# Dangl.SchneidModbus
+# Dangl.SchneidControl

@@ -1,4 +1,4 @@
-namespace Dangl.SchneidModbus
+namespace Dangl.SchneidControl
 {
     public class WeatherForecast
     {

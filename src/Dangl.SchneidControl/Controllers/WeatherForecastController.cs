@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace Dangl.SchneidModbus.Controllers
+namespace Dangl.SchneidControl.Controllers
 {
     [ApiController]
     [Route("[controller]")]
