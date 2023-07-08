@@ -105,8 +105,8 @@ namespace Dangl.SchneidControl
         .After(Clean)
         .Executes(() =>
         {
-            (SourceDirectory / "dangl-arikon-convert" / "node_modules").CreateOrCleanDirectory();
-            (SourceDirectory / "dangl-arikon-convert" / "node_modules").DeleteDirectory();
+            (SourceDirectory / "dangl-schneid-control" / "node_modules").CreateOrCleanDirectory();
+            (SourceDirectory / "dangl-schneid-control" / "node_modules").DeleteDirectory();
             Npm("ci", SourceDirectory / "dangl-schneid-control");
         });
 
@@ -132,7 +132,7 @@ namespace Dangl.SchneidControl
         {
             DotNetPublish(s => s
                 .SetProcessArgumentConfigurator(a => a.Add("/nodeReuse:false"))
-                .SetProject(SourceDirectory / "Dangl.ArikonConvert")
+                .SetProject(SourceDirectory / "Dangl.SchneidControl")
                 .SetOutput(OutputDirectory)
                 .SetConfiguration(Configuration));
 
@@ -141,7 +141,7 @@ namespace Dangl.SchneidControl
                 configFileToDelete.DeleteFile();
             }
 
-            CopyFile(SourceDirectory / "Dangl.ArikonConvert" / "Dockerfile", OutputDirectory / "Dockerfile", FileExistsPolicy.Overwrite);
+            CopyFile(SourceDirectory / "Dangl.SchneidControl" / "Dockerfile", OutputDirectory / "Dockerfile", FileExistsPolicy.Overwrite);
 
             DockerBuild(c => c
                 .SetFile(OutputDirectory / "Dockerfile")
