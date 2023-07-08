@@ -156,17 +156,9 @@ namespace Dangl.SchneidControl
     Target PushDocker => _ => _
         .DependsOn(BuildDocker)
         .Requires(() => DockerRegistryUrl)
-        .Requires(() => DockerRegistryUsername)
-        .Requires(() => DockerRegistryPassword)
         .OnlyWhenDynamic(() => IsOnBranch("master") || IsOnBranch("develop"))
         .Executes(() =>
         {
-            DockerLogin(x => x
-                .SetUsername(DockerRegistryUsername)
-                .SetServer(DockerRegistryUrl)
-                .SetPassword(DockerRegistryPassword)
-                .DisableProcessLogOutput());
-
             PushDockerWithTag("dev", DockerRegistryUrl, DockerImageName);
         });
 
