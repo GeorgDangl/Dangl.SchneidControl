@@ -166,9 +166,9 @@ namespace Dangl.SchneidControl
     {
         DockerTag(c => c
             .SetSourceImage(DockerImageName + ":" + "dev")
-            .SetTargetImage($"{dockerRegistryUrl}/{targetDockerImageName}:{tag}"));
+            .SetTargetImage($"{dockerRegistryUrl}/{targetDockerImageName}:{tag}".ToLowerInvariant()));
         DockerPush(c => c
-            .SetName($"{dockerRegistryUrl}/{targetDockerImageName}:{tag}"));
+            .SetName($"{dockerRegistryUrl}/{targetDockerImageName}:{tag}".ToLowerInvariant()));
     }
 
     private bool IsOnBranch(string branchName)
