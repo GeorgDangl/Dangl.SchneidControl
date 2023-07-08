@@ -22,6 +22,6 @@ jobs:
       - name: Run './build.cmd PushDocker -Configuration Release'
         run: ./build.cmd PushDocker -Configuration Release
         env:
-            DockerRegistryUrl: ghcr.io/${{github.repository_owner}}
+            DockerRegistryUrl: ghcr.io/${{github.repository_owner}}/${{github.repository}}
             DockerRegistryUsername: ${{github.actor}}
             DockerRegistryPassword: ${{secrets.GITHUB_TOKEN}}
