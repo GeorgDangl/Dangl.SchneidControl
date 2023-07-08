@@ -18,7 +18,7 @@ export const API_BASE_URL = new InjectionToken<string>('API_BASE_URL');
 @Injectable({
     providedIn: 'root'
 })
-export class ConverterClient {
+export class WeatherForecastClient {
     private http: HttpClient;
     private baseUrl: string;
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
@@ -28,272 +28,8 @@ export class ConverterClient {
         this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
     }
 
-    getExcelConversionResult(conversionId: string | undefined): Observable<FileResponse> {
-        let url_ = this.baseUrl + "/api/converter/gaeb/excel?";
-        if (conversionId === null)
-            throw new Error("The parameter 'conversionId' cannot be null.");
-        else if (conversionId !== undefined)
-            url_ += "conversionId=" + encodeURIComponent("" + conversionId) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "application/octet-stream"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetExcelConversionResult(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetExcelConversionResult(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<FileResponse>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<FileResponse>;
-        }));
-    }
-
-    protected processGetExcelConversionResult(response: HttpResponseBase): Observable<FileResponse> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200 || status === 206) {
-            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
-            let fileNameMatch = contentDisposition ? /filename\*=(?:(\\?['"])(.*?)\1|(?:[^\s]+'.*?')?([^;\n]*))/g.exec(contentDisposition) : undefined;
-            let fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[3] || fileNameMatch[2] : undefined;
-            if (fileName) {
-                fileName = decodeURIComponent(fileName);
-            } else {
-                fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
-                fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
-            }
-            return _observableOf({ fileName: fileName, data: responseBlob as any, status: status, headers: _headers });
-        } else if (status === 400) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result400: any = null;
-            result400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as ApiError;
-            return throwException("A server side error occurred.", status, _responseText, _headers, result400);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<FileResponse>(null as any);
-    }
-
-    convertGaebToExcel(companyNameAndAddress: string | undefined, gaebFile: FileParameter | null | undefined): Observable<ExcelJob> {
-        let url_ = this.baseUrl + "/api/converter/gaeb/excel?";
-        if (companyNameAndAddress === null)
-            throw new Error("The parameter 'companyNameAndAddress' cannot be null.");
-        else if (companyNameAndAddress !== undefined)
-            url_ += "companyNameAndAddress=" + encodeURIComponent("" + companyNameAndAddress) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = new FormData();
-        if (gaebFile !== null && gaebFile !== undefined)
-            content_.append("gaebFile", gaebFile.data, gaebFile.fileName ? gaebFile.fileName : "gaebFile");
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processConvertGaebToExcel(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processConvertGaebToExcel(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<ExcelJob>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<ExcelJob>;
-        }));
-    }
-
-    protected processConvertGaebToExcel(response: HttpResponseBase): Observable<ExcelJob> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            result200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as ExcelJob;
-            return _observableOf(result200);
-            }));
-        } else if (status === 400) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result400: any = null;
-            result400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as ApiError;
-            return throwException("A server side error occurred.", status, _responseText, _headers, result400);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<ExcelJob>(null as any);
-    }
-
-    convertExcelToD11(excelFile: FileParameter | null | undefined): Observable<FileResponse> {
-        let url_ = this.baseUrl + "/api/converter/excel/d11";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = new FormData();
-        if (excelFile !== null && excelFile !== undefined)
-            content_.append("excelFile", excelFile.data, excelFile.fileName ? excelFile.fileName : "excelFile");
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "application/octet-stream"
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processConvertExcelToD11(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processConvertExcelToD11(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<FileResponse>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<FileResponse>;
-        }));
-    }
-
-    protected processConvertExcelToD11(response: HttpResponseBase): Observable<FileResponse> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200 || status === 206) {
-            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
-            let fileNameMatch = contentDisposition ? /filename\*=(?:(\\?['"])(.*?)\1|(?:[^\s]+'.*?')?([^;\n]*))/g.exec(contentDisposition) : undefined;
-            let fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[3] || fileNameMatch[2] : undefined;
-            if (fileName) {
-                fileName = decodeURIComponent(fileName);
-            } else {
-                fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
-                fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
-            }
-            return _observableOf({ fileName: fileName, data: responseBlob as any, status: status, headers: _headers });
-        } else if (status === 400) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result400: any = null;
-            result400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as ApiError;
-            return throwException("A server side error occurred.", status, _responseText, _headers, result400);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<FileResponse>(null as any);
-    }
-
-    convertExcelToCsv(excelFile: FileParameter | null | undefined): Observable<FileResponse> {
-        let url_ = this.baseUrl + "/api/converter/excel/csv";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = new FormData();
-        if (excelFile !== null && excelFile !== undefined)
-            content_.append("excelFile", excelFile.data, excelFile.fileName ? excelFile.fileName : "excelFile");
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "application/octet-stream"
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processConvertExcelToCsv(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processConvertExcelToCsv(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<FileResponse>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<FileResponse>;
-        }));
-    }
-
-    protected processConvertExcelToCsv(response: HttpResponseBase): Observable<FileResponse> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200 || status === 206) {
-            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
-            let fileNameMatch = contentDisposition ? /filename\*=(?:(\\?['"])(.*?)\1|(?:[^\s]+'.*?')?([^;\n]*))/g.exec(contentDisposition) : undefined;
-            let fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[3] || fileNameMatch[2] : undefined;
-            if (fileName) {
-                fileName = decodeURIComponent(fileName);
-            } else {
-                fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
-                fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
-            }
-            return _observableOf({ fileName: fileName, data: responseBlob as any, status: status, headers: _headers });
-        } else if (status === 400) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result400: any = null;
-            result400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as ApiError;
-            return throwException("A server side error occurred.", status, _responseText, _headers, result400);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<FileResponse>(null as any);
-    }
-}
-
-@Injectable({
-    providedIn: 'root'
-})
-export class StatusClient {
-    private http: HttpClient;
-    private baseUrl: string;
-    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
-
-    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
-        this.http = http;
-        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
-    }
-
-    getStatus(): Observable<StatusGet> {
-        let url_ = this.baseUrl + "/api/status";
+    get(): Observable<WeatherForecast[]> {
+        let url_ = this.baseUrl + "/WeatherForecast";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -305,20 +41,20 @@ export class StatusClient {
         };
 
         return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetStatus(response_);
+            return this.processGet(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGetStatus(response_ as any);
+                    return this.processGet(response_ as any);
                 } catch (e) {
-                    return _observableThrow(e) as any as Observable<StatusGet>;
+                    return _observableThrow(e) as any as Observable<WeatherForecast[]>;
                 }
             } else
-                return _observableThrow(response_) as any as Observable<StatusGet>;
+                return _observableThrow(response_) as any as Observable<WeatherForecast[]>;
         }));
     }
 
-    protected processGetStatus(response: HttpResponseBase): Observable<StatusGet> {
+    protected processGet(response: HttpResponseBase): Observable<WeatherForecast[]> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -328,7 +64,7 @@ export class StatusClient {
         if (status === 200) {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             let result200: any = null;
-            result200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as StatusGet;
+            result200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as WeatherForecast[];
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -336,37 +72,15 @@ export class StatusClient {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<StatusGet>(null as any);
+        return _observableOf<WeatherForecast[]>(null as any);
     }
 }
 
-/** Data transfer class to convey api errors */
-export interface ApiError {
-    /** This dictionary contains a set of all errors and their messages */
-    errors?: { [key: string]: string[]; } | null;
-}
-
-export interface ExcelJob {
-    conversionId: string;
-}
-
-export interface StatusGet {
-    isHealthy?: boolean;
-    version?: string | null;
-    informationalVersion?: string | null;
-    environment?: string | null;
-}
-
-export interface FileParameter {
-    data: any;
-    fileName: string;
-}
-
-export interface FileResponse {
-    data: Blob;
-    status: number;
-    fileName?: string;
-    headers?: { [name: string]: any };
+export interface WeatherForecast {
+    date?: Date;
+    temperatureC?: number;
+    temperatureF?: number;
+    summary?: string | null;
 }
 
 export class SwaggerException extends Error {
