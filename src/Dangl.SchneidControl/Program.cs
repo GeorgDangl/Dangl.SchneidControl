@@ -101,6 +101,7 @@ namespace Dangl.SchneidControl
 
             app.UseAuthorization();
 
+#pragma warning disable ASP0014
             app.UseEndpoints(endpoints => endpoints.MapControllers());
 
             app.UseSpa(spaOptions =>
