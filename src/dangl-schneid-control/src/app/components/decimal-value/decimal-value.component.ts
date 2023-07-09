@@ -12,7 +12,14 @@ export class DecimalValueComponent {
   @Input() canEdit = false;
   @Input() decimalPlaces: number = 1;
   @Input() value: DecimalValue | null = null;
+  @Input() isActive = false;
   @Output() onEditRequested = new EventEmitter<void>();
+  @Output() onStatsRequested = new EventEmitter<void>();
+  @Input() canShowStats = false;
+
+  get showActions(): boolean {
+    return this.canEdit || !!this.value?.value || this.canShowStats;
+  }
 
   get numberFormat(): string {
     return `1.${this.decimalPlaces}-${this.decimalPlaces}`;
@@ -20,5 +27,9 @@ export class DecimalValueComponent {
 
   raiseEditEvent(): void {
     this.onEditRequested.emit();
+  }
+
+  showStatsEvent(): void {
+    this.onStatsRequested.emit();
   }
 }

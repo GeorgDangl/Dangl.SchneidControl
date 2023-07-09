@@ -27,11 +27,21 @@
   <app-bool-value
     class="value-card"
     label="Pumpe Heizkreis 1"
+    [canShowStats]="true"
+    [isActive]="visibleStats === logEntryTypes.HeatingCircuit0Pump"
+    (onStatsRequested)="
+      showStats(logEntryTypes.HeatingCircuit0Pump, 'Pumpe Heizkreis 1')
+    "
     [value]="(dashboardValues$ | async)?.pumpStatus00 || null"
   ></app-bool-value>
   <app-bool-value
     class="value-card"
     label="Pumpe Heizkreis 2"
+    [canShowStats]="true"
+    [isActive]="visibleStats === logEntryTypes.HeatingCircuit1Pump"
+    (onStatsRequested)="
+      showStats(logEntryTypes.HeatingCircuit1Pump, 'Pumpe Heizkreis 2')
+    "
     [value]="(dashboardValues$ | async)?.pumpStatus01 || null"
   ></app-bool-value>
 
@@ -39,18 +49,33 @@
     class="value-card"
     label="Aussentemperatur"
     [decimalPlaces]="1"
+    [canShowStats]="true"
+    [isActive]="visibleStats === logEntryTypes.OuterTemperature"
+    (onStatsRequested)="
+      showStats(logEntryTypes.OuterTemperature, 'Aussentemperatur')
+    "
     [value]="(dashboardValues$ | async)?.outerTemperature || null"
   ></app-decimal-value>
   <app-decimal-value
     class="value-card"
     label="Gesamtenergieverbrauch"
     [decimalPlaces]="0"
+    [canShowStats]="true"
+    [isActive]="visibleStats === logEntryTypes.TotalEnergyConsumption"
+    (onStatsRequested)="
+      showStats(logEntryTypes.TotalEnergyConsumption, 'Gesamtenergieverbrauch')
+    "
     [value]="(dashboardValues$ | async)?.totalEnergyConsumption || null"
   ></app-decimal-value>
   <app-decimal-value
     class="value-card"
     label="Leistung Wärmetauscher"
     [decimalPlaces]="0"
+    [canShowStats]="true"
+    [isActive]="visibleStats === logEntryTypes.HeatingPowerDraw"
+    (onStatsRequested)="
+      showStats(logEntryTypes.HeatingPowerDraw, 'Leistung Wärmetauscher')
+    "
     [value]="(dashboardValues$ | async)?.heatingPower || null"
   ></app-decimal-value>
   <app-decimal-value
@@ -75,6 +100,11 @@
     class="value-card"
     label="Ventilöffnung Wärmetauscher"
     [decimalPlaces]="0"
+    [canShowStats]="true"
+    [isActive]="visibleStats === logEntryTypes.ValveOpening"
+    (onStatsRequested)="
+      showStats(logEntryTypes.ValveOpening, 'Ventilöffnung Wärmetauscher')
+    "
     [value]="(dashboardValues$ | async)?.valveOpening || null"
   ></app-decimal-value>
 
@@ -82,6 +112,11 @@
     class="value-card"
     label="Pufferspeicher Oben"
     [decimalPlaces]="1"
+    [canShowStats]="true"
+    [isActive]="visibleStats === logEntryTypes.BufferTemperature"
+    (onStatsRequested)="
+      showStats(logEntryTypes.BufferTemperature, 'Pufferspeicher Oben')
+    "
     [value]="(dashboardValues$ | async)?.bufferTemperatureTop || null"
   ></app-decimal-value>
   <app-decimal-value
@@ -94,6 +129,11 @@
     class="value-card"
     label="Warmwasserspeicher Oben"
     [decimalPlaces]="1"
+    [canShowStats]="true"
+    [isActive]="visibleStats === logEntryTypes.BoilerTemperature"
+    (onStatsRequested)="
+      showStats(logEntryTypes.BoilerTemperature, 'Warmwasserspeicher Oben')
+    "
     [value]="(dashboardValues$ | async)?.boilerTemperatureTop || null"
   ></app-decimal-value>
   <app-decimal-value

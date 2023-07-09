@@ -1,9 +1,15 @@
+import {
+  ConfigurationClient,
+  LogEntryType,
+  StatusClient,
+} from './generated-client/generated-client';
+
 import { Component } from '@angular/core';
-import { ConfigurationClient } from './generated-client/generated-client';
 import { DashboardService } from './services/dashboard.service';
 import { DashboardValues } from './models/dashboard-values';
 import { MatDialog } from '@angular/material/dialog';
 import { SetNumericalValueComponent } from './components/set-numerical-value/set-numerical-value.component';
+import { StatsComponent } from './components/stats/stats.component';
 import { Subject } from 'rxjs';
 
 @Component({
@@ -15,15 +21,22 @@ export class AppComponent {
   constructor(
     private dashboardService: DashboardService,
     private matDialog: MatDialog,
-    private configurationClient: ConfigurationClient
+    private configurationClient: ConfigurationClient,
+    private statusClient: StatusClient
   ) {}
 
   private lastValues: DashboardValues | null = null;
   public dashboardValues$ = new Subject<DashboardValues>();
   isLoading = false;
+  statsAreAvailable = false;
+  logEntryTypes = LogEntryType;
+  visibleStats: LogEntryType | null = null;
 
   ngOnInit(): void {
     this.setDashboardLoading();
+    this.statusClient.getStatus().subscribe((status) => {
+      this.statsAreAvailable = status.statsEnabled;
+    });
   }
 
   private setDashboardLoading(): void {
@@ -110,6 +123,22 @@ export class AppComponent {
               },
             });
         }
+      });
+  }
+
+  showStats(type: LogEntryType, label: string): void {
+    this.visibleStats = type;
+    this.matDialog
+      .open(StatsComponent, {
+        data: {
+          logEntryType: type,
+          label: label,
+        },
+        panelClass: 'stats-dialog',
+      })
+      .afterClosed()
+      .subscribe(() => {
+        this.visibleStats = null;
       });
   }
 }

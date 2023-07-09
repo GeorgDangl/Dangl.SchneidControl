@@ -1,0 +1,18 @@
+.wrapper {
+  margin: 10px;
+}
+
+.date-entry {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  mat-form-field {
+    width: 100%;
+  }
+}
+
+h1 {
+  @media only screen and (max-width: 600px) {
+    font-size: small;
+  }
+}

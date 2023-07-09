@@ -9,11 +9,11 @@
 
 .value-card {
   flex-grow: 4;
-  height: 120px;
-  width: calc(16.67% - 10px);
+  height: 140px;
+  width: calc(20% - 30px);
 
   @media only screen and (max-width: 1600px) {
-    width: calc(20% - 10px);
+    width: calc(25% - 20px);
   }
 
   @media only screen and (max-width: 1200px) {

@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card [ngClass]="{ active: isActive }">
   <mat-card-header>
     <mat-card-title>{{ label }}</mat-card-title>
   </mat-card-header>
@@ -7,9 +7,16 @@
     {{ value?.unit }}
   </mat-card-content>
 
-  <mat-card-actions *ngIf="canEdit && value?.value">
-    <button mat-button (click)="raiseEditEvent()">
+  <mat-card-actions *ngIf="showActions">
+    <button
+      *ngIf="this.canEdit && this.value?.value"
+      mat-button
+      (click)="raiseEditEvent()"
+    >
       <mat-icon fontIcon="settings"></mat-icon>
+    </button>
+    <button *ngIf="canShowStats" mat-button (click)="showStatsEvent()">
+      <mat-icon>insert_chart</mat-icon>
     </button>
   </mat-card-actions>
 </mat-card>
