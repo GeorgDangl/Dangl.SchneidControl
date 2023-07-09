@@ -1,6 +1,9 @@
 using Dangl.Data.Shared.AspNetCore;
 using Dangl.SchneidControl.Configuration;
+using Dangl.SchneidControl.Services;
+using Namotion.Reflection;
 using NSwag;
+using System.Text.Json.Serialization;
 
 namespace Dangl.SchneidControl
 {
@@ -10,7 +13,7 @@ namespace Dangl.SchneidControl
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            ConfigureServices(builder.Services);
+            ConfigureServices(builder.Services, builder.Configuration);
 
             var app = builder.Build();
             ConfigureApp(app, builder.Environment);
@@ -18,15 +21,25 @@ namespace Dangl.SchneidControl
             await app.RunAsync();
         }
 
-        private static void ConfigureServices(IServiceCollection services)
+        private static void ConfigureServices(IServiceCollection services, ConfigurationManager configuration)
         {
+            var appConfig = configuration.Get<SchneidControlSettings>();
+            appConfig.Validate();
+
+            services.AddTransient<ModbusConnectionManager>(_ => new ModbusConnectionManager(appConfig.SchneidModbusIpAddress, appConfig.SchneidModbusTcpPort));
+            services.AddTransient<ISchneidRepository, SchneidRepository>();
+
             services.AddControllers(o =>
             {
                 // We want to return 400 Bad Request for missing but required form files in controllers
                 o.Filters.Add(typeof(RequiredFormFileValidationFilter));
             });
 
-            services.AddMvc();
+            services.AddMvc()
+                .AddJsonOptions(j =>
+                {
+                    j.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+                });
 
             services.AddOpenApiDocument(c =>
             {
