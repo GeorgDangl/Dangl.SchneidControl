@@ -56,7 +56,7 @@ namespace Dangl.SchneidControl.Services
                     var rawValue = await master.ReadHoldingRegistersAsync(1, address, length);
                     await sock.DisconnectAsync(reuseSocket: true);
                     return rawValue;
-                }, 10);
+                }, 30);
 
                 return resultWithRetry;
             }
@@ -84,7 +84,7 @@ namespace Dangl.SchneidControl.Services
                     await master.WriteSingleRegisterAsync(1, address, unsignedValue);
                     await sock.DisconnectAsync(reuseSocket: true);
                     return true;
-                }, 10);
+                }, 30);
             }
             finally
             {
@@ -105,10 +105,12 @@ namespace Dangl.SchneidControl.Services
                 catch
                 {
                     retries++;
-                    if (retries > maxRetries)
+                    if (retries >= maxRetries)
                     {
                         throw;
                     }
+
+                    await Task.Delay(10);
                 }
             }
 
