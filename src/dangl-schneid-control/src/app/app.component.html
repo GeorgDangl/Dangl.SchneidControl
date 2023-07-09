@@ -8,69 +8,93 @@
 
 <div class="main-content">
   <app-decimal-value
+    class="value-card"
     label="Aussentemperatur"
     [decimalPlaces]="1"
     [value]="(dashboardValues$ | async)?.outerTemperature || null"
   ></app-decimal-value>
   <app-decimal-value
+    class="value-card"
     label="Gesamtenergieverbrauch"
     [decimalPlaces]="0"
     [value]="(dashboardValues$ | async)?.totalEnergyConsumption || null"
   ></app-decimal-value>
   <app-decimal-value
+    class="value-card"
     label="Leistung Wärmetauscher"
     [decimalPlaces]="0"
     [value]="(dashboardValues$ | async)?.heatingPower || null"
   ></app-decimal-value>
   <app-decimal-value
+    class="value-card"
     label="Vorlauf Wärmetauscher"
     [decimalPlaces]="1"
     [value]="(dashboardValues$ | async)?.advanceTemperature || null"
   ></app-decimal-value>
   <app-decimal-value
+    class="value-card"
     label="Rücklauf Wärmetauscher (Primär)"
     [decimalPlaces]="1"
     [value]="(dashboardValues$ | async)?.primaryRefluxTemperature || null"
   ></app-decimal-value>
   <app-decimal-value
+    class="value-card"
     label="Rücklauf Wärmetauscher (Sekundär)"
     [decimalPlaces]="1"
     [value]="(dashboardValues$ | async)?.secondaryRefluxTemperature || null"
   ></app-decimal-value>
   <app-decimal-value
+    class="value-card"
     label="Ventilöffnung Wärmetauscher"
     [decimalPlaces]="0"
     [value]="(dashboardValues$ | async)?.valveOpening || null"
   ></app-decimal-value>
 
   <app-decimal-value
+    class="value-card"
     label="Pufferspeicher Oben"
     [decimalPlaces]="1"
     [value]="(dashboardValues$ | async)?.bufferTemperatureTop || null"
   ></app-decimal-value>
   <app-decimal-value
+    class="value-card"
     label="Pufferspeicher Unten"
     [decimalPlaces]="1"
     [value]="(dashboardValues$ | async)?.bufferTemperatureBottom || null"
   ></app-decimal-value>
   <app-decimal-value
+    class="value-card"
     label="Warmwasserspeicher Oben"
     [decimalPlaces]="1"
     [value]="(dashboardValues$ | async)?.boilerTemperatureTop || null"
   ></app-decimal-value>
   <app-decimal-value
+    class="value-card"
     label="Warmwasserspeicher Unten"
     [decimalPlaces]="1"
     [value]="(dashboardValues$ | async)?.boilerTemperatureBottom || null"
   ></app-decimal-value>
   <app-decimal-value
+    class="value-card"
     label="Pufferspeicher Soll"
     [decimalPlaces]="1"
     [value]="(dashboardValues$ | async)?.targetBufferTemperature || null"
   ></app-decimal-value>
   <app-decimal-value
+    class="value-card"
     label="Warmwasserspeicher Soll"
     [decimalPlaces]="1"
     [value]="(dashboardValues$ | async)?.targetBoilerTemperature || null"
   ></app-decimal-value>
+
+  <app-bool-value
+    class="value-card"
+    label="Heizkreis 1"
+    [value]="(dashboardValues$ | async)?.pumpStatus00 || null"
+  ></app-bool-value>
+  <app-bool-value
+    class="value-card"
+    label="Heizkreis 2"
+    [value]="(dashboardValues$ | async)?.pumpStatus01 || null"
+  ></app-bool-value>
 </div>
