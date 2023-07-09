@@ -7,6 +7,12 @@
 </dangl-header>
 
 <div class="main-content">
+  <app-transfer-station-status
+    class="value-card"
+    label="Betriebsart"
+    [value]="(dashboardValues$ | async)?.transferStationStatus || null"
+  ></app-transfer-station-status>
+
   <app-decimal-value
     class="value-card"
     label="Aussentemperatur"

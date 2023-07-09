@@ -15,9 +15,11 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { NgModule } from '@angular/core';
 import { BoolValueComponent } from './components/bool-value/bool-value.component';
+import { TransferStationStatusComponent } from './components/transfer-station-status/transfer-station-status.component';
+import { TransferStationStatusPipe } from './pipes/transfer-station-status.pipe';
 
 @NgModule({
-  declarations: [AppComponent, DecimalValueComponent, BoolValueComponent],
+  declarations: [AppComponent, DecimalValueComponent, BoolValueComponent, TransferStationStatusComponent, TransferStationStatusPipe],
   imports: [
     BrowserModule,
     AppRoutingModule,
