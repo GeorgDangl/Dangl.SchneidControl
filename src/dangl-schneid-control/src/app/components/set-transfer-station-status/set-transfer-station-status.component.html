@@ -1,0 +1,14 @@
+<mat-dialog-content>
+  <h1>Betriebsart Ändern</h1>
+
+  <mat-select [(ngModel)]="selectedStatus">
+    <mat-option *ngFor="let status of availableStati" [value]="status">
+      {{ status | transferStationStatus }}
+    </mat-option>
+  </mat-select>
+
+  <div class="actions">
+    <button mat-raised-button (click)="changeStatus()">Speichern</button>
+    <button mat-raised-button color="warn" (click)="close()">Abbrechen</button>
+  </div>
+</mat-dialog-content>

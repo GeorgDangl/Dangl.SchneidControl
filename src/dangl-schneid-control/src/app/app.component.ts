@@ -1,8 +1,7 @@
-import { Subject, timer } from 'rxjs';
-
 import { Component } from '@angular/core';
 import { DashboardService } from './services/dashboard.service';
 import { DashboardValues } from './models/dashboard-values';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -41,5 +40,9 @@ export class AppComponent {
         actionAfterLoad();
       }
     });
+  }
+
+  transferStationStatusChanged(): void {
+    this.loadDashboardValues();
   }
 }

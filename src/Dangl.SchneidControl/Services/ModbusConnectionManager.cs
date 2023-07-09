@@ -16,6 +16,11 @@ namespace Dangl.SchneidControl.Services
             _port = port;
         }
 
+        public Task SetInteger16ValueAsync(ushort address, short value)
+        {
+            return PresetSingleRegisterAsync(address, value);
+        }
+
         public async Task<int> GetInteger16ValueAsync(ushort address)
         {
             var rawData = await ReadHoldingRegistersAsync(address, 1);
@@ -54,6 +59,32 @@ namespace Dangl.SchneidControl.Services
                 }, 10);
 
                 return resultWithRetry;
+            }
+            finally
+            {
+                _semaphore.Release();
+            }
+        }
+
+        private async Task PresetSingleRegisterAsync(ushort address, short value)
+        {
+            await _semaphore.WaitAsync();
+            try
+            {
+                var resultWithRetry = await RetryAsync(async () =>
+                {
+                    using var sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                    var serverIP = IPAddress.Parse(_ipAddress);
+                    var serverFullAddr = new IPEndPoint(serverIP, _port);
+                    await sock.ConnectAsync(serverFullAddr);
+                    var factory = new ModbusFactory();
+                    using IModbusMaster master = factory.CreateMaster(sock);
+                    var originalBytes = BitConverter.GetBytes(value);
+                    var unsignedValue = BitConverter.ToUInt16(originalBytes, 0);
+                    await master.WriteSingleRegisterAsync(1, address, unsignedValue);
+                    await sock.DisconnectAsync(reuseSocket: true);
+                    return true;
+                }, 10);
             }
             finally
             {

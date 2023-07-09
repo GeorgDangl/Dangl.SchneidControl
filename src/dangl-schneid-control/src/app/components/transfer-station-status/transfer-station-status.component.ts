@@ -1,6 +1,11 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  EnumValueOfTransferStationStatus,
+  TransferStationStatus,
+} from '../../generated-client/generated-client';
 
-import { EnumValueOfTransferStationStatus } from '../../generated-client/generated-client';
+import { MatDialog } from '@angular/material/dialog';
+import { SetTransferStationStatusComponent } from '../set-transfer-station-status/set-transfer-station-status.component';
 
 @Component({
   selector: 'app-transfer-station-status',
@@ -10,4 +15,22 @@ import { EnumValueOfTransferStationStatus } from '../../generated-client/generat
 export class TransferStationStatusComponent {
   @Input() label: string | null = null;
   @Input() value: EnumValueOfTransferStationStatus | null = null;
+  @Output() onStatusChanged = new EventEmitter<void>();
+
+  constructor(private dialog: MatDialog) {}
+
+  initiateTransferStationStatusChange(): void {
+    if (this.value) {
+      this.dialog
+        .open(SetTransferStationStatusComponent, {
+          data: { currentValue: this.value!.value },
+        })
+        .afterClosed()
+        .subscribe((newStatus?: TransferStationStatus) => {
+          if (newStatus) {
+            this.onStatusChanged.emit();
+          }
+        });
+    }
+  }
 }

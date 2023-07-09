@@ -30,6 +30,118 @@ export const API_BASE_URL = new InjectionToken<string>('API_BASE_URL');
 @Injectable({
   providedIn: 'root',
 })
+export class ConfigurationClient {
+  private http: HttpClient;
+  private baseUrl: string;
+  protected jsonParseReviver: ((key: string, value: any) => any) | undefined =
+    undefined;
+
+  constructor(
+    @Inject(HttpClient) http: HttpClient,
+    @Optional() @Inject(API_BASE_URL) baseUrl?: string
+  ) {
+    this.http = http;
+    this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : '';
+  }
+
+  setTransferStationMode(
+    transferStationMode: TransferStationStatus | undefined
+  ): Observable<void> {
+    let url_ = this.baseUrl + '/api/config?';
+    if (transferStationMode === null)
+      throw new Error("The parameter 'transferStationMode' cannot be null.");
+    else if (transferStationMode !== undefined)
+      url_ +=
+        'transferStationMode=' +
+        encodeURIComponent('' + transferStationMode) +
+        '&';
+    url_ = url_.replace(/[?&]$/, '');
+
+    let options_: any = {
+      observe: 'response',
+      responseType: 'blob',
+      headers: new HttpHeaders({}),
+    };
+
+    return this.http
+      .request('post', url_, options_)
+      .pipe(
+        _observableMergeMap((response_: any) => {
+          return this.processSetTransferStationMode(response_);
+        })
+      )
+      .pipe(
+        _observableCatch((response_: any) => {
+          if (response_ instanceof HttpResponseBase) {
+            try {
+              return this.processSetTransferStationMode(response_ as any);
+            } catch (e) {
+              return _observableThrow(e) as any as Observable<void>;
+            }
+          } else return _observableThrow(response_) as any as Observable<void>;
+        })
+      );
+  }
+
+  protected processSetTransferStationMode(
+    response: HttpResponseBase
+  ): Observable<void> {
+    const status = response.status;
+    const responseBlob =
+      response instanceof HttpResponse
+        ? response.body
+        : (response as any).error instanceof Blob
+        ? (response as any).error
+        : undefined;
+
+    let _headers: any = {};
+    if (response.headers) {
+      for (let key of response.headers.keys()) {
+        _headers[key] = response.headers.get(key);
+      }
+    }
+    if (status === 400) {
+      return blobToText(responseBlob).pipe(
+        _observableMergeMap((_responseText) => {
+          let result400: any = null;
+          result400 =
+            _responseText === ''
+              ? null
+              : (JSON.parse(_responseText, this.jsonParseReviver) as ApiError);
+          return throwException(
+            'A server side error occurred.',
+            status,
+            _responseText,
+            _headers,
+            result400
+          );
+        })
+      );
+    } else if (status === 204) {
+      return blobToText(responseBlob).pipe(
+        _observableMergeMap((_responseText) => {
+          return _observableOf<void>(null as any);
+        })
+      );
+    } else if (status !== 200 && status !== 204) {
+      return blobToText(responseBlob).pipe(
+        _observableMergeMap((_responseText) => {
+          return throwException(
+            'An unexpected server error occurred.',
+            status,
+            _responseText,
+            _headers
+          );
+        })
+      );
+    }
+    return _observableOf<void>(null as any);
+  }
+}
+
+@Injectable({
+  providedIn: 'root',
+})
 export class ValuesClient {
   private http: HttpClient;
   private baseUrl: string;
@@ -1624,19 +1736,10 @@ export class ValuesClient {
   }
 }
 
-export interface DecimalValue {
-  value: number;
-  unit: string;
-}
-
 /** Data transfer class to convey api errors */
 export interface ApiError {
   /** This dictionary contains a set of all errors and their messages */
   errors?: { [key: string]: string[] } | null;
-}
-
-export interface EnumValueOfTransferStationStatus {
-  value: TransferStationStatus;
 }
 
 export enum TransferStationStatus {
@@ -1647,6 +1750,15 @@ export enum TransferStationStatus {
   OnlyBoiler = 'OnlyBoiler',
   PartyMode = 'PartyMode',
   Maintenance = 'Maintenance',
+}
+
+export interface DecimalValue {
+  value: number;
+  unit: string;
+}
+
+export interface EnumValueOfTransferStationStatus {
+  value: TransferStationStatus;
 }
 
 export interface EnumValueOfHeatingCircuitStatus {

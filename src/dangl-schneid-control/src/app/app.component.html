@@ -11,6 +11,7 @@
     class="value-card"
     label="Betriebsart"
     [value]="(dashboardValues$ | async)?.transferStationStatus || null"
+    (onStatusChanged)="transferStationStatusChanged()"
   ></app-transfer-station-status>
   <app-heating-circuit-status
     class="value-card"
