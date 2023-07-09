@@ -17,9 +17,11 @@ import { NgModule } from '@angular/core';
 import { BoolValueComponent } from './components/bool-value/bool-value.component';
 import { TransferStationStatusComponent } from './components/transfer-station-status/transfer-station-status.component';
 import { TransferStationStatusPipe } from './pipes/transfer-station-status.pipe';
+import { HeatingCircuitStatusPipe } from './pipes/heating-circuit-status.pipe';
+import { HeatingCircuitStatusComponent } from './components/heating-circuit-status/heating-circuit-status.component';
 
 @NgModule({
-  declarations: [AppComponent, DecimalValueComponent, BoolValueComponent, TransferStationStatusComponent, TransferStationStatusPipe],
+  declarations: [AppComponent, DecimalValueComponent, BoolValueComponent, TransferStationStatusComponent, TransferStationStatusPipe, HeatingCircuitStatusPipe, HeatingCircuitStatusComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
