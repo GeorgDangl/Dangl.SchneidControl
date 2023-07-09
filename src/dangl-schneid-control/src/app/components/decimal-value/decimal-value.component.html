@@ -6,4 +6,10 @@
     {{ value?.value | number : numberFormat }}
     {{ value?.unit }}
   </mat-card-content>
+
+  <mat-card-actions *ngIf="canEdit && value?.value">
+    <button mat-button (click)="raiseEditEvent()">
+      <mat-icon fontIcon="settings"></mat-icon>
+    </button>
+  </mat-card-actions>
 </mat-card>

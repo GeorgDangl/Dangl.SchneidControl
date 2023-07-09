@@ -22,6 +22,7 @@ import { NgModule } from '@angular/core';
 import { SetTransferStationStatusComponent } from './components/set-transfer-station-status/set-transfer-station-status.component';
 import { TransferStationStatusComponent } from './components/transfer-station-status/transfer-station-status.component';
 import { TransferStationStatusPipe } from './pipes/transfer-station-status.pipe';
+import { SetNumericalValueComponent } from './components/set-numerical-value/set-numerical-value.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { TransferStationStatusPipe } from './pipes/transfer-station-status.pipe'
     HeatingCircuitStatusPipe,
     HeatingCircuitStatusComponent,
     SetTransferStationStatusComponent,
+    SetNumericalValueComponent,
   ],
   imports: [
     BrowserModule,

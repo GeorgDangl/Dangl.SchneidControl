@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
+import { ConfigurationClient } from './generated-client/generated-client';
 import { DashboardService } from './services/dashboard.service';
 import { DashboardValues } from './models/dashboard-values';
+import { MatDialog } from '@angular/material/dialog';
+import { SetNumericalValueComponent } from './components/set-numerical-value/set-numerical-value.component';
 import { Subject } from 'rxjs';
 
 @Component({
@@ -9,8 +12,13 @@ import { Subject } from 'rxjs';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  constructor(private dashboardService: DashboardService) {}
+  constructor(
+    private dashboardService: DashboardService,
+    private matDialog: MatDialog,
+    private configurationClient: ConfigurationClient
+  ) {}
 
+  private lastValues: DashboardValues | null = null;
   public dashboardValues$ = new Subject<DashboardValues>();
   isLoading = false;
 
@@ -33,6 +41,7 @@ export class AppComponent {
   private loadDashboardValues(actionAfterLoad?: () => void): void {
     this.isLoading = true;
     this.dashboardService.getDashboardValues().subscribe((v) => {
+      this.lastValues = v;
       this.dashboardValues$.next(v);
       this.isLoading = false;
 
@@ -44,5 +53,63 @@ export class AppComponent {
 
   transferStationStatusChanged(): void {
     this.loadDashboardValues();
+  }
+
+  bufferTemperatureEditRequested(): void {
+    if (!this.lastValues) {
+      return;
+    }
+
+    this.matDialog
+      .open(SetNumericalValueComponent, {
+        data: {
+          currentValue: this.lastValues.targetBufferTemperature.value,
+          min: 50,
+          max: 70,
+          label: 'Pufferspeicher Soll',
+          unit: this.lastValues.targetBufferTemperature.unit,
+        },
+      })
+      .afterClosed()
+      .subscribe((newValue) => {
+        if (newValue) {
+          this.configurationClient
+            .setTargetBufferTopTemperature(newValue)
+            .subscribe({
+              next: () => {
+                this.loadDashboardValues();
+              },
+            });
+        }
+      });
+  }
+
+  boilerTemperatureEditRequested(): void {
+    if (!this.lastValues) {
+      return;
+    }
+
+    this.matDialog
+      .open(SetNumericalValueComponent, {
+        data: {
+          currentValue: this.lastValues.targetBoilerTemperature.value,
+          min: 50,
+          max: 65,
+          label: 'Warmwasserspeicher Soll',
+          unit: this.lastValues.targetBoilerTemperature.unit,
+        },
+      })
+      .afterClosed()
+      .subscribe((newValue) => {
+        if (newValue) {
+          this.configurationClient
+            .setTargetBoilerTemperature(newValue)
+            .subscribe({
+              next: () => {
+                this.loadDashboardValues();
+              },
+            });
+        }
+      });
   }
 }

@@ -107,11 +107,15 @@
     label="Pufferspeicher Soll"
     [decimalPlaces]="1"
     [value]="(dashboardValues$ | async)?.targetBufferTemperature || null"
+    [canEdit]="true"
+    (onEditRequested)="bufferTemperatureEditRequested()"
   ></app-decimal-value>
   <app-decimal-value
     class="value-card"
     label="Warmwasserspeicher Soll"
     [decimalPlaces]="1"
     [value]="(dashboardValues$ | async)?.targetBoilerTemperature || null"
+    [canEdit]="true"
+    (onEditRequested)="boilerTemperatureEditRequested()"
   ></app-decimal-value>
 </div>
