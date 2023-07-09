@@ -40,7 +40,8 @@ namespace Dangl.SchneidControl
             services.AddTransient<ISchneidReadRepository, SchneidReadRepository>();
             services.AddTransient<ISchneidWriteRepository, SchneidWriteRepository>();
 
-            if (!string.IsNullOrWhiteSpace(appConfig.DatabaseLoggingFilePath))
+            var statsLoggingIsEnabled = !string.IsNullOrWhiteSpace(appConfig.DatabaseLoggingFilePath);
+            if (statsLoggingIsEnabled)
             {
                 shouldInitializeDatabase = true;
                 services.AddDbContext<DataLoggingContext>(o =>
@@ -49,11 +50,13 @@ namespace Dangl.SchneidControl
                 });
                 services.AddTransient<IHostedService, DataLoggingScheduler>();
                 services.AddTransient<IDataLoggingService, DataLoggingService>();
+                services.AddTransient<IStatsRepository, StatsRepository>();
             }
             else
             {
                 shouldInitializeDatabase = false;
             }
+            services.AddTransient(_ => new StatsEnabledService(statsLoggingIsEnabled));
 
             services.AddControllers(o =>
             {

@@ -328,6 +328,224 @@ export class ConfigurationClient {
 @Injectable({
   providedIn: 'root',
 })
+export class StatsClient {
+  private http: HttpClient;
+  private baseUrl: string;
+  protected jsonParseReviver: ((key: string, value: any) => any) | undefined =
+    undefined;
+
+  constructor(
+    @Inject(HttpClient) http: HttpClient,
+    @Optional() @Inject(API_BASE_URL) baseUrl?: string
+  ) {
+    this.http = http;
+    this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : '';
+  }
+
+  getStats(
+    startTime: Date | null | undefined,
+    endTime: Date | null | undefined,
+    logEntryType: LogEntryType | undefined
+  ): Observable<Stats> {
+    let url_ = this.baseUrl + '/api/stats?';
+    if (startTime !== undefined && startTime !== null)
+      url_ +=
+        'startTime=' +
+        encodeURIComponent(startTime ? '' + startTime.toISOString() : '') +
+        '&';
+    if (endTime !== undefined && endTime !== null)
+      url_ +=
+        'endTime=' +
+        encodeURIComponent(endTime ? '' + endTime.toISOString() : '') +
+        '&';
+    if (logEntryType === null)
+      throw new Error("The parameter 'logEntryType' cannot be null.");
+    else if (logEntryType !== undefined)
+      url_ += 'logEntryType=' + encodeURIComponent('' + logEntryType) + '&';
+    url_ = url_.replace(/[?&]$/, '');
+
+    let options_: any = {
+      observe: 'response',
+      responseType: 'blob',
+      headers: new HttpHeaders({
+        Accept: 'application/json',
+      }),
+    };
+
+    return this.http
+      .request('get', url_, options_)
+      .pipe(
+        _observableMergeMap((response_: any) => {
+          return this.processGetStats(response_);
+        })
+      )
+      .pipe(
+        _observableCatch((response_: any) => {
+          if (response_ instanceof HttpResponseBase) {
+            try {
+              return this.processGetStats(response_ as any);
+            } catch (e) {
+              return _observableThrow(e) as any as Observable<Stats>;
+            }
+          } else return _observableThrow(response_) as any as Observable<Stats>;
+        })
+      );
+  }
+
+  protected processGetStats(response: HttpResponseBase): Observable<Stats> {
+    const status = response.status;
+    const responseBlob =
+      response instanceof HttpResponse
+        ? response.body
+        : (response as any).error instanceof Blob
+        ? (response as any).error
+        : undefined;
+
+    let _headers: any = {};
+    if (response.headers) {
+      for (let key of response.headers.keys()) {
+        _headers[key] = response.headers.get(key);
+      }
+    }
+    if (status === 200) {
+      return blobToText(responseBlob).pipe(
+        _observableMergeMap((_responseText) => {
+          let result200: any = null;
+          result200 =
+            _responseText === ''
+              ? null
+              : (JSON.parse(_responseText, this.jsonParseReviver) as Stats);
+          return _observableOf(result200);
+        })
+      );
+    } else if (status === 400) {
+      return blobToText(responseBlob).pipe(
+        _observableMergeMap((_responseText) => {
+          let result400: any = null;
+          result400 =
+            _responseText === ''
+              ? null
+              : (JSON.parse(_responseText, this.jsonParseReviver) as ApiError);
+          return throwException(
+            'A server side error occurred.',
+            status,
+            _responseText,
+            _headers,
+            result400
+          );
+        })
+      );
+    } else if (status !== 200 && status !== 204) {
+      return blobToText(responseBlob).pipe(
+        _observableMergeMap((_responseText) => {
+          return throwException(
+            'An unexpected server error occurred.',
+            status,
+            _responseText,
+            _headers
+          );
+        })
+      );
+    }
+    return _observableOf<Stats>(null as any);
+  }
+}
+
+@Injectable({
+  providedIn: 'root',
+})
+export class StatusClient {
+  private http: HttpClient;
+  private baseUrl: string;
+  protected jsonParseReviver: ((key: string, value: any) => any) | undefined =
+    undefined;
+
+  constructor(
+    @Inject(HttpClient) http: HttpClient,
+    @Optional() @Inject(API_BASE_URL) baseUrl?: string
+  ) {
+    this.http = http;
+    this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : '';
+  }
+
+  getStatus(): Observable<Status> {
+    let url_ = this.baseUrl + '/api/status';
+    url_ = url_.replace(/[?&]$/, '');
+
+    let options_: any = {
+      observe: 'response',
+      responseType: 'blob',
+      headers: new HttpHeaders({
+        Accept: 'application/json',
+      }),
+    };
+
+    return this.http
+      .request('get', url_, options_)
+      .pipe(
+        _observableMergeMap((response_: any) => {
+          return this.processGetStatus(response_);
+        })
+      )
+      .pipe(
+        _observableCatch((response_: any) => {
+          if (response_ instanceof HttpResponseBase) {
+            try {
+              return this.processGetStatus(response_ as any);
+            } catch (e) {
+              return _observableThrow(e) as any as Observable<Status>;
+            }
+          } else
+            return _observableThrow(response_) as any as Observable<Status>;
+        })
+      );
+  }
+
+  protected processGetStatus(response: HttpResponseBase): Observable<Status> {
+    const status = response.status;
+    const responseBlob =
+      response instanceof HttpResponse
+        ? response.body
+        : (response as any).error instanceof Blob
+        ? (response as any).error
+        : undefined;
+
+    let _headers: any = {};
+    if (response.headers) {
+      for (let key of response.headers.keys()) {
+        _headers[key] = response.headers.get(key);
+      }
+    }
+    if (status === 200) {
+      return blobToText(responseBlob).pipe(
+        _observableMergeMap((_responseText) => {
+          let result200: any = null;
+          result200 =
+            _responseText === ''
+              ? null
+              : (JSON.parse(_responseText, this.jsonParseReviver) as Status);
+          return _observableOf(result200);
+        })
+      );
+    } else if (status !== 200 && status !== 204) {
+      return blobToText(responseBlob).pipe(
+        _observableMergeMap((_responseText) => {
+          return throwException(
+            'An unexpected server error occurred.',
+            status,
+            _responseText,
+            _headers
+          );
+        })
+      );
+    }
+    return _observableOf<Status>(null as any);
+  }
+}
+
+@Injectable({
+  providedIn: 'root',
+})
 export class ValuesClient {
   private http: HttpClient;
   private baseUrl: string;
@@ -1936,6 +2154,36 @@ export enum TransferStationStatus {
   OnlyBoiler = 'OnlyBoiler',
   PartyMode = 'PartyMode',
   Maintenance = 'Maintenance',
+}
+
+export interface Stats {
+  unit: string;
+  logEntryType: LogEntryType;
+  startUtc?: Date | null;
+  endUtc?: Date | null;
+  entries: DataEntry[];
+}
+
+export enum LogEntryType {
+  OuterTemperature = 'OuterTemperature',
+  TotalEnergyConsumption = 'TotalEnergyConsumption',
+  HeatingPowerDraw = 'HeatingPowerDraw',
+  BufferTemperature = 'BufferTemperature',
+  BoilerTemperature = 'BoilerTemperature',
+  ValveOpening = 'ValveOpening',
+  HeatingCircuit0Pump = 'HeatingCircuit0Pump',
+  HeatingCircuit1Pump = 'HeatingCircuit1Pump',
+}
+
+export interface DataEntry {
+  createdAtUtc?: Date;
+  value?: number;
+}
+
+export interface Status {
+  statsEnabled: boolean;
+  environment: string;
+  isHealthy: boolean;
 }
 
 export interface DecimalValue {
