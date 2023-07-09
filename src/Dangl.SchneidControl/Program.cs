@@ -27,7 +27,7 @@ namespace Dangl.SchneidControl
             appConfig.Validate();
 
             services.AddTransient<ModbusConnectionManager>(_ => new ModbusConnectionManager(appConfig.SchneidModbusIpAddress, appConfig.SchneidModbusTcpPort));
-            services.AddTransient<ISchneidRepository, SchneidRepository>();
+            services.AddTransient<ISchneidReadRepository, SchneidReadRepository>();
 
             services.AddControllers(o =>
             {

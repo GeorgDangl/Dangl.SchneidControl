@@ -4,7 +4,7 @@ using Dangl.SchneidControl.Models.Enums;
 
 namespace Dangl.SchneidControl.Services
 {
-    public interface ISchneidRepository
+    public interface ISchneidReadRepository
     {
         Task<RepositoryResult<DecimalValue>> GetOuterTemperaturAsync();
 

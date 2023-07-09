@@ -4,11 +4,11 @@ using Dangl.SchneidControl.Models.Enums;
 
 namespace Dangl.SchneidControl.Services
 {
-    public class SchneidRepository : ISchneidRepository
+    public class SchneidReadRepository : ISchneidReadRepository
     {
         private readonly ModbusConnectionManager _modbusConnectionManager;
 
-        public SchneidRepository(ModbusConnectionManager modbusConnectionManager)
+        public SchneidReadRepository(ModbusConnectionManager modbusConnectionManager)
         {
             _modbusConnectionManager = modbusConnectionManager;
         }

@@ -11,19 +11,19 @@ namespace Dangl.SchneidControl.Controllers
     [Route("/api/values")]
     public class ValuesController : ControllerBase
     {
-        public ValuesController(ISchneidRepository schneidRepository)
+        public ValuesController(ISchneidReadRepository schneidReadRepository)
         {
-            _schneidRepository = schneidRepository;
+            _schneidReadRepository = schneidReadRepository;
         }
 
-        private readonly ISchneidRepository _schneidRepository;
+        private readonly ISchneidReadRepository _schneidReadRepository;
 
         [HttpGet("outer-temperature")]
         [ProducesResponseType(typeof(DecimalValue), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ApiError), (int)HttpStatusCode.BadRequest)]
         public Task<IActionResult> GetOuterTemperatureAsync()
         {
-            return RepositoryResponseAsync(() => _schneidRepository.GetOuterTemperaturAsync());
+            return RepositoryResponseAsync(() => _schneidReadRepository.GetOuterTemperaturAsync());
         }
 
         [HttpGet("total-energy-consumption")]
@@ -31,7 +31,7 @@ namespace Dangl.SchneidControl.Controllers
         [ProducesResponseType(typeof(ApiError), (int)HttpStatusCode.BadRequest)]
         public Task<IActionResult> GetTotalEnergyConsumptionAsync()
         {
-            return RepositoryResponseAsync(() => _schneidRepository.GetTotalEnergyConsumptionAsync());
+            return RepositoryResponseAsync(() => _schneidReadRepository.GetTotalEnergyConsumptionAsync());
         }
 
         [HttpGet("heating-power")]
@@ -39,7 +39,7 @@ namespace Dangl.SchneidControl.Controllers
         [ProducesResponseType(typeof(ApiError), (int)HttpStatusCode.BadRequest)]
         public Task<IActionResult> GetCurrentHeatingPowerAsync()
         {
-            return RepositoryResponseAsync(() => _schneidRepository.GetCurrentHeatingPowerDrawAsync());
+            return RepositoryResponseAsync(() => _schneidReadRepository.GetCurrentHeatingPowerDrawAsync());
         }
 
         [HttpGet("advance-temperature")]
@@ -47,7 +47,7 @@ namespace Dangl.SchneidControl.Controllers
         [ProducesResponseType(typeof(ApiError), (int)HttpStatusCode.BadRequest)]
         public Task<IActionResult> GetAdvanceTemperatureAsync()
         {
-            return RepositoryResponseAsync(() => _schneidRepository.GetAdvanceTemperatureAsync());
+            return RepositoryResponseAsync(() => _schneidReadRepository.GetAdvanceTemperatureAsync());
         }
 
         [HttpGet("primary-reflux-temperature")]
@@ -55,7 +55,7 @@ namespace Dangl.SchneidControl.Controllers
         [ProducesResponseType(typeof(ApiError), (int)HttpStatusCode.BadRequest)]
         public Task<IActionResult> GetPrimaryRefluxTemperatureAsync()
         {
-            return RepositoryResponseAsync(() => _schneidRepository.GetPrimaryRefluxTemperatureAsync());
+            return RepositoryResponseAsync(() => _schneidReadRepository.GetPrimaryRefluxTemperatureAsync());
         }
 
         [HttpGet("secondary-reflux-temperature")]
@@ -63,7 +63,7 @@ namespace Dangl.SchneidControl.Controllers
         [ProducesResponseType(typeof(ApiError), (int)HttpStatusCode.BadRequest)]
         public Task<IActionResult> GetSecondaryRefluxTemperatureAsync()
         {
-            return RepositoryResponseAsync(() => _schneidRepository.GetSecondaryRefluxTemperatureAsync());
+            return RepositoryResponseAsync(() => _schneidReadRepository.GetSecondaryRefluxTemperatureAsync());
         }
 
         [HttpGet("valve-opening")]
@@ -71,7 +71,7 @@ namespace Dangl.SchneidControl.Controllers
         [ProducesResponseType(typeof(ApiError), (int)HttpStatusCode.BadRequest)]
         public Task<IActionResult> GetValveOpeningAsync()
         {
-            return RepositoryResponseAsync(() => _schneidRepository.GetValveOpeningAsync());
+            return RepositoryResponseAsync(() => _schneidReadRepository.GetValveOpeningAsync());
         }
 
         [HttpGet("transfer-station-status")]
@@ -79,7 +79,7 @@ namespace Dangl.SchneidControl.Controllers
         [ProducesResponseType(typeof(ApiError), (int)HttpStatusCode.BadRequest)]
         public Task<IActionResult> GetTransferStationStatusAsync()
         {
-            return RepositoryResponseAsync(() => _schneidRepository.GetTransferStationStatusAsync());
+            return RepositoryResponseAsync(() => _schneidReadRepository.GetTransferStationStatusAsync());
         }
 
         [HttpGet("buffer-temperature-top")]
@@ -87,7 +87,7 @@ namespace Dangl.SchneidControl.Controllers
         [ProducesResponseType(typeof(ApiError), (int)HttpStatusCode.BadRequest)]
         public Task<IActionResult> GetBufferTemperatureTopAsync()
         {
-            return RepositoryResponseAsync(() => _schneidRepository.GetBufferTemperatureTopAsync());
+            return RepositoryResponseAsync(() => _schneidReadRepository.GetBufferTemperatureTopAsync());
         }
 
         [HttpGet("buffer-temperature-bottom")]
@@ -95,7 +95,7 @@ namespace Dangl.SchneidControl.Controllers
         [ProducesResponseType(typeof(ApiError), (int)HttpStatusCode.BadRequest)]
         public Task<IActionResult> GetBufferTemperatureBottomAsync()
         {
-            return RepositoryResponseAsync(() => _schneidRepository.GetBufferTemperatureBottomAsync());
+            return RepositoryResponseAsync(() => _schneidReadRepository.GetBufferTemperatureBottomAsync());
         }
 
         [HttpGet("boiler-temperature-top")]
@@ -103,7 +103,7 @@ namespace Dangl.SchneidControl.Controllers
         [ProducesResponseType(typeof(ApiError), (int)HttpStatusCode.BadRequest)]
         public Task<IActionResult> GetBoilerTemperatureTopAsync()
         {
-            return RepositoryResponseAsync(() => _schneidRepository.GetBoilerTemperatureTopAsync());
+            return RepositoryResponseAsync(() => _schneidReadRepository.GetBoilerTemperatureTopAsync());
         }
 
         [HttpGet("boiler-temperature-bottom")]
@@ -111,7 +111,7 @@ namespace Dangl.SchneidControl.Controllers
         [ProducesResponseType(typeof(ApiError), (int)HttpStatusCode.BadRequest)]
         public Task<IActionResult> GetBoilerTemperatureBottomAsync()
         {
-            return RepositoryResponseAsync(() => _schneidRepository.GetBoilerTemperatureBottomAsync());
+            return RepositoryResponseAsync(() => _schneidReadRepository.GetBoilerTemperatureBottomAsync());
         }
 
         [HttpGet("target-buffer-temperature")]
@@ -119,7 +119,7 @@ namespace Dangl.SchneidControl.Controllers
         [ProducesResponseType(typeof(ApiError), (int)HttpStatusCode.BadRequest)]
         public Task<IActionResult> GetTargetBufferTopTemperatureAsync()
         {
-            return RepositoryResponseAsync(() => _schneidRepository.GetTargetBufferTopTemperatureAsync());
+            return RepositoryResponseAsync(() => _schneidReadRepository.GetTargetBufferTopTemperatureAsync());
         }
 
         [HttpGet("target-boiler-temperature")]
@@ -127,7 +127,7 @@ namespace Dangl.SchneidControl.Controllers
         [ProducesResponseType(typeof(ApiError), (int)HttpStatusCode.BadRequest)]
         public Task<IActionResult> GetTargetBoilerTemperatureAsync()
         {
-            return RepositoryResponseAsync(() => _schneidRepository.GetTargetBoilerTemperatureAsync());
+            return RepositoryResponseAsync(() => _schneidReadRepository.GetTargetBoilerTemperatureAsync());
         }
 
         [HttpGet("circuit-status/{circuitId}")]
@@ -137,11 +137,11 @@ namespace Dangl.SchneidControl.Controllers
         {
             if (circuitId == 0)
             {
-                return await RepositoryResponseAsync(() => _schneidRepository.GetHeatingCircuitStatus00Async());
+                return await RepositoryResponseAsync(() => _schneidReadRepository.GetHeatingCircuitStatus00Async());
             }
             else if (circuitId == 1)
             {
-                return await RepositoryResponseAsync(() => _schneidRepository.GetHeatingCircuitStatus01Async());
+                return await RepositoryResponseAsync(() => _schneidReadRepository.GetHeatingCircuitStatus01Async());
             }
             else
             {
@@ -156,11 +156,11 @@ namespace Dangl.SchneidControl.Controllers
         {
             if (pumpId == 0)
             {
-                return await RepositoryResponseAsync(() => _schneidRepository.GetPumpStatusHeatingCircuit00Async());
+                return await RepositoryResponseAsync(() => _schneidReadRepository.GetPumpStatusHeatingCircuit00Async());
             }
             else if (pumpId == 1)
             {
-                return await RepositoryResponseAsync(() => _schneidRepository.GetPumpStatusHeatingCircuit01Async());
+                return await RepositoryResponseAsync(() => _schneidReadRepository.GetPumpStatusHeatingCircuit01Async());
             }
             else
             {
