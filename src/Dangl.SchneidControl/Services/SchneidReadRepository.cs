@@ -40,12 +40,12 @@ namespace Dangl.SchneidControl.Services
 
         public Task<RepositoryResult<DecimalValue>> GetBufferTemperatureTopAsync()
         {
-            return GetDecimal16BitValueAsync(704, 1, "°C");
+            return GetDecimal16BitValueAsync(695, 1, "°C");
         }
 
         public Task<RepositoryResult<DecimalValue>> GetBufferTemperatureBottomAsync()
         {
-            return GetDecimal16BitValueAsync(705, 1, "°C");
+            return GetDecimal16BitValueAsync(696, 1, "°C");
         }
 
         public Task<RepositoryResult<DecimalValue>> GetBoilerTemperatureTopAsync()
