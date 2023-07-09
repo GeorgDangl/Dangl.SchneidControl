@@ -158,7 +158,7 @@ namespace Dangl.SchneidControl
         .Requires(() => DockerRegistryUrl)
         .Requires(() => DockerRegistryUsername)
         .Requires(() => DockerRegistryPassword)
-        .OnlyWhenDynamic(() => IsOnBranch("master") || IsOnBranch("develop"))
+        .OnlyWhenDynamic(() => IsOnBranch("main") || IsOnBranch("develop"))
         .Executes(() =>
         {
             DockerLogin(x => x
@@ -168,6 +168,12 @@ namespace Dangl.SchneidControl
                 .DisableProcessLogOutput());
 
             PushDockerWithTag("dev", DockerRegistryUrl, DockerImageName);
+
+            if (IsOnBranch("main"))
+            {
+                PushDockerWithTag("latest", DockerRegistryUrl, DockerImageName);
+                PushDockerWithTag(GitVersion.SemVer, DockerRegistryUrl, DockerImageName);
+            }
         });
 
     private void PushDockerWithTag(string tag, string dockerRegistryUrl, string targetDockerImageName)
