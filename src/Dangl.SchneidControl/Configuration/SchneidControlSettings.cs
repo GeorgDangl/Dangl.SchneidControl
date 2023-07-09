@@ -13,6 +13,8 @@ namespace Dangl.SchneidControl.Configuration
 
         public int SchneidModbusTcpPort { get; set; }
 
+        public string DatabaseLoggingFilePath { get;set; }
+
         public void Validate()
         {
             if (!IPAddress.TryParse(SchneidModbusIpAddress, out var _))

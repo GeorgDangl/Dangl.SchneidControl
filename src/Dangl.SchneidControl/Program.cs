@@ -1,7 +1,8 @@
 using Dangl.Data.Shared.AspNetCore;
 using Dangl.SchneidControl.Configuration;
+using Dangl.SchneidControl.Data;
 using Dangl.SchneidControl.Services;
-using Namotion.Reflection;
+using Microsoft.EntityFrameworkCore;
 using NSwag;
 using System.Text.Json.Serialization;
 
@@ -13,15 +14,24 @@ namespace Dangl.SchneidControl
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            ConfigureServices(builder.Services, builder.Configuration);
+            ConfigureServices(builder.Services, builder.Configuration, out var shouldInitializeDatabase);
 
             var app = builder.Build();
             ConfigureApp(app, builder.Environment);
 
+            if (shouldInitializeDatabase)
+            {
+                using var scope = app.Services.CreateScope();
+                var context = scope.ServiceProvider.GetRequiredService<DataLoggingContext>();
+                await context.Database.MigrateAsync();
+            }
+
             await app.RunAsync();
         }
 
-        private static void ConfigureServices(IServiceCollection services, ConfigurationManager configuration)
+        private static void ConfigureServices(IServiceCollection services,
+            ConfigurationManager configuration,
+            out bool shouldInitializeDatabase)
         {
             var appConfig = configuration.Get<SchneidControlSettings>();
             appConfig.Validate();
@@ -29,6 +39,21 @@ namespace Dangl.SchneidControl
             services.AddTransient<ModbusConnectionManager>(_ => new ModbusConnectionManager(appConfig.SchneidModbusIpAddress, appConfig.SchneidModbusTcpPort));
             services.AddTransient<ISchneidReadRepository, SchneidReadRepository>();
             services.AddTransient<ISchneidWriteRepository, SchneidWriteRepository>();
+
+            if (!string.IsNullOrWhiteSpace(appConfig.DatabaseLoggingFilePath))
+            {
+                shouldInitializeDatabase = true;
+                services.AddDbContext<DataLoggingContext>(o =>
+                {
+                    o.UseSqlite($"Data Source={appConfig.DatabaseLoggingFilePath}");
+                });
+                services.AddTransient<IHostedService, DataLoggingScheduler>();
+                services.AddTransient<IDataLoggingService, DataLoggingService>();
+            }
+            else
+            {
+                shouldInitializeDatabase = false;
+            }
 
             services.AddControllers(o =>
             {
