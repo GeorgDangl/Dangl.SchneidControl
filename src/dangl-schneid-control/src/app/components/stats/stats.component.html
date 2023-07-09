@@ -25,6 +25,16 @@
       <mat-datepicker #picker2></mat-datepicker>
     </mat-form-field>
   </div>
+  <div class="export-buttons">
+    <button mat-raised-button (click)="saveAsExcel()">
+      <mat-icon>format_align_justify</mat-icon>
+      Excel
+    </button>
+    <button mat-raised-button (click)="saveAsCsv()">
+      <mat-icon>list</mat-icon>
+      CSV
+    </button>
+  </div>
 
   <div class="charts-wrapper">
     <ngx-charts-area-chart

@@ -1,7 +1,13 @@
-﻿using Dangl.Data.Shared;
+﻿using CsvHelper.Configuration;
+using CsvHelper;
+using Dangl.Data.Shared;
 using Dangl.SchneidControl.Data;
 using Dangl.SchneidControl.Models.Controllers.Stats;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
+using System.Text;
+using Dangl.SchneidControl.Models.Stats;
+using ClosedXML.Excel;
 
 namespace Dangl.SchneidControl.Services
 {
@@ -103,6 +109,64 @@ namespace Dangl.SchneidControl.Services
                 default:
                     throw new NotImplementedException();
             }
+        }
+
+        public async Task<RepositoryResult<FileResultContainer>> ExportToExcelAsync(DateTime? startUtc, DateTime? endUtc, LogEntryType type)
+        {
+            var entries = await GetStatsAsync(startUtc, endUtc, type);
+            if (!entries.IsSuccess)
+            {
+                return RepositoryResult<FileResultContainer>.Fail(entries.ErrorMessage);
+            }
+
+            using var workbook = new XLWorkbook();
+            var worksheet = workbook.Worksheets.Add("Auswertung");
+
+            worksheet.Cell(1,1).SetValue("Datum");
+            worksheet.Cell(1,2).SetValue($"Wert ({entries.Value.Unit})");
+
+            var currentLine = 2;
+            foreach (var entry in entries.Value.Entries)
+            {
+                worksheet.Cell(currentLine, 1).SetValue(entry.CreatedAtUtc);
+                worksheet.Cell(currentLine, 2).SetValue(entry.Value);
+                currentLine++;
+            }
+
+            var outputStream = new MemoryStream();
+            workbook.SaveAs(outputStream);
+            outputStream.Position = 0;
+
+            var mimeType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            return RepositoryResult<FileResultContainer>.Success(new FileResultContainer(outputStream, "Export.xlsx", mimeType));
+        }
+
+        public async Task<RepositoryResult<FileResultContainer>> ExportToCsvAsync(DateTime? startUtc, DateTime? endUtc, LogEntryType type)
+        {
+            var entries = await GetStatsAsync(startUtc, endUtc, type);
+            if (!entries.IsSuccess)
+            {
+                return RepositoryResult<FileResultContainer>.Fail(entries.ErrorMessage);
+            }
+
+            var csvEntries = entries
+                .Value
+                .Entries
+                .Select(e => new CsvOutputEntry
+                {
+                    DateUtc = e.CreatedAtUtc,
+                    Value = e.Value,
+                })
+                .ToList();
+
+            var outputStream = new MemoryStream();
+            using var streamWriter = new StreamWriter(outputStream, Encoding.UTF8, 1024, true);
+            using var csvWriter = new CsvWriter(streamWriter, CultureInfo.InvariantCulture, leaveOpen: true);
+            await csvWriter.WriteRecordsAsync(csvEntries);
+            await csvWriter.FlushAsync();
+            await streamWriter.FlushAsync();
+            outputStream.Position = 0;
+            return RepositoryResult<FileResultContainer>.Success(new FileResultContainer(outputStream, "Export.csv", "application/octet-stream"));
         }
     }
 }

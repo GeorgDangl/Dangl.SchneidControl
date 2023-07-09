@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import {
+  FileResponse,
   LogEntryType,
   Stats,
   StatsClient,
@@ -9,6 +10,7 @@ import { Moment } from 'moment';
 import { Subscription } from 'rxjs';
 
 import * as moment from 'moment';
+import { saveAs } from '../../utilities/file-save';
 
 @Component({
   selector: 'app-stats',
@@ -89,5 +91,54 @@ export class StatsComponent implements OnInit {
           },
         ];
       });
+  }
+
+  saveAsExcel(): void {
+    this.statsClient
+      .getExcel(
+        this._fromDate?.toDate(),
+        this._endDate?.toDate(),
+        this.data.logEntryType
+      )
+      .subscribe((fileResponse) => {
+        this.downloadFile(fileResponse);
+      });
+  }
+
+  saveAsCsv(): void {
+    this.statsClient
+      .getCsv(
+        this._fromDate?.toDate(),
+        this._endDate?.toDate(),
+        this.data.logEntryType
+      )
+      .subscribe((fileResponse) => {
+        this.downloadFile(fileResponse);
+      });
+  }
+
+  private downloadFile(fileResponse: FileResponse): void {
+    let fileName = fileResponse.fileName;
+
+    if (fileResponse.headers) {
+      const contentDispositionHeaderName = Object.keys(
+        fileResponse.headers
+      ).find((h) => h.toUpperCase() === 'Content-Disposition'.toUpperCase());
+      if (contentDispositionHeaderName) {
+        const contentDisposition = fileResponse.headers[
+          contentDispositionHeaderName
+        ] as string;
+        if (
+          contentDisposition &&
+          contentDisposition.indexOf("filename*=UTF-8''") > -1
+        ) {
+          const encodedFileName =
+            contentDisposition.split("filename*=UTF-8''")[1];
+          fileName = decodeURI(encodedFileName);
+        }
+      }
+    }
+
+    saveAs(fileResponse.data, fileName || 'Datei.xlsx');
   }
 }
