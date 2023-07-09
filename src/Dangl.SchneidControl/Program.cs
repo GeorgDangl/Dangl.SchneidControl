@@ -5,6 +5,7 @@ using Dangl.SchneidControl.Services;
 using Microsoft.EntityFrameworkCore;
 using NSwag;
 using System.Text.Json.Serialization;
+using static Dangl.SchneidControl.Configuration.SchneidControlSettings;
 
 namespace Dangl.SchneidControl
 {
@@ -33,7 +34,7 @@ namespace Dangl.SchneidControl
             ConfigurationManager configuration,
             out bool shouldInitializeDatabase)
         {
-            var appConfig = configuration.Get<SchneidControlSettings>();
+            var appConfig = configuration.Get<SchneidControlSettings>() ?? throw new AppConfigException("Failed to load configuration");
             appConfig.Validate();
 
             services.AddTransient<ModbusConnectionManager>(_ => new ModbusConnectionManager(appConfig.SchneidModbusIpAddress, appConfig.SchneidModbusTcpPort));

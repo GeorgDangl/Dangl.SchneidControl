@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Net;
 
 namespace Dangl.SchneidControl.Configuration
 {
@@ -13,7 +8,7 @@ namespace Dangl.SchneidControl.Configuration
 
         public int SchneidModbusTcpPort { get; set; }
 
-        public string DatabaseLoggingFilePath { get;set; }
+        public string DatabaseLoggingFilePath { get; set; }
 
         public void Validate()
         {
