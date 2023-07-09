@@ -63,7 +63,7 @@ namespace Dangl.SchneidControl.Services
                 var heatingCircuitPump1 = await _schneidReadRepository.GetPumpStatusHeatingCircuit01Async();
                 if (heatingCircuitPump1.IsSuccess)
                 {
-                    _context.DataEntries.Add(new DataEntry { CreatedAtUtc = DateTime.UtcNow, LogEntryType = LogEntryType.HeatingCircuit0Pump, Value = heatingCircuitPump1.Value.Value ? 1 : 0 });
+                    _context.DataEntries.Add(new DataEntry { CreatedAtUtc = DateTime.UtcNow, LogEntryType = LogEntryType.HeatingCircuit1Pump, Value = heatingCircuitPump1.Value.Value ? 1 : 0 });
                 }
 
                 await _context.SaveChangesAsync();

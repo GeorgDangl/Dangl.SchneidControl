@@ -2176,8 +2176,8 @@ export enum LogEntryType {
 }
 
 export interface DataEntry {
-  createdAtUtc?: Date;
-  value?: number;
+  createdAtUtc: Date;
+  value: number;
 }
 
 export interface Status {

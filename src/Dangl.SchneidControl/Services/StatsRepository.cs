@@ -92,9 +92,9 @@ namespace Dangl.SchneidControl.Services
                 case LogEntryType.HeatingCircuit0Pump:
                 case LogEntryType.HeatingPowerDraw:
                 case LogEntryType.ValveOpening:
-                case LogEntryType.TotalEnergyConsumption:
                     return decimalValue;
 
+                case LogEntryType.TotalEnergyConsumption:
                 case LogEntryType.BoilerTemperature:
                 case LogEntryType.BufferTemperature:
                 case LogEntryType.OuterTemperature:
