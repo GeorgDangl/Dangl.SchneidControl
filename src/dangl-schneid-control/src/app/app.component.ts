@@ -53,14 +53,19 @@ export class AppComponent {
 
   private loadDashboardValues(actionAfterLoad?: () => void): void {
     this.isLoading = true;
-    this.dashboardService.getDashboardValues().subscribe((v) => {
-      this.lastValues = v;
-      this.dashboardValues$.next(v);
-      this.isLoading = false;
+    this.dashboardService.getDashboardValues().subscribe({
+      next: (v) => {
+        this.lastValues = v;
+        this.dashboardValues$.next(v);
+        this.isLoading = false;
 
-      if (actionAfterLoad) {
-        actionAfterLoad();
-      }
+        if (actionAfterLoad) {
+          actionAfterLoad();
+        }
+      },
+      error: () => {
+        this.isLoading = false;
+      },
     });
   }
 
