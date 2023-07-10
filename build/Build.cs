@@ -31,6 +31,9 @@ class Build : NukeBuild
     [Parameter] readonly string DockerRegistryUrl;
     [Parameter] readonly string DockerRegistryUsername;
     [Parameter] readonly string DockerRegistryPassword;
+    [Parameter] readonly string PublicDockerRegistryUsername;
+    [Parameter] readonly string PublicDockerRegistryPassword;
+    [Parameter] readonly string PublicDockerOrganization = "dangl";
 
     Target Clean => _ => _
         .Before(Restore)
@@ -174,6 +177,24 @@ namespace Dangl.SchneidControl
                 PushDockerWithTag("latest", DockerRegistryUrl, DockerImageName);
                 PushDockerWithTag(GitVersion.SemVer, DockerRegistryUrl, DockerImageName);
             }
+
+            if (!string.IsNullOrWhiteSpace(PublicDockerRegistryUsername)
+                && !string.IsNullOrWhiteSpace(PublicDockerRegistryPassword)
+                && !string.IsNullOrWhiteSpace(PublicDockerOrganization))
+            {
+                DockerLogin(x => x
+                    .SetUsername(PublicDockerRegistryUsername)
+                    .SetPassword(PublicDockerRegistryPassword)
+                    .DisableProcessLogOutput());
+
+                PushPublicDockerWithTag("dev", DockerImageName);
+
+                if (IsOnBranch("main"))
+                {
+                    PushPublicDockerWithTag("latest", DockerImageName);
+                    PushPublicDockerWithTag(GitVersion.SemVer, DockerImageName);
+                }
+            }
         });
 
     private void PushDockerWithTag(string tag, string dockerRegistryUrl, string targetDockerImageName)
@@ -183,6 +204,15 @@ namespace Dangl.SchneidControl
             .SetTargetImage($"{dockerRegistryUrl}/{targetDockerImageName}:{tag}".ToLowerInvariant()));
         DockerPush(c => c
             .SetName($"{dockerRegistryUrl}/{targetDockerImageName}:{tag}".ToLowerInvariant()));
+    }
+
+    private void PushPublicDockerWithTag(string tag, string targetDockerImageName)
+    {
+        DockerTag(c => c
+            .SetSourceImage(DockerImageName + ":" + "dev")
+            .SetTargetImage($"{PublicDockerOrganization}/{targetDockerImageName}:{tag}".ToLowerInvariant()));
+        DockerPush(c => c
+            .SetName($"{PublicDockerOrganization}/{targetDockerImageName}:{tag}".ToLowerInvariant()));
     }
 
     private bool IsOnBranch(string branchName)

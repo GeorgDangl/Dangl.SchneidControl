@@ -28,3 +28,5 @@ jobs:
             DockerRegistryUrl: ghcr.io/${{github.repository_owner}}
             DockerRegistryUsername: ${{github.actor}}
             DockerRegistryPassword: ${{secrets.GITHUB_TOKEN}}
+            PublicDockerRegistryUsername: ${{secrets.PUBLICDOCKERREGISTRYUSERNAME}}
+            PublicDockerRegistryPassword: ${{secrets.PUBLICDOCKERREGISTRYPASSWORD}}
