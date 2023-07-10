@@ -230,6 +230,7 @@ namespace Dangl.SchneidControl
 
     Target PublishGitHubRelease => _ => _
          .OnlyWhenDynamic(() => IsOnBranch("main"))
+         .After(PushDocker)
          .Executes(async () =>
          {
              Assert.NotNull(GitHubActions.Instance?.Token);
