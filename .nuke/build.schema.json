@@ -71,6 +71,15 @@
             "type": "string"
           }
         },
+        "PublicDockerOrganization": {
+          "type": "string"
+        },
+        "PublicDockerRegistryPassword": {
+          "type": "string"
+        },
+        "PublicDockerRegistryUsername": {
+          "type": "string"
+        },
         "Root": {
           "type": "string",
           "description": "Root directory during build execution"
@@ -88,6 +97,7 @@
               "Compile",
               "FrontEndRestore",
               "GenerateVersion",
+              "PublishGitHubRelease",
               "PushDocker",
               "Restore"
             ]
@@ -110,6 +120,7 @@
               "Compile",
               "FrontEndRestore",
               "GenerateVersion",
+              "PublishGitHubRelease",
               "PushDocker",
               "Restore"
             ]
