@@ -1,0 +1,25 @@
+<mat-dialog-content>
+  <h1>{{ data.label }} Ändern</h1>
+
+  <mat-form-field>
+    <input
+      matInput
+      type="number"
+      [min]="data.min"
+      [max]="data.max"
+      step="1"
+      [(ngModel)]="selectedValue"
+      [placeholder]="data.unit"
+    />
+    <span matSuffix>
+      {{ data.unit }}
+    </span>
+  </mat-form-field>
+
+  <div class="actions">
+    <button mat-raised-button [disabled]="!canSave" (click)="changeValue()">
+      Speichern
+    </button>
+    <button mat-raised-button color="warn" (click)="close()">Abbrechen</button>
+  </div>
+</mat-dialog-content>

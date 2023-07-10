@@ -1,0 +1,16 @@
+/* You can add global styles to this file, and also import other style files */
+@import "@dangl/angular-material-shared/styles/material-style.scss";
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, sans-serif;
+}
+
+.stats-dialog {
+  width: 90vw;
+  max-height: 90vh;
+}

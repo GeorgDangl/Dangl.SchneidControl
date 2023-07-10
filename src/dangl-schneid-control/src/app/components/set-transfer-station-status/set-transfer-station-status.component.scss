@@ -1,0 +1,19 @@
+h1 {
+  color: black;
+}
+
+mat-select {
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+.actions {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 10px;
+
+  button {
+    width: 100%;
+  }
+}

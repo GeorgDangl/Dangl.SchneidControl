@@ -1,0 +1,48 @@
+{
+  "name": "dangl-schneid-control",
+  "version": "0.0.0",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "build:prod": "ng build --configuration production --aot --no-progress --output-path ../Dangl.SchneidControl/wwwroot/dist",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/animations": "^16.1.4",
+    "@angular/cdk": "^16.1.4",
+    "@angular/common": "^16.1.4",
+    "@angular/compiler": "^16.1.4",
+    "@angular/core": "^16.1.4",
+    "@angular/forms": "^16.1.4",
+    "@angular/material": "^16.1.4",
+    "@angular/platform-browser": "^16.1.4",
+    "@angular/platform-browser-dynamic": "^16.1.4",
+    "@angular/router": "^16.1.4",
+    "@dangl/angular-material-shared": "2.4.0-beta0031",
+    "@angular/material-moment-adapter": "^16.1.4",
+    "@swimlane/ngx-charts": "20.4.1",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0",
+    "zone.js": "~0.13.1",
+    "moment": "2.29.4"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "^16.1.4",
+    "@angular/cli": "~16.1.4",
+    "@angular/compiler-cli": "^16.1.4",
+    "@types/jasmine": "~4.3.0",
+    "jasmine-core": "~4.5.0",
+    "karma": "~6.4.0",
+    "karma-chrome-launcher": "~3.1.0",
+    "karma-coverage": "~2.2.0",
+    "karma-jasmine": "~5.1.0",
+    "karma-jasmine-html-reporter": "~2.0.0",
+    "typescript": "~4.9.4",
+    "@types/d3-shape": "3.1.1",
+    "@types/d3-scale": "4.0.3",
+    "@types/d3-selection": "3.0.5"
+  }
+}

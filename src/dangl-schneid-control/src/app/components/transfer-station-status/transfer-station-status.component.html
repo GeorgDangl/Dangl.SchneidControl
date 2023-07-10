@@ -1,0 +1,18 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>{{ label }}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    {{ value?.value | transferStationStatus }}
+  </mat-card-content>
+
+  <mat-card-actions>
+    <button
+      *ngIf="value"
+      mat-button
+      (click)="initiateTransferStationStatusChange()"
+    >
+      <mat-icon fontIcon="settings"></mat-icon>
+    </button>
+  </mat-card-actions>
+</mat-card>

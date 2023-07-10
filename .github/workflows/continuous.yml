@@ -1,0 +1,33 @@
+name: tests
+
+on: [push]
+
+jobs:
+  publish:
+    name: publish
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v1
+      - name: Cache .nuke/temp, ~/.nuget/packages
+        uses: actions/cache@v3
+        with:
+          path: |
+            .nuke/temp
+            ~/.nuget/packages
+          key: ${{ runner.os }}-${{ hashFiles('**/*.csproj') }}
+      - uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '7.0'
+      - name: Run './build.cmd PushDocker+PublishGitHubRelease -Configuration Release'
+        run: ./build.cmd PushDocker+PublishGitHubRelease -Configuration Release
+        env:
+            DockerRegistryUrl: ghcr.io/${{github.repository_owner}}
+            DockerRegistryUsername: ${{github.actor}}
+            DockerRegistryPassword: ${{secrets.GITHUB_TOKEN}}
+            PublicDockerRegistryUsername: ${{secrets.PUBLICDOCKERREGISTRYUSERNAME}}
+            PublicDockerRegistryPassword: ${{secrets.PUBLICDOCKERREGISTRYPASSWORD}}
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
