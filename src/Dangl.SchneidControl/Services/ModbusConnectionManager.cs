@@ -47,14 +47,8 @@ namespace Dangl.SchneidControl.Services
             {
                 var resultWithRetry = await RetryAsync(async () =>
                 {
-                    using var sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                    var serverIP = IPAddress.Parse(_ipAddress);
-                    var serverFullAddr = new IPEndPoint(serverIP, _port);
-                    await sock.ConnectAsync(serverFullAddr);
-                    var factory = new ModbusFactory();
-                    using IModbusMaster master = factory.CreateMaster(sock);
+                    var master = await GetModbusMasterAsync();
                     var rawValue = await master.ReadHoldingRegistersAsync(1, address, length);
-                    await sock.DisconnectAsync(reuseSocket: true);
                     return rawValue;
                 }, 30);
 
@@ -73,16 +67,10 @@ namespace Dangl.SchneidControl.Services
             {
                 var resultWithRetry = await RetryAsync(async () =>
                 {
-                    using var sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                    var serverIP = IPAddress.Parse(_ipAddress);
-                    var serverFullAddr = new IPEndPoint(serverIP, _port);
-                    await sock.ConnectAsync(serverFullAddr);
-                    var factory = new ModbusFactory();
-                    using IModbusMaster master = factory.CreateMaster(sock);
                     var originalBytes = BitConverter.GetBytes(value);
                     var unsignedValue = BitConverter.ToUInt16(originalBytes, 0);
+                    var master = await GetModbusMasterAsync();
                     await master.WriteSingleRegisterAsync(1, address, unsignedValue);
-                    await sock.DisconnectAsync(reuseSocket: true);
                     return true;
                 }, 30);
             }
@@ -92,7 +80,7 @@ namespace Dangl.SchneidControl.Services
             }
         }
 
-        private static async Task<T> RetryAsync<T>(Func<Task<T>> action, int maxRetries)
+        private async Task<T> RetryAsync<T>(Func<Task<T>> action, int maxRetries)
         {
             var retries = 0;
             while (retries < maxRetries)
@@ -110,11 +98,46 @@ namespace Dangl.SchneidControl.Services
                         throw;
                     }
 
+                    await ResetSocketAndMasterAsync();
                     await Task.Delay(10);
                 }
             }
 
             throw new Exception("Invalid max retries specified.");
+        }
+
+        private Socket _socket;
+        private IModbusMaster _master;
+
+        private async Task ResetSocketAndMasterAsync()
+        {
+            if (_socket != null)
+            {
+                await _socket.DisconnectAsync(reuseSocket: true);
+            }
+
+            if (_master != null)
+            {
+                _master.Dispose();
+            }
+
+            _socket = null;
+            _master = null;
+        }
+
+        private async Task<IModbusMaster> GetModbusMasterAsync()
+        {
+            if (_socket == null)
+            {
+                _socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                var serverIP = IPAddress.Parse(_ipAddress);
+                var serverFullAddr = new IPEndPoint(serverIP, _port);
+                await _socket.ConnectAsync(serverFullAddr);
+                var factory = new ModbusFactory();
+                _master = factory.CreateMaster(_socket);
+            }
+
+            return _master;
         }
     }
 }

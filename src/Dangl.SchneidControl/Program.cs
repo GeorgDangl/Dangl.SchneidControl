@@ -37,7 +37,7 @@ namespace Dangl.SchneidControl
             var appConfig = configuration.Get<SchneidControlSettings>() ?? throw new AppConfigException("Failed to load configuration");
             appConfig.Validate();
 
-            services.AddTransient<ModbusConnectionManager>(_ => new ModbusConnectionManager(appConfig.SchneidModbusIpAddress, appConfig.SchneidModbusTcpPort));
+            services.AddSingleton<ModbusConnectionManager>(_ => new ModbusConnectionManager(appConfig.SchneidModbusIpAddress, appConfig.SchneidModbusTcpPort));
             services.AddTransient<ISchneidReadRepository, SchneidReadRepository>();
             services.AddTransient<ISchneidWriteRepository, SchneidWriteRepository>();
 
