@@ -1,10 +1,9 @@
-﻿using NModbus;
-using System.Net;
-using System.Net.Sockets;
+﻿using System.Net;
+using FluentModbus;
 
 namespace Dangl.SchneidControl.Services
 {
-    public class ModbusConnectionManager
+    public class ModbusConnectionManager : IDisposable
     {
         private readonly string _ipAddress;
         private readonly int _port;
@@ -23,33 +22,29 @@ namespace Dangl.SchneidControl.Services
 
         public async Task<int> GetInteger16ValueAsync(ushort address)
         {
-            var rawData = await ReadHoldingRegistersAsync(address, 1);
-            var bytes = BitConverter.GetBytes(rawData.FirstOrDefault());
-            var signedInteger = BitConverter.ToInt16(bytes, 0);
+            var bytes = await ReadHoldingRegistersAsync(address, 1);
+            var signedInteger = BitConverter.ToInt16(bytes.Reverse().ToArray(), 0);
             var integerValue = Convert.ToInt32(signedInteger);
             return integerValue;
         }
 
         public async Task<uint> GetInteger32ValueAsync(ushort address)
         {
-            var rawData = await ReadHoldingRegistersAsync(address, 2);
-            var bytes = BitConverter.GetBytes(rawData[1])
-                .Concat(BitConverter.GetBytes(rawData[0]))
-                .ToArray();
-            var unsignedInteger = BitConverter.ToUInt32(bytes, 0);
+            var bytes = await ReadHoldingRegistersAsync(address, 2);
+            var unsignedInteger = BitConverter.ToUInt32(bytes.Reverse().ToArray(), 0);
             return unsignedInteger;
         }
 
-        private async Task<ushort[]> ReadHoldingRegistersAsync(ushort address, ushort length)
+        private async Task<byte[]> ReadHoldingRegistersAsync(ushort address, ushort length)
         {
             await _semaphore.WaitAsync();
             try
             {
                 var resultWithRetry = await RetryAsync(async () =>
                 {
-                    var master = await GetModbusMasterAsync();
-                    var rawValue = await master.ReadHoldingRegistersAsync(1, address, length);
-                    return rawValue;
+                    var client = GetModbusClient();
+                    var readBytes = (await client.ReadHoldingRegistersAsync(1, address, length)).ToArray();
+                    return readBytes;
                 }, 30);
 
                 return resultWithRetry;
@@ -67,10 +62,9 @@ namespace Dangl.SchneidControl.Services
             {
                 var resultWithRetry = await RetryAsync(async () =>
                 {
-                    var originalBytes = BitConverter.GetBytes(value);
-                    var unsignedValue = BitConverter.ToUInt16(originalBytes, 0);
-                    var master = await GetModbusMasterAsync();
-                    await master.WriteSingleRegisterAsync(1, address, unsignedValue);
+                    var client = GetModbusClient();
+                    var byteValue = BitConverter.GetBytes(value).Reverse().ToArray();
+                    await client.WriteSingleRegisterAsync(1, address, byteValue);
                     return true;
                 }, 30);
             }
@@ -98,7 +92,7 @@ namespace Dangl.SchneidControl.Services
                         throw;
                     }
 
-                    await ResetSocketAndMasterAsync();
+                    ResetModbusClient();
                     await Task.Delay(10);
                 }
             }
@@ -106,38 +100,47 @@ namespace Dangl.SchneidControl.Services
             throw new Exception("Invalid max retries specified.");
         }
 
-        private Socket _socket;
-        private IModbusMaster _master;
-
-        private async Task ResetSocketAndMasterAsync()
+        private void ResetModbusClient()
         {
-            if (_socket != null)
+            if (_client != null)
             {
-                await _socket.DisconnectAsync(reuseSocket: true);
+                try
+                {
+                    _client.Disconnect();
+                }
+                catch
+                {
+                    // Ignore any errors here
+                }
+                try
+                {
+                    _client.Dispose();
+                }
+                catch
+                {
+                    // Ignore any errors here
+                }
             }
 
-            if (_master != null)
-            {
-                _master.Dispose();
-            }
-
-            _socket = null;
-            _master = null;
+            _client = null;
         }
 
-        private async Task<IModbusMaster> GetModbusMasterAsync()
+        public void Dispose()
         {
-            if (_socket == null)
+            ResetModbusClient();
+        }
+
+        private ModbusTcpClient _client;
+
+        private ModbusTcpClient GetModbusClient()
+        {
+            if (_client == null)
             {
-                _socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                var serverIP = IPAddress.Parse(_ipAddress);
-                var serverFullAddr = new IPEndPoint(serverIP, _port);
-                await _socket.ConnectAsync(serverFullAddr);
-                var factory = new ModbusFactory();
-                _master = factory.CreateMaster(_socket);
+                _client = new ModbusTcpClient();
+                _client.Connect(new IPEndPoint(IPAddress.Parse(_ipAddress), _port));
             }
 
-            return _master;
+            return _client;
         }
     }
 }
