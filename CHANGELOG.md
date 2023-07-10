@@ -2,6 +2,9 @@
 
 All notable changes to **Dangl.SchneidControl** are documented here.
 
+## v1.0.2:
+- Added a timeout when reading data from the controller unit
+
 ## v1.0.1
 - Switch to `FluentModus` instead of `NModbus`
 

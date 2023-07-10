@@ -43,7 +43,8 @@ namespace Dangl.SchneidControl.Services
                 var resultWithRetry = await RetryAsync(async () =>
                 {
                     var client = GetModbusClient();
-                    var readBytes = (await client.ReadHoldingRegistersAsync(1, address, length)).ToArray();
+                    var ctsSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+                    var readBytes = (await client.ReadHoldingRegistersAsync(1, address, length, ctsSource.Token)).ToArray();
                     return readBytes;
                 }, 30);
 
@@ -64,7 +65,8 @@ namespace Dangl.SchneidControl.Services
                 {
                     var client = GetModbusClient();
                     var byteValue = BitConverter.GetBytes(value).Reverse().ToArray();
-                    await client.WriteSingleRegisterAsync(1, address, byteValue);
+                    var ctsSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+                    await client.WriteSingleRegisterAsync(1, address, byteValue, ctsSource.Token);
                     return true;
                 }, 30);
             }
