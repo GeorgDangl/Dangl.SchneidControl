@@ -1,4 +1,6 @@
 using Nuke.Common;
+using Nuke.Common.CI.GitHubActions;
+using Nuke.Common.Git;
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
 using Nuke.Common.Tooling;
@@ -12,6 +14,10 @@ using static Nuke.Common.IO.FileSystemTasks;
 using static Nuke.Common.Tools.Docker.DockerTasks;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
 using static Nuke.Common.Tools.Npm.NpmTasks;
+using static Nuke.GitHub.GitHubTasks;
+using static Nuke.Common.ChangeLog.ChangelogTasks;
+using System.Linq;
+using Nuke.GitHub;
 
 class Build : NukeBuild
 {
@@ -24,7 +30,9 @@ class Build : NukeBuild
 
     AbsolutePath SourceDirectory => RootDirectory / "src";
     AbsolutePath OutputDirectory => RootDirectory / "output";
+    AbsolutePath ChangeLogFile => RootDirectory / "CHANGELOG.md";
     [Solution] readonly Solution Solution;
+    [GitRepository] readonly GitRepository GitRepository;
 
     readonly string DockerImageName = "dangl-schneid-control";
 
@@ -219,4 +227,27 @@ namespace Dangl.SchneidControl
     {
         return GitVersion.BranchName.Equals(branchName) || GitVersion.BranchName.Equals($"origin/{branchName}");
     }
+
+    Target PublishGitHubRelease => _ => _
+         .OnlyWhenDynamic(() => IsOnBranch("main"))
+         .Executes(async () =>
+         {
+             Assert.NotNull(GitHubActions.Instance?.Token);
+             var releaseTag = $"v{GitVersion.MajorMinorPatch}";
+
+             var changeLogSectionEntries = ExtractChangelogSectionNotes(ChangeLogFile);
+             var latestChangeLog = changeLogSectionEntries
+                 .Aggregate((c, n) => c + Environment.NewLine + n);
+             var completeChangeLog = $"## {releaseTag}" + Environment.NewLine + latestChangeLog;
+
+             var repositoryInfo = GetGitHubRepositoryInfo(GitRepository);
+
+             await PublishRelease(x => x
+                     .SetCommitSha(GitVersion.Sha)
+                     .SetReleaseNotes(completeChangeLog)
+                     .SetRepositoryName(repositoryInfo.repositoryName)
+                     .SetRepositoryOwner(repositoryInfo.gitHubOwner)
+                     .SetTag(releaseTag)
+                     .SetToken(GitHubActions.Instance.Token));
+         });
 }
