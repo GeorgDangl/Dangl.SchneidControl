@@ -27,10 +27,22 @@ namespace Dangl.SchneidControl.Services
                 return RepositoryResult<Stats>.Fail($"The entry type is now defined: {type}");
             }
 
+            if (startUtc != null)
+            {
+                var offset = TimeZoneInfo.Local.GetUtcOffset(startUtc.Value);
+                startUtc = startUtc.Value.Subtract(offset);
+            }
+
+            if (endUtc != null)
+            {
+                var offset = TimeZoneInfo.Local.GetUtcOffset(endUtc.Value);
+                endUtc = endUtc.Value.Subtract(offset);
+            }
+
             var dbEntries = await _context
                 .DataEntries
                 .Where(e => (startUtc == null || e.CreatedAtUtc >= startUtc)
-                    && (endUtc == null || e.CreatedAtUtc <= startUtc)
+                    && (endUtc == null || e.CreatedAtUtc <= endUtc)
                     && e.LogEntryType == type)
                 .OrderBy(e => e.CreatedAtUtc)
                 .Select(e => new
@@ -48,7 +60,7 @@ namespace Dangl.SchneidControl.Services
                 Unit = GetUnitForLogEntryType(type),
                 Entries = dbEntries.Select(dbEntry => new Models.Controllers.Stats.DataEntry
                 {
-                    CreatedAtUtc = dbEntry.CreatedAtUtc,
+                    CreatedAtUtc = dbEntry.CreatedAtUtc.ToLocalTime(),
                     Value = GetDataEntryValueForElement(type, dbEntry.Value)
                 })
                     .ToList()
@@ -66,6 +78,8 @@ namespace Dangl.SchneidControl.Services
             {
                 case LogEntryType.HeatingCircuit1Pump:
                 case LogEntryType.HeatingCircuit0Pump:
+                case LogEntryType.BoilerLoadingPump:
+                case LogEntryType.BufferLoadingPump:
                     return "An";
 
                 case LogEntryType.HeatingPowerDraw:
@@ -98,6 +112,8 @@ namespace Dangl.SchneidControl.Services
                 case LogEntryType.HeatingCircuit0Pump:
                 case LogEntryType.HeatingPowerDraw:
                 case LogEntryType.ValveOpening:
+                case LogEntryType.BoilerLoadingPump:
+                case LogEntryType.BufferLoadingPump:
                     return decimalValue;
 
                 case LogEntryType.TotalEnergyConsumption:

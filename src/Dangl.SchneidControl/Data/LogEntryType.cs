@@ -17,5 +17,9 @@
         HeatingCircuit0Pump = 7,
 
         HeatingCircuit1Pump = 8,
+
+        BoilerLoadingPump = 9,
+
+        BufferLoadingPump = 10
     }
 }

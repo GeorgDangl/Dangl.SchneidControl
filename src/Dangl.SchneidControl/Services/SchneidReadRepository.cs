@@ -117,6 +117,28 @@ namespace Dangl.SchneidControl.Services
             return RepositoryResult<EnumValue<HeatingCircuitStatus>>.Success(new EnumValue<HeatingCircuitStatus> { Value = enumValue });
         }
 
+        public async Task<RepositoryResult<BoolValue>> GetBufferLoadingPumpStatusAsync()
+        {
+            var integerValue = await GetDecimal16BitValueAsync(699, 0, string.Empty);
+            if (!integerValue.IsSuccess)
+            {
+                return RepositoryResult<BoolValue>.Fail(integerValue.ErrorMessage);
+            }
+
+            return RepositoryResult<BoolValue>.Success(new BoolValue { Value = integerValue.Value.Value == 1m });
+        }
+
+        public async Task<RepositoryResult<BoolValue>> GetBoilerLoadingPumpStatusAsync()
+        {
+            var integerValue = await GetDecimal16BitValueAsync(694, 0, string.Empty);
+            if (!integerValue.IsSuccess)
+            {
+                return RepositoryResult<BoolValue>.Fail(integerValue.ErrorMessage);
+            }
+
+            return RepositoryResult<BoolValue>.Success(new BoolValue { Value = integerValue.Value.Value == 1m });
+        }
+
         public async Task<RepositoryResult<BoolValue>> GetPumpStatusHeatingCircuit00Async()
         {
             var integerValue = await GetDecimal16BitValueAsync(616, 0, string.Empty);
