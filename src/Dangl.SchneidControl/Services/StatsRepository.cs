@@ -20,7 +20,7 @@ namespace Dangl.SchneidControl.Services
             _context = context;
         }
 
-        public async Task<RepositoryResult<Stats>> GetStatsAsync(DateTime? startUtc, DateTime? endUtc, LogEntryType type)
+        public async Task<RepositoryResult<Stats>> GetStatsAsync(DateTime? startUtc, DateTime? endUtc, LogEntryType type, int utcTimeZoneOffset)
         {
             if (!Enum.IsDefined(type))
             {
@@ -29,14 +29,12 @@ namespace Dangl.SchneidControl.Services
 
             if (startUtc != null)
             {
-                var offset = TimeZoneInfo.Local.GetUtcOffset(startUtc.Value);
-                startUtc = startUtc.Value.Subtract(offset);
+                startUtc = startUtc.Value.Add(TimeSpan.FromMinutes(utcTimeZoneOffset));
             }
 
             if (endUtc != null)
             {
-                var offset = TimeZoneInfo.Local.GetUtcOffset(endUtc.Value);
-                endUtc = endUtc.Value.Subtract(offset);
+                endUtc = endUtc.Value.Add(TimeSpan.FromMinutes(utcTimeZoneOffset));
             }
 
             var dbEntries = await _context
@@ -127,9 +125,9 @@ namespace Dangl.SchneidControl.Services
             }
         }
 
-        public async Task<RepositoryResult<FileResultContainer>> ExportToExcelAsync(DateTime? startUtc, DateTime? endUtc, LogEntryType type)
+        public async Task<RepositoryResult<FileResultContainer>> ExportToExcelAsync(DateTime? startUtc, DateTime? endUtc, LogEntryType type, int utcTimeZoneOffset)
         {
-            var entries = await GetStatsAsync(startUtc, endUtc, type);
+            var entries = await GetStatsAsync(startUtc, endUtc, type, utcTimeZoneOffset);
             if (!entries.IsSuccess)
             {
                 return RepositoryResult<FileResultContainer>.Fail(entries.ErrorMessage);
@@ -157,9 +155,9 @@ namespace Dangl.SchneidControl.Services
             return RepositoryResult<FileResultContainer>.Success(new FileResultContainer(outputStream, "Export.xlsx", mimeType));
         }
 
-        public async Task<RepositoryResult<FileResultContainer>> ExportToCsvAsync(DateTime? startUtc, DateTime? endUtc, LogEntryType type)
+        public async Task<RepositoryResult<FileResultContainer>> ExportToCsvAsync(DateTime? startUtc, DateTime? endUtc, LogEntryType type, int utcTimeZoneOffset)
         {
-            var entries = await GetStatsAsync(startUtc, endUtc, type);
+            var entries = await GetStatsAsync(startUtc, endUtc, type, utcTimeZoneOffset);
             if (!entries.IsSuccess)
             {
                 return RepositoryResult<FileResultContainer>.Fail(entries.ErrorMessage);
