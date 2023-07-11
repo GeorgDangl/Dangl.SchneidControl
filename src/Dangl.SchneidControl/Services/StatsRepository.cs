@@ -1,5 +1,4 @@
-﻿using CsvHelper.Configuration;
-using CsvHelper;
+﻿using CsvHelper;
 using Dangl.Data.Shared;
 using Dangl.SchneidControl.Data;
 using Dangl.SchneidControl.Models.Controllers.Stats;
@@ -27,14 +26,16 @@ namespace Dangl.SchneidControl.Services
                 return RepositoryResult<Stats>.Fail($"The entry type is now defined: {type}");
             }
 
+            var userTimeZoneOffset = TimeSpan.FromMinutes(utcTimeZoneOffset);
+
             if (startUtc != null)
             {
-                startUtc = startUtc.Value.Add(TimeSpan.FromMinutes(utcTimeZoneOffset));
+                startUtc = startUtc.Value.Add(userTimeZoneOffset);
             }
 
             if (endUtc != null)
             {
-                endUtc = endUtc.Value.Add(TimeSpan.FromMinutes(utcTimeZoneOffset));
+                endUtc = endUtc.Value.Add(userTimeZoneOffset);
             }
 
             var dbEntries = await _context
@@ -58,7 +59,7 @@ namespace Dangl.SchneidControl.Services
                 Unit = GetUnitForLogEntryType(type),
                 Entries = dbEntries.Select(dbEntry => new Models.Controllers.Stats.DataEntry
                 {
-                    CreatedAtUtc = dbEntry.CreatedAtUtc.ToLocalTime(),
+                    CreatedAtUtc = dbEntry.CreatedAtUtc.Add(userTimeZoneOffset),
                     Value = GetDataEntryValueForElement(type, dbEntry.Value)
                 })
                     .ToList()
