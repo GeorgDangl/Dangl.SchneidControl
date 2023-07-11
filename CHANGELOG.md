@@ -2,6 +2,9 @@
 
 All notable changes to **Dangl.SchneidControl** are documented here.
 
+## v1.0.4:
+- User time zone offset provided by the frontend to correctly show user-local data
+
 ## v1.0.3:
 - Added status for buffer and boiler pumps
 - Stats now use local time when displaying them or exporting them to Excel and CSV
