@@ -66,6 +66,10 @@ export class StatsComponent implements OnInit {
     this.queryData();
   }
 
+  private getUserTimeZoneOffset(): number {
+    return new Date().getTimezoneOffset();
+  }
+
   private queryData() {
     if (this.lastQuerySubscription) {
       this.lastQuerySubscription.unsubscribe();
@@ -76,7 +80,12 @@ export class StatsComponent implements OnInit {
       ? this._endDate.endOf('day').toDate()
       : undefined;
     this.lastQuerySubscription = this.statsClient
-      .getStats(fromDate, endDate, this.data.logEntryType)
+      .getStats(
+        fromDate,
+        endDate,
+        this.data.logEntryType,
+        this.getUserTimeZoneOffset()
+      )
       .subscribe((stats) => {
         this.unit = stats.unit;
         this.dataSet = [
@@ -98,7 +107,8 @@ export class StatsComponent implements OnInit {
       .getExcel(
         this._fromDate?.toDate(),
         this._endDate?.toDate(),
-        this.data.logEntryType
+        this.data.logEntryType,
+        this.getUserTimeZoneOffset()
       )
       .subscribe((fileResponse) => {
         this.downloadFile(fileResponse);
@@ -110,7 +120,8 @@ export class StatsComponent implements OnInit {
       .getCsv(
         this._fromDate?.toDate(),
         this._endDate?.toDate(),
-        this.data.logEntryType
+        this.data.logEntryType,
+        this.getUserTimeZoneOffset()
       )
       .subscribe((fileResponse) => {
         this.downloadFile(fileResponse);

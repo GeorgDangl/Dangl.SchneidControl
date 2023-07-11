@@ -65,6 +65,10 @@ export class AppComponent {
       },
       error: () => {
         this.isLoading = false;
+
+        if (actionAfterLoad) {
+          actionAfterLoad();
+        }
       },
     });
   }

@@ -345,7 +345,8 @@ export class StatsClient {
   getStats(
     startTime: Date | null | undefined,
     endTime: Date | null | undefined,
-    logEntryType: LogEntryType | undefined
+    logEntryType: LogEntryType | undefined,
+    utcTimeZoneOffset: number | undefined
   ): Observable<Stats> {
     let url_ = this.baseUrl + '/api/stats?';
     if (startTime !== undefined && startTime !== null)
@@ -362,6 +363,11 @@ export class StatsClient {
       throw new Error("The parameter 'logEntryType' cannot be null.");
     else if (logEntryType !== undefined)
       url_ += 'logEntryType=' + encodeURIComponent('' + logEntryType) + '&';
+    if (utcTimeZoneOffset === null)
+      throw new Error("The parameter 'utcTimeZoneOffset' cannot be null.");
+    else if (utcTimeZoneOffset !== undefined)
+      url_ +=
+        'utcTimeZoneOffset=' + encodeURIComponent('' + utcTimeZoneOffset) + '&';
     url_ = url_.replace(/[?&]$/, '');
 
     let options_: any = {
@@ -453,7 +459,8 @@ export class StatsClient {
   getExcel(
     startTime: Date | null | undefined,
     endTime: Date | null | undefined,
-    logEntryType: LogEntryType | undefined
+    logEntryType: LogEntryType | undefined,
+    utcTimeZoneOffset: number | undefined
   ): Observable<FileResponse> {
     let url_ = this.baseUrl + '/api/stats/excel?';
     if (startTime !== undefined && startTime !== null)
@@ -470,6 +477,11 @@ export class StatsClient {
       throw new Error("The parameter 'logEntryType' cannot be null.");
     else if (logEntryType !== undefined)
       url_ += 'logEntryType=' + encodeURIComponent('' + logEntryType) + '&';
+    if (utcTimeZoneOffset === null)
+      throw new Error("The parameter 'utcTimeZoneOffset' cannot be null.");
+    else if (utcTimeZoneOffset !== undefined)
+      url_ +=
+        'utcTimeZoneOffset=' + encodeURIComponent('' + utcTimeZoneOffset) + '&';
     url_ = url_.replace(/[?&]$/, '');
 
     let options_: any = {
@@ -585,7 +597,8 @@ export class StatsClient {
   getCsv(
     startTime: Date | null | undefined,
     endTime: Date | null | undefined,
-    logEntryType: LogEntryType | undefined
+    logEntryType: LogEntryType | undefined,
+    utcTimeZoneOffset: number | undefined
   ): Observable<FileResponse> {
     let url_ = this.baseUrl + '/api/stats/csv?';
     if (startTime !== undefined && startTime !== null)
@@ -602,6 +615,11 @@ export class StatsClient {
       throw new Error("The parameter 'logEntryType' cannot be null.");
     else if (logEntryType !== undefined)
       url_ += 'logEntryType=' + encodeURIComponent('' + logEntryType) + '&';
+    if (utcTimeZoneOffset === null)
+      throw new Error("The parameter 'utcTimeZoneOffset' cannot be null.");
+    else if (utcTimeZoneOffset !== undefined)
+      url_ +=
+        'utcTimeZoneOffset=' + encodeURIComponent('' + utcTimeZoneOffset) + '&';
     url_ = url_.replace(/[?&]$/, '');
 
     let options_: any = {

@@ -21,9 +21,9 @@ namespace Dangl.SchneidControl.Controllers
         [HttpGet("")]
         [ProducesResponseType(typeof(Stats), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ApiError), (int)HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> GetStatsAsync(DateTime? startTime, DateTime? endTime, LogEntryType logEntryType)
+        public async Task<IActionResult> GetStatsAsync(DateTime? startTime, DateTime? endTime, LogEntryType logEntryType, int utcTimeZoneOffset = 0)
         {
-            var actual = await _statsRepository.GetStatsAsync(startTime, endTime, logEntryType);
+            var actual = await _statsRepository.GetStatsAsync(startTime, endTime, logEntryType, utcTimeZoneOffset);
             if (!actual.IsSuccess)
             {
                 return BadRequest(new ApiError(actual.ErrorMessage));
@@ -35,9 +35,9 @@ namespace Dangl.SchneidControl.Controllers
         [HttpGet("excel")]
         [ProducesResponseType(typeof(FileStreamResult), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ApiError), (int)HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> GetExcelAsync(DateTime? startTime, DateTime? endTime, LogEntryType logEntryType)
+        public async Task<IActionResult> GetExcelAsync(DateTime? startTime, DateTime? endTime, LogEntryType logEntryType, int utcTimeZoneOffset = 0)
         {
-            var repoResult = await _statsRepository.ExportToExcelAsync(startTime, endTime, logEntryType);
+            var repoResult = await _statsRepository.ExportToExcelAsync(startTime, endTime, logEntryType, utcTimeZoneOffset);
             if (!repoResult.IsSuccess)
             {
                 return BadRequest(new ApiError(repoResult.ErrorMessage));
@@ -49,9 +49,9 @@ namespace Dangl.SchneidControl.Controllers
         [HttpGet("csv")]
         [ProducesResponseType(typeof(FileStreamResult), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ApiError), (int)HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> GetCsvAsync(DateTime? startTime, DateTime? endTime, LogEntryType logEntryType)
+        public async Task<IActionResult> GetCsvAsync(DateTime? startTime, DateTime? endTime, LogEntryType logEntryType, int utcTimeZoneOffset = 0)
         {
-            var repoResult = await _statsRepository.ExportToCsvAsync(startTime, endTime, logEntryType);
+            var repoResult = await _statsRepository.ExportToCsvAsync(startTime, endTime, logEntryType, utcTimeZoneOffset);
             if (!repoResult.IsSuccess)
             {
                 return BadRequest(new ApiError(repoResult.ErrorMessage));
