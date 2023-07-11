@@ -93,7 +93,10 @@ export class StatsComponent implements OnInit {
             name: `${this.label} (${this.unit})`,
             series: stats.entries.map((e) => {
               return {
-                name: moment(e.createdAtUtc).format('YYYY-MM-DD HH:mm'),
+                name: moment
+                  .utc(e.createdAtUtc)
+                  .local()
+                  .format('YYYY-MM-DD HH:mm'),
                 value: e.value,
               };
             }),

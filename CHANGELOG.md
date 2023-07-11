@@ -2,6 +2,9 @@
 
 All notable changes to **Dangl.SchneidControl** are documented here.
 
+## v1.0.5:
+- Fixed a bug where the frontend would not translate times in stats to the correct local time
+
 ## v1.0.4:
 - User time zone offset provided by the frontend to correctly show user-local data
 
