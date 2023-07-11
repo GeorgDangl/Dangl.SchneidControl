@@ -1,4 +1,4 @@
-﻿using CsvHelper.Configuration;
+using CsvHelper.Configuration;
 using CsvHelper;
 using Dangl.Data.Shared;
 using Dangl.SchneidControl.Data;
@@ -30,7 +30,7 @@ namespace Dangl.SchneidControl.Services
             var dbEntries = await _context
                 .DataEntries
                 .Where(e => (startUtc == null || e.CreatedAtUtc >= startUtc)
-                    && (endUtc == null || e.CreatedAtUtc <= startUtc)
+                    && (endUtc == null || e.CreatedAtUtc <= endUtc)
                     && e.LogEntryType == type)
                 .OrderBy(e => e.CreatedAtUtc)
                 .Select(e => new
