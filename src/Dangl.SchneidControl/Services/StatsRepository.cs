@@ -59,7 +59,7 @@ namespace Dangl.SchneidControl.Services
                 Unit = GetUnitForLogEntryType(type),
                 Entries = dbEntries.Select(dbEntry => new Models.Controllers.Stats.DataEntry
                 {
-                    CreatedAtUtc = dbEntry.CreatedAtUtc.Add(userTimeZoneOffset),
+                    CreatedAtUtc = dbEntry.CreatedAtUtc,
                     Value = GetDataEntryValueForElement(type, dbEntry.Value)
                 })
                     .ToList()
