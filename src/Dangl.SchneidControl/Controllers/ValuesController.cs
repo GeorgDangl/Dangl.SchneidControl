@@ -168,6 +168,22 @@ namespace Dangl.SchneidControl.Controllers
             }
         }
 
+        [HttpGet("boiler-loading-pump-status")]
+        [ProducesResponseType(typeof(BoolValue), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ApiError), (int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> GetBoilerLoadingPumpStatusAsync()
+        {
+            return await RepositoryResponseAsync(() => _schneidReadRepository.GetBoilerLoadingPumpStatusAsync());
+        }
+
+        [HttpGet("buffer-loading-pump-status")]
+        [ProducesResponseType(typeof(BoolValue), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ApiError), (int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> GetBufferLoadingPumpStatusAsync()
+        {
+            return await RepositoryResponseAsync(() => _schneidReadRepository.GetBufferLoadingPumpStatusAsync());
+        }
+
         private async Task<IActionResult> RepositoryResponseAsync<T>(Func<Task<RepositoryResult<T>>> action)
         {
             var result = await action();

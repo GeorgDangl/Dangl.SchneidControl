@@ -44,6 +44,26 @@
     "
     [value]="(dashboardValues$ | async)?.pumpStatus01 || null"
   ></app-bool-value>
+  <app-bool-value
+    class="value-card"
+    label="Ladepumpe Pufferspeicher"
+    [canShowStats]="true"
+    [isActive]="visibleStats === logEntryTypes.BufferLoadingPump"
+    (onStatsRequested)="
+      showStats(logEntryTypes.BufferLoadingPump, 'Ladepumpe Pufferspeicher')
+    "
+    [value]="(dashboardValues$ | async)?.bufferLoadingPumpStatus || null"
+  ></app-bool-value>
+  <app-bool-value
+    class="value-card"
+    label="Ladepumpe Boiler"
+    [canShowStats]="true"
+    [isActive]="visibleStats === logEntryTypes.BoilerLoadingPump"
+    (onStatsRequested)="
+      showStats(logEntryTypes.BoilerLoadingPump, 'Ladepumpe Boiler')
+    "
+    [value]="(dashboardValues$ | async)?.boilerLoadingPumpStatus || null"
+  ></app-bool-value>
 
   <app-decimal-value
     class="value-card"

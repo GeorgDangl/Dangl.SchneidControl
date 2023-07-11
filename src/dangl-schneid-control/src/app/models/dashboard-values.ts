@@ -24,4 +24,6 @@ export interface DashboardValues {
   circuitStatus01: EnumValueOfHeatingCircuitStatus;
   pumpStatus00: BoolValue;
   pumpStatus01: BoolValue;
+  boilerLoadingPumpStatus: BoolValue;
+  bufferLoadingPumpStatus: BoolValue;
 }

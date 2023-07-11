@@ -26,6 +26,10 @@ namespace Dangl.SchneidControl.Services
 
         Task<RepositoryResult<BoolValue>> GetPumpStatusHeatingCircuit01Async();
 
+        Task<RepositoryResult<BoolValue>> GetBufferLoadingPumpStatusAsync();
+
+        Task<RepositoryResult<BoolValue>> GetBoilerLoadingPumpStatusAsync();
+
         Task<RepositoryResult<DecimalValue>> GetBufferTemperatureTopAsync();
 
         Task<RepositoryResult<DecimalValue>> GetBufferTemperatureBottomAsync();

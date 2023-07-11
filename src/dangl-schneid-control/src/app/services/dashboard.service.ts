@@ -30,6 +30,8 @@ export class DashboardService {
       this.valuesClient.getTotalEnergyConsumption(),
       this.valuesClient.getTransferStationStatus(),
       this.valuesClient.getValveOpening(),
+      this.valuesClient.getBoilerLoadingPumpStatus(),
+      this.valuesClient.getBufferLoadingPumpStatus(),
     ]).pipe(
       map(
         ([
@@ -51,6 +53,8 @@ export class DashboardService {
           totalEnergyConsumption,
           transferStationStatus,
           valveOpening,
+          boilerLoadingPumpStatus,
+          bufferLoadingPumpStatus,
         ]) => {
           const dashboardValues: DashboardValues = {
             advanceTemperature: advanceTemperature,
@@ -71,6 +75,8 @@ export class DashboardService {
             totalEnergyConsumption: totalEnergyConsumption,
             transferStationStatus: transferStationStatus,
             valveOpening: valveOpening,
+            boilerLoadingPumpStatus: boilerLoadingPumpStatus,
+            bufferLoadingPumpStatus: bufferLoadingPumpStatus,
           };
 
           return dashboardValues;

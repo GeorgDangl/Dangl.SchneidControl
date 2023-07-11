@@ -66,6 +66,8 @@ namespace Dangl.SchneidControl.Services
             {
                 case LogEntryType.HeatingCircuit1Pump:
                 case LogEntryType.HeatingCircuit0Pump:
+                case LogEntryType.BoilerLoadingPump:
+                case LogEntryType.BufferLoadingPump:
                     return "An";
 
                 case LogEntryType.HeatingPowerDraw:
@@ -98,6 +100,8 @@ namespace Dangl.SchneidControl.Services
                 case LogEntryType.HeatingCircuit0Pump:
                 case LogEntryType.HeatingPowerDraw:
                 case LogEntryType.ValveOpening:
+                case LogEntryType.BoilerLoadingPump:
+                case LogEntryType.BufferLoadingPump:
                     return decimalValue;
 
                 case LogEntryType.TotalEnergyConsumption:
