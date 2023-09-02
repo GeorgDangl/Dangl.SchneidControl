@@ -65,10 +65,39 @@ namespace Dangl.SchneidControl.Services
                     .ToList()
             };
 
+            ReduceEntriesIfRequired(stats, 1000);
+
             return RepositoryResult<Stats>.Success(stats);
+        }
 
+        private void ReduceEntriesIfRequired(Stats stats, int maxEntries)
+        {
+            var originalEntries = stats.Entries;
+            if (originalEntries.Count <= maxEntries)
+            {
+                return;
+            }
 
-            throw new NotImplementedException();
+            stats.Entries = new List<Models.Controllers.Stats.DataEntry>(maxEntries);
+            var entriesToMerge = originalEntries.Count / maxEntries;
+            var originalEntriesArray = originalEntries.ToArray();
+            var lastIndex = 0;
+            for (var i = 0; i < maxEntries; i++)
+            {
+                var lengthToTake = originalEntriesArray.Length >= lastIndex + entriesToMerge
+                    ? entriesToMerge
+                    : originalEntriesArray.Length - lastIndex;
+                var endIndex = lastIndex + lengthToTake;
+                var entriesRange = originalEntriesArray[lastIndex..endIndex];
+
+                var newEntry = new Models.Controllers.Stats.DataEntry
+                {
+                    CreatedAtUtc = entriesRange.First().CreatedAtUtc,
+                    Value = entriesRange.Average(e => e.Value)
+                };
+                stats.Entries.Add(newEntry);
+                lastIndex+= lengthToTake;
+            }
         }
 
         private static string GetUnitForLogEntryType(LogEntryType type)
