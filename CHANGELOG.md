@@ -2,6 +2,9 @@
 
 All notable changes to **Dangl.SchneidControl** are documented here.
 
+## v1.0.6:
+- The stats endpoint now returns a max of 1000 entries, which will be averaged if more are returned. This is to ensure smooth UI operations
+
 ## v1.0.5:
 - Fixed a bug where the frontend would not translate times in stats to the correct local time
 
