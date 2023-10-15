@@ -12,15 +12,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Dangl.Data.Shared.AspNetCore" Version="2.1.1" />
+    <PackageReference Include="Dangl.Data.Shared.AspNetCore" Version="2.3.0" />
     <PackageReference Include="FluentModbus" Version="5.0.3" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.10">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.12">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.12" />
     <PackageReference Include="NSwag.AspNetCore" Version="13.20.0" />
-    <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="7.0.10" />
+    <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="7.0.12" />
     <PackageReference Include="ClosedXML" Version="0.102.1" />
     <PackageReference Include="CsvHelper" Version="30.0.1" />
   </ItemGroup>
