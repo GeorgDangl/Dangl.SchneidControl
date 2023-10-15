@@ -20,10 +20,12 @@ export interface DashboardValues {
   targetBufferTemperature: DecimalValue;
   targetBoilerTemperature: DecimalValue;
   transferStationStatus: EnumValueOfTransferStationStatus;
-  circuitStatus00: EnumValueOfHeatingCircuitStatus;
   circuitStatus01: EnumValueOfHeatingCircuitStatus;
-  pumpStatus00: BoolValue;
+  circuitStatus02: EnumValueOfHeatingCircuitStatus;
   pumpStatus01: BoolValue;
+  pumpStatus02: BoolValue;
+  circuit1AdvanceTemperature: DecimalValue;
+  circuit2AdvanceTemperature: DecimalValue;
   boilerLoadingPumpStatus: BoolValue;
   bufferLoadingPumpStatus: BoolValue;
 }

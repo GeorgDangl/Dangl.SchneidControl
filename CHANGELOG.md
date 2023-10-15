@@ -2,6 +2,11 @@
 
 All notable changes to **Dangl.SchneidControl** are documented here.
 
+## v1.0.7:
+- Updated the internal mapping of the heating circuits
+- Added visualization for advance temperature of the heating circuits
+- Added data logging for advance temperature of heat exchange station and heating circuits
+
 ## v1.0.6:
 - The stats endpoint now returns a max of 1000 entries, which will be averaged if more are returned. This is to ensure smooth UI operations
 

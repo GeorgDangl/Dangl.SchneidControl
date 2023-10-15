@@ -143,6 +143,33 @@ namespace Dangl.SchneidControl.Controllers
             {
                 return await RepositoryResponseAsync(() => _schneidReadRepository.GetHeatingCircuitStatus01Async());
             }
+            else if (circuitId == 2)
+            {
+                return await RepositoryResponseAsync(() => _schneidReadRepository.GetHeatingCircuitStatus02Async());
+            }
+            else
+            {
+                return BadRequest(new ApiError($"Invalid circuit ID: {circuitId}"));
+            }
+        }
+
+        [HttpGet("circuit-advance-temperature/{circuitId}")]
+        [ProducesResponseType(typeof(DecimalValue), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ApiError), (int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> GetHeatingCircuitAdvanceTemperatureAsync(int circuitId)
+        {
+            if (circuitId == 0)
+            {
+                return await RepositoryResponseAsync(() => _schneidReadRepository.GetHeatingCircuit00AdvanceTemperatureAsync());
+            }
+            else if (circuitId == 1)
+            {
+                return await RepositoryResponseAsync(() => _schneidReadRepository.GetHeatingCircuit01AdvanceTemperatureAsync());
+            }
+            else if (circuitId == 2)
+            {
+                return await RepositoryResponseAsync(() => _schneidReadRepository.GetHeatingCircuit02AdvanceTemperatureAsync());
+            }
             else
             {
                 return BadRequest(new ApiError($"Invalid circuit ID: {circuitId}"));
@@ -161,6 +188,10 @@ namespace Dangl.SchneidControl.Controllers
             else if (pumpId == 1)
             {
                 return await RepositoryResponseAsync(() => _schneidReadRepository.GetPumpStatusHeatingCircuit01Async());
+            }
+            else if (pumpId == 2)
+            {
+                return await RepositoryResponseAsync(() => _schneidReadRepository.GetPumpStatusHeatingCircuit02Async());
             }
             else
             {

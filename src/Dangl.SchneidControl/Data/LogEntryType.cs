@@ -14,12 +14,18 @@
 
         ValveOpening = 6,
 
-        HeatingCircuit0Pump = 7,
+        HeatingCircuit1Pump = 7,
 
-        HeatingCircuit1Pump = 8,
+        HeatingCircuit2Pump = 8,
 
         BoilerLoadingPump = 9,
 
-        BufferLoadingPump = 10
+        BufferLoadingPump = 10,
+
+        AdvanceTemperature = 11,
+
+        HeatingCircuit1AdvanceTemperature = 12,
+
+        HeatingCircuit2AdvanceTemperature = 13,
     }
 }

@@ -74,19 +74,19 @@ namespace Dangl.SchneidControl.Services
 
                 await PerformAndIgnoreExceptionsAsync(async () =>
                 {
-                    var heatingCircuitPump0 = await _schneidReadRepository.GetPumpStatusHeatingCircuit00Async();
-                    if (heatingCircuitPump0.IsSuccess)
+                    var heatingCircuitPump1 = await _schneidReadRepository.GetPumpStatusHeatingCircuit00Async();
+                    if (heatingCircuitPump1.IsSuccess)
                     {
-                        _context.DataEntries.Add(new DataEntry { CreatedAtUtc = DateTime.UtcNow, LogEntryType = LogEntryType.HeatingCircuit0Pump, Value = heatingCircuitPump0.Value.Value ? 1 : 0 });
+                        _context.DataEntries.Add(new DataEntry { CreatedAtUtc = DateTime.UtcNow, LogEntryType = LogEntryType.HeatingCircuit1Pump, Value = heatingCircuitPump1.Value.Value ? 1 : 0 });
                     }
                 });
 
                 await PerformAndIgnoreExceptionsAsync(async () =>
                 {
-                    var heatingCircuitPump1 = await _schneidReadRepository.GetPumpStatusHeatingCircuit01Async();
-                    if (heatingCircuitPump1.IsSuccess)
+                    var heatingCircuitPump2 = await _schneidReadRepository.GetPumpStatusHeatingCircuit01Async();
+                    if (heatingCircuitPump2.IsSuccess)
                     {
-                        _context.DataEntries.Add(new DataEntry { CreatedAtUtc = DateTime.UtcNow, LogEntryType = LogEntryType.HeatingCircuit1Pump, Value = heatingCircuitPump1.Value.Value ? 1 : 0 });
+                        _context.DataEntries.Add(new DataEntry { CreatedAtUtc = DateTime.UtcNow, LogEntryType = LogEntryType.HeatingCircuit2Pump, Value = heatingCircuitPump2.Value.Value ? 1 : 0 });
                     }
                 });
 
@@ -105,6 +105,33 @@ namespace Dangl.SchneidControl.Services
                     if (bufferLoadingPump.IsSuccess)
                     {
                         _context.DataEntries.Add(new DataEntry { CreatedAtUtc = DateTime.UtcNow, LogEntryType = LogEntryType.BufferLoadingPump, Value = bufferLoadingPump.Value.Value ? 1 : 0 });
+                    }
+                });
+
+                await PerformAndIgnoreExceptionsAsync(async () =>
+                {
+                    var advanceTemperature = await _schneidReadRepository.GetAdvanceTemperatureAsync();
+                    if (advanceTemperature.IsSuccess)
+                    {
+                        _context.DataEntries.Add(new DataEntry { CreatedAtUtc = DateTime.UtcNow, LogEntryType = LogEntryType.AdvanceTemperature, Value = Convert.ToInt32(advanceTemperature.Value.Value * 10) });
+                    }
+                });
+
+                await PerformAndIgnoreExceptionsAsync(async () =>
+                {
+                    var advanceTemperature = await _schneidReadRepository.GetHeatingCircuit01AdvanceTemperatureAsync();
+                    if (advanceTemperature.IsSuccess)
+                    {
+                        _context.DataEntries.Add(new DataEntry { CreatedAtUtc = DateTime.UtcNow, LogEntryType = LogEntryType.HeatingCircuit1AdvanceTemperature, Value = Convert.ToInt32(advanceTemperature.Value.Value * 10) });
+                    }
+                });
+
+                await PerformAndIgnoreExceptionsAsync(async () =>
+                {
+                    var advanceTemperature = await _schneidReadRepository.GetHeatingCircuit02AdvanceTemperatureAsync();
+                    if (advanceTemperature.IsSuccess)
+                    {
+                        _context.DataEntries.Add(new DataEntry { CreatedAtUtc = DateTime.UtcNow, LogEntryType = LogEntryType.HeatingCircuit2AdvanceTemperature, Value = Convert.ToInt32(advanceTemperature.Value.Value * 10) });
                     }
                 });
 

@@ -105,7 +105,7 @@ namespace Dangl.SchneidControl.Services
             switch (type)
             {
                 case LogEntryType.HeatingCircuit1Pump:
-                case LogEntryType.HeatingCircuit0Pump:
+                case LogEntryType.HeatingCircuit2Pump:
                 case LogEntryType.BoilerLoadingPump:
                 case LogEntryType.BufferLoadingPump:
                     return "An";
@@ -116,6 +116,8 @@ namespace Dangl.SchneidControl.Services
                 case LogEntryType.BoilerTemperature:
                 case LogEntryType.BufferTemperature:
                 case LogEntryType.OuterTemperature:
+                case LogEntryType.HeatingCircuit1AdvanceTemperature:
+                case LogEntryType.HeatingCircuit2AdvanceTemperature:
                     return "°C";
 
                 case LogEntryType.ValveOpening:
@@ -137,7 +139,7 @@ namespace Dangl.SchneidControl.Services
             switch (type)
             {
                 case LogEntryType.HeatingCircuit1Pump:
-                case LogEntryType.HeatingCircuit0Pump:
+                case LogEntryType.HeatingCircuit2Pump:
                 case LogEntryType.HeatingPowerDraw:
                 case LogEntryType.ValveOpening:
                 case LogEntryType.BoilerLoadingPump:
@@ -148,6 +150,9 @@ namespace Dangl.SchneidControl.Services
                 case LogEntryType.BoilerTemperature:
                 case LogEntryType.BufferTemperature:
                 case LogEntryType.OuterTemperature:
+                case LogEntryType.AdvanceTemperature:
+                case LogEntryType.HeatingCircuit1AdvanceTemperature:
+                case LogEntryType.HeatingCircuit2AdvanceTemperature:
                     return decimalValue / 10;
 
                 default:
