@@ -93,7 +93,7 @@ namespace Dangl.SchneidControl.Services
 
         public async Task<RepositoryResult<EnumValue<HeatingCircuitStatus>>> GetHeatingCircuitStatus00Async()
         {
-            var integerValue = await GetDecimal16BitValueAsync(617, 0, string.Empty);
+            var integerValue = await GetDecimal16BitValueAsync(627, 0, string.Empty);
             if (!integerValue.IsSuccess)
             {
                 return RepositoryResult<EnumValue<HeatingCircuitStatus>>.Fail(integerValue.ErrorMessage);
@@ -107,6 +107,19 @@ namespace Dangl.SchneidControl.Services
         public async Task<RepositoryResult<EnumValue<HeatingCircuitStatus>>> GetHeatingCircuitStatus01Async()
         {
             var integerValue = await GetDecimal16BitValueAsync(627, 0, string.Empty);
+            if (!integerValue.IsSuccess)
+            {
+                return RepositoryResult<EnumValue<HeatingCircuitStatus>>.Fail(integerValue.ErrorMessage);
+            }
+
+            var integer = Convert.ToInt32(integerValue.Value.Value);
+            var enumValue = (HeatingCircuitStatus)integer;
+            return RepositoryResult<EnumValue<HeatingCircuitStatus>>.Success(new EnumValue<HeatingCircuitStatus> { Value = enumValue });
+        }
+
+        public async Task<RepositoryResult<EnumValue<HeatingCircuitStatus>>> GetHeatingCircuitStatus02Async()
+        {
+            var integerValue = await GetDecimal16BitValueAsync(637, 0, string.Empty);
             if (!integerValue.IsSuccess)
             {
                 return RepositoryResult<EnumValue<HeatingCircuitStatus>>.Fail(integerValue.ErrorMessage);
@@ -141,7 +154,7 @@ namespace Dangl.SchneidControl.Services
 
         public async Task<RepositoryResult<BoolValue>> GetPumpStatusHeatingCircuit00Async()
         {
-            var integerValue = await GetDecimal16BitValueAsync(616, 0, string.Empty);
+            var integerValue = await GetDecimal16BitValueAsync(626, 0, string.Empty);
             if (!integerValue.IsSuccess)
             {
                 return RepositoryResult<BoolValue>.Fail(integerValue.ErrorMessage);
@@ -153,6 +166,17 @@ namespace Dangl.SchneidControl.Services
         public async Task<RepositoryResult<BoolValue>> GetPumpStatusHeatingCircuit01Async()
         {
             var integerValue = await GetDecimal16BitValueAsync(626, 0, string.Empty);
+            if (!integerValue.IsSuccess)
+            {
+                return RepositoryResult<BoolValue>.Fail(integerValue.ErrorMessage);
+            }
+
+            return RepositoryResult<BoolValue>.Success(new BoolValue { Value = integerValue.Value.Value == 1m });
+        }
+
+        public async Task<RepositoryResult<BoolValue>> GetPumpStatusHeatingCircuit02Async()
+        {
+            var integerValue = await GetDecimal16BitValueAsync(636, 0, string.Empty);
             if (!integerValue.IsSuccess)
             {
                 return RepositoryResult<BoolValue>.Fail(integerValue.ErrorMessage);

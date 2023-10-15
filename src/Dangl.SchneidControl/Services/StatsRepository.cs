@@ -105,7 +105,7 @@ namespace Dangl.SchneidControl.Services
             switch (type)
             {
                 case LogEntryType.HeatingCircuit1Pump:
-                case LogEntryType.HeatingCircuit0Pump:
+                case LogEntryType.HeatingCircuit2Pump:
                 case LogEntryType.BoilerLoadingPump:
                 case LogEntryType.BufferLoadingPump:
                     return "An";
@@ -137,7 +137,7 @@ namespace Dangl.SchneidControl.Services
             switch (type)
             {
                 case LogEntryType.HeatingCircuit1Pump:
-                case LogEntryType.HeatingCircuit0Pump:
+                case LogEntryType.HeatingCircuit2Pump:
                 case LogEntryType.HeatingPowerDraw:
                 case LogEntryType.ValveOpening:
                 case LogEntryType.BoilerLoadingPump:

@@ -16,33 +16,33 @@
   <app-heating-circuit-status
     class="value-card"
     label="Heizkreis 1 (Bad)"
-    [value]="(dashboardValues$ | async)?.circuitStatus00 || null"
+    [value]="(dashboardValues$ | async)?.circuitStatus01 || null"
   ></app-heating-circuit-status>
   <app-heating-circuit-status
     class="value-card"
     label="Heizkreis 2 (Haus)"
-    [value]="(dashboardValues$ | async)?.circuitStatus01 || null"
+    [value]="(dashboardValues$ | async)?.circuitStatus02 || null"
   ></app-heating-circuit-status>
 
   <app-bool-value
     class="value-card"
     label="Pumpe Heizkreis 1"
     [canShowStats]="true"
-    [isActive]="visibleStats === logEntryTypes.HeatingCircuit0Pump"
+    [isActive]="visibleStats === logEntryTypes.HeatingCircuit1Pump"
     (onStatsRequested)="
-      showStats(logEntryTypes.HeatingCircuit0Pump, 'Pumpe Heizkreis 1')
+      showStats(logEntryTypes.HeatingCircuit1Pump, 'Pumpe Heizkreis 1')
     "
-    [value]="(dashboardValues$ | async)?.pumpStatus00 || null"
+    [value]="(dashboardValues$ | async)?.pumpStatus01 || null"
   ></app-bool-value>
   <app-bool-value
     class="value-card"
     label="Pumpe Heizkreis 2"
     [canShowStats]="true"
-    [isActive]="visibleStats === logEntryTypes.HeatingCircuit1Pump"
+    [isActive]="visibleStats === logEntryTypes.HeatingCircuit2Pump"
     (onStatsRequested)="
-      showStats(logEntryTypes.HeatingCircuit1Pump, 'Pumpe Heizkreis 2')
+      showStats(logEntryTypes.HeatingCircuit2Pump, 'Pumpe Heizkreis 2')
     "
-    [value]="(dashboardValues$ | async)?.pumpStatus01 || null"
+    [value]="(dashboardValues$ | async)?.pumpStatus02 || null"
   ></app-bool-value>
   <app-bool-value
     class="value-card"

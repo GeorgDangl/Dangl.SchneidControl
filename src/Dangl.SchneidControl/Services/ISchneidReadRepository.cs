@@ -22,9 +22,13 @@ namespace Dangl.SchneidControl.Services
 
         Task<RepositoryResult<EnumValue<HeatingCircuitStatus>>> GetHeatingCircuitStatus01Async();
 
+        Task<RepositoryResult<EnumValue<HeatingCircuitStatus>>> GetHeatingCircuitStatus02Async();
+
         Task<RepositoryResult<BoolValue>> GetPumpStatusHeatingCircuit00Async();
 
         Task<RepositoryResult<BoolValue>> GetPumpStatusHeatingCircuit01Async();
+
+        Task<RepositoryResult<BoolValue>> GetPumpStatusHeatingCircuit02Async();
 
         Task<RepositoryResult<BoolValue>> GetBufferLoadingPumpStatusAsync();
 

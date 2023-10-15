@@ -74,19 +74,19 @@ namespace Dangl.SchneidControl.Services
 
                 await PerformAndIgnoreExceptionsAsync(async () =>
                 {
-                    var heatingCircuitPump0 = await _schneidReadRepository.GetPumpStatusHeatingCircuit00Async();
-                    if (heatingCircuitPump0.IsSuccess)
+                    var heatingCircuitPump1 = await _schneidReadRepository.GetPumpStatusHeatingCircuit00Async();
+                    if (heatingCircuitPump1.IsSuccess)
                     {
-                        _context.DataEntries.Add(new DataEntry { CreatedAtUtc = DateTime.UtcNow, LogEntryType = LogEntryType.HeatingCircuit0Pump, Value = heatingCircuitPump0.Value.Value ? 1 : 0 });
+                        _context.DataEntries.Add(new DataEntry { CreatedAtUtc = DateTime.UtcNow, LogEntryType = LogEntryType.HeatingCircuit1Pump, Value = heatingCircuitPump1.Value.Value ? 1 : 0 });
                     }
                 });
 
                 await PerformAndIgnoreExceptionsAsync(async () =>
                 {
-                    var heatingCircuitPump1 = await _schneidReadRepository.GetPumpStatusHeatingCircuit01Async();
-                    if (heatingCircuitPump1.IsSuccess)
+                    var heatingCircuitPump2 = await _schneidReadRepository.GetPumpStatusHeatingCircuit01Async();
+                    if (heatingCircuitPump2.IsSuccess)
                     {
-                        _context.DataEntries.Add(new DataEntry { CreatedAtUtc = DateTime.UtcNow, LogEntryType = LogEntryType.HeatingCircuit1Pump, Value = heatingCircuitPump1.Value.Value ? 1 : 0 });
+                        _context.DataEntries.Add(new DataEntry { CreatedAtUtc = DateTime.UtcNow, LogEntryType = LogEntryType.HeatingCircuit2Pump, Value = heatingCircuitPump2.Value.Value ? 1 : 0 });
                     }
                 });
 

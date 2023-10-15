@@ -143,6 +143,10 @@ namespace Dangl.SchneidControl.Controllers
             {
                 return await RepositoryResponseAsync(() => _schneidReadRepository.GetHeatingCircuitStatus01Async());
             }
+            else if (circuitId == 2)
+            {
+                return await RepositoryResponseAsync(() => _schneidReadRepository.GetHeatingCircuitStatus02Async());
+            }
             else
             {
                 return BadRequest(new ApiError($"Invalid circuit ID: {circuitId}"));
@@ -161,6 +165,10 @@ namespace Dangl.SchneidControl.Controllers
             else if (pumpId == 1)
             {
                 return await RepositoryResponseAsync(() => _schneidReadRepository.GetPumpStatusHeatingCircuit01Async());
+            }
+            else if (pumpId == 2)
+            {
+                return await RepositoryResponseAsync(() => _schneidReadRepository.GetPumpStatusHeatingCircuit02Async());
             }
             else
             {

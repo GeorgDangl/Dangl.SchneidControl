@@ -14,9 +14,9 @@
 
         ValveOpening = 6,
 
-        HeatingCircuit0Pump = 7,
+        HeatingCircuit1Pump = 7,
 
-        HeatingCircuit1Pump = 8,
+        HeatingCircuit2Pump = 8,
 
         BoilerLoadingPump = 9,
 
