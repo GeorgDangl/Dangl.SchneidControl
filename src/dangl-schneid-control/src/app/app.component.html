@@ -20,13 +20,13 @@
   ></app-heating-circuit-status>
   <app-heating-circuit-status
     class="value-card"
-    label="Heizkreis 2"
+    label="Heizkreis 2 (Haus)"
     [value]="(dashboardValues$ | async)?.circuitStatus01 || null"
   ></app-heating-circuit-status>
 
   <app-bool-value
     class="value-card"
-    label="Pumpe Heizkreis 1 (Haus)"
+    label="Pumpe Heizkreis 1"
     [canShowStats]="true"
     [isActive]="visibleStats === logEntryTypes.HeatingCircuit0Pump"
     (onStatsRequested)="
