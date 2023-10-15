@@ -15,7 +15,7 @@
   ></app-transfer-station-status>
   <app-heating-circuit-status
     class="value-card"
-    label="Heizkreis 1"
+    label="Heizkreis 1 (Bad)"
     [value]="(dashboardValues$ | async)?.circuitStatus00 || null"
   ></app-heating-circuit-status>
   <app-heating-circuit-status
@@ -26,7 +26,7 @@
 
   <app-bool-value
     class="value-card"
-    label="Pumpe Heizkreis 1"
+    label="Pumpe Heizkreis 1 (Haus)"
     [canShowStats]="true"
     [isActive]="visibleStats === logEntryTypes.HeatingCircuit0Pump"
     (onStatsRequested)="
