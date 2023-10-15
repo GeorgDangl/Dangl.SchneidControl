@@ -116,6 +116,8 @@ namespace Dangl.SchneidControl.Services
                 case LogEntryType.BoilerTemperature:
                 case LogEntryType.BufferTemperature:
                 case LogEntryType.OuterTemperature:
+                case LogEntryType.HeatingCircuit1AdvanceTemperature:
+                case LogEntryType.HeatingCircuit2AdvanceTemperature:
                     return "°C";
 
                 case LogEntryType.ValveOpening:
@@ -149,6 +151,8 @@ namespace Dangl.SchneidControl.Services
                 case LogEntryType.BufferTemperature:
                 case LogEntryType.OuterTemperature:
                 case LogEntryType.AdvanceTemperature:
+                case LogEntryType.HeatingCircuit1AdvanceTemperature:
+                case LogEntryType.HeatingCircuit2AdvanceTemperature:
                     return decimalValue / 10;
 
                 default:

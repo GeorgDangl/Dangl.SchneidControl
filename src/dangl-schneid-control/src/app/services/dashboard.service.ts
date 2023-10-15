@@ -30,6 +30,8 @@ export class DashboardService {
       this.valuesClient.getTotalEnergyConsumption(),
       this.valuesClient.getTransferStationStatus(),
       this.valuesClient.getValveOpening(),
+      this.valuesClient.getHeatingCircuitAdvanceTemperature(1),
+      this.valuesClient.getHeatingCircuitAdvanceTemperature(2),
       this.valuesClient.getBoilerLoadingPumpStatus(),
       this.valuesClient.getBufferLoadingPumpStatus(),
     ]).pipe(
@@ -53,6 +55,8 @@ export class DashboardService {
           totalEnergyConsumption,
           transferStationStatus,
           valveOpening,
+          circuit1AdvanceTemperature,
+          circuit2AdvanceTemperature,
           boilerLoadingPumpStatus,
           bufferLoadingPumpStatus,
         ]) => {
@@ -75,6 +79,8 @@ export class DashboardService {
             totalEnergyConsumption: totalEnergyConsumption,
             transferStationStatus: transferStationStatus,
             valveOpening: valveOpening,
+            circuit1AdvanceTemperature: circuit1AdvanceTemperature,
+            circuit2AdvanceTemperature: circuit2AdvanceTemperature,
             boilerLoadingPumpStatus: boilerLoadingPumpStatus,
             bufferLoadingPumpStatus: bufferLoadingPumpStatus,
           };

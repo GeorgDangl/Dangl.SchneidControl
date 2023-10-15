@@ -44,6 +44,41 @@
     "
     [value]="(dashboardValues$ | async)?.pumpStatus02 || null"
   ></app-bool-value>
+
+  <app-decimal-value
+    class="value-card"
+    label="Vorlauftemperatur Heizkreis 1"
+    [decimalPlaces]="1"
+    [canShowStats]="true"
+    [isActive]="
+      visibleStats === logEntryTypes.HeatingCircuit1AdvanceTemperature
+    "
+    (onStatsRequested)="
+      showStats(
+        logEntryTypes.HeatingCircuit1AdvanceTemperature,
+        'Vorlauftemperatur Heizkreis 1'
+      )
+    "
+    [value]="(dashboardValues$ | async)?.circuit1AdvanceTemperature || null"
+  ></app-decimal-value>
+
+  <app-decimal-value
+    class="value-card"
+    label="Vorlauftemperatur Heizkreis 2"
+    [decimalPlaces]="1"
+    [canShowStats]="true"
+    [isActive]="
+      visibleStats === logEntryTypes.HeatingCircuit2AdvanceTemperature
+    "
+    (onStatsRequested)="
+      showStats(
+        logEntryTypes.HeatingCircuit2AdvanceTemperature,
+        'Vorlauftemperatur Heizkreis 2'
+      )
+    "
+    [value]="(dashboardValues$ | async)?.circuit2AdvanceTemperature || null"
+  ></app-decimal-value>
+
   <app-bool-value
     class="value-card"
     label="Ladepumpe Pufferspeicher"

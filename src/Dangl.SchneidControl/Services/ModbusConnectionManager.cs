@@ -132,7 +132,7 @@ namespace Dangl.SchneidControl.Services
             ResetModbusClient();
         }
 
-        private ModbusTcpClient _client;
+        private ModbusTcpClient? _client;
 
         private ModbusTcpClient GetModbusClient()
         {

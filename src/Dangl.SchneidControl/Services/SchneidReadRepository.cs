@@ -185,6 +185,21 @@ namespace Dangl.SchneidControl.Services
             return RepositoryResult<BoolValue>.Success(new BoolValue { Value = integerValue.Value.Value == 1m });
         }
 
+        public Task<RepositoryResult<DecimalValue>> GetHeatingCircuit00AdvanceTemperatureAsync()
+        {
+            return GetDecimal16BitValueAsync(610, 1, "°C");
+        }
+
+        public Task<RepositoryResult<DecimalValue>> GetHeatingCircuit01AdvanceTemperatureAsync()
+        {
+            return GetDecimal16BitValueAsync(620, 1, "°C");
+        }
+
+        public Task<RepositoryResult<DecimalValue>> GetHeatingCircuit02AdvanceTemperatureAsync()
+        {
+            return GetDecimal16BitValueAsync(630, 1, "°C");
+        }
+
         private Task<RepositoryResult<DecimalValue>> GetDecimal16BitValueAsync(ushort address,
             int decimalPlaces,
             string unit)

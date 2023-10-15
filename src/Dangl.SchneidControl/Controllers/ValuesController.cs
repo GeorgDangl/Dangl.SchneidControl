@@ -153,6 +153,29 @@ namespace Dangl.SchneidControl.Controllers
             }
         }
 
+        [HttpGet("circuit-advance-temperature/{circuitId}")]
+        [ProducesResponseType(typeof(DecimalValue), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ApiError), (int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> GetHeatingCircuitAdvanceTemperatureAsync(int circuitId)
+        {
+            if (circuitId == 0)
+            {
+                return await RepositoryResponseAsync(() => _schneidReadRepository.GetHeatingCircuit00AdvanceTemperatureAsync());
+            }
+            else if (circuitId == 1)
+            {
+                return await RepositoryResponseAsync(() => _schneidReadRepository.GetHeatingCircuit01AdvanceTemperatureAsync());
+            }
+            else if (circuitId == 2)
+            {
+                return await RepositoryResponseAsync(() => _schneidReadRepository.GetHeatingCircuit02AdvanceTemperatureAsync());
+            }
+            else
+            {
+                return BadRequest(new ApiError($"Invalid circuit ID: {circuitId}"));
+            }
+        }
+
         [HttpGet("pump-status/{pumpId}")]
         [ProducesResponseType(typeof(BoolValue), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ApiError), (int)HttpStatusCode.BadRequest)]

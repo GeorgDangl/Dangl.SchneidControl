@@ -22,6 +22,10 @@
 
         BufferLoadingPump = 10,
 
-        AdvanceTemperature = 11
+        AdvanceTemperature = 11,
+
+        HeatingCircuit1AdvanceTemperature = 12,
+
+        HeatingCircuit2AdvanceTemperature = 13,
     }
 }

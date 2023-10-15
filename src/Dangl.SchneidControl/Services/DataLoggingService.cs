@@ -113,7 +113,25 @@ namespace Dangl.SchneidControl.Services
                     var advanceTemperature = await _schneidReadRepository.GetAdvanceTemperatureAsync();
                     if (advanceTemperature.IsSuccess)
                     {
-                        _context.DataEntries.Add(new DataEntry { CreatedAtUtc = DateTime.UtcNow, LogEntryType = LogEntryType.AdvanceTemperature, Value = Convert.ToInt32(advanceTemperature.Value.Value * 10 )});
+                        _context.DataEntries.Add(new DataEntry { CreatedAtUtc = DateTime.UtcNow, LogEntryType = LogEntryType.AdvanceTemperature, Value = Convert.ToInt32(advanceTemperature.Value.Value * 10) });
+                    }
+                });
+
+                await PerformAndIgnoreExceptionsAsync(async () =>
+                {
+                    var advanceTemperature = await _schneidReadRepository.GetHeatingCircuit01AdvanceTemperatureAsync();
+                    if (advanceTemperature.IsSuccess)
+                    {
+                        _context.DataEntries.Add(new DataEntry { CreatedAtUtc = DateTime.UtcNow, LogEntryType = LogEntryType.HeatingCircuit1AdvanceTemperature, Value = Convert.ToInt32(advanceTemperature.Value.Value * 10) });
+                    }
+                });
+
+                await PerformAndIgnoreExceptionsAsync(async () =>
+                {
+                    var advanceTemperature = await _schneidReadRepository.GetHeatingCircuit02AdvanceTemperatureAsync();
+                    if (advanceTemperature.IsSuccess)
+                    {
+                        _context.DataEntries.Add(new DataEntry { CreatedAtUtc = DateTime.UtcNow, LogEntryType = LogEntryType.HeatingCircuit2AdvanceTemperature, Value = Convert.ToInt32(advanceTemperature.Value.Value * 10) });
                     }
                 });
 

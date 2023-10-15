@@ -2325,6 +2325,112 @@ export class ValuesClient {
     return _observableOf<EnumValueOfHeatingCircuitStatus>(null as any);
   }
 
+  getHeatingCircuitAdvanceTemperature(
+    circuitId: number
+  ): Observable<DecimalValue> {
+    let url_ =
+      this.baseUrl + '/api/values/circuit-advance-temperature/{circuitId}';
+    if (circuitId === undefined || circuitId === null)
+      throw new Error("The parameter 'circuitId' must be defined.");
+    url_ = url_.replace('{circuitId}', encodeURIComponent('' + circuitId));
+    url_ = url_.replace(/[?&]$/, '');
+
+    let options_: any = {
+      observe: 'response',
+      responseType: 'blob',
+      headers: new HttpHeaders({
+        Accept: 'application/json',
+      }),
+    };
+
+    return this.http
+      .request('get', url_, options_)
+      .pipe(
+        _observableMergeMap((response_: any) => {
+          return this.processGetHeatingCircuitAdvanceTemperature(response_);
+        })
+      )
+      .pipe(
+        _observableCatch((response_: any) => {
+          if (response_ instanceof HttpResponseBase) {
+            try {
+              return this.processGetHeatingCircuitAdvanceTemperature(
+                response_ as any
+              );
+            } catch (e) {
+              return _observableThrow(e) as any as Observable<DecimalValue>;
+            }
+          } else
+            return _observableThrow(
+              response_
+            ) as any as Observable<DecimalValue>;
+        })
+      );
+  }
+
+  protected processGetHeatingCircuitAdvanceTemperature(
+    response: HttpResponseBase
+  ): Observable<DecimalValue> {
+    const status = response.status;
+    const responseBlob =
+      response instanceof HttpResponse
+        ? response.body
+        : (response as any).error instanceof Blob
+        ? (response as any).error
+        : undefined;
+
+    let _headers: any = {};
+    if (response.headers) {
+      for (let key of response.headers.keys()) {
+        _headers[key] = response.headers.get(key);
+      }
+    }
+    if (status === 200) {
+      return blobToText(responseBlob).pipe(
+        _observableMergeMap((_responseText) => {
+          let result200: any = null;
+          result200 =
+            _responseText === ''
+              ? null
+              : (JSON.parse(
+                  _responseText,
+                  this.jsonParseReviver
+                ) as DecimalValue);
+          return _observableOf(result200);
+        })
+      );
+    } else if (status === 400) {
+      return blobToText(responseBlob).pipe(
+        _observableMergeMap((_responseText) => {
+          let result400: any = null;
+          result400 =
+            _responseText === ''
+              ? null
+              : (JSON.parse(_responseText, this.jsonParseReviver) as ApiError);
+          return throwException(
+            'A server side error occurred.',
+            status,
+            _responseText,
+            _headers,
+            result400
+          );
+        })
+      );
+    } else if (status !== 200 && status !== 204) {
+      return blobToText(responseBlob).pipe(
+        _observableMergeMap((_responseText) => {
+          return throwException(
+            'An unexpected server error occurred.',
+            status,
+            _responseText,
+            _headers
+          );
+        })
+      );
+    }
+    return _observableOf<DecimalValue>(null as any);
+  }
+
   getPumpStatusHeatingCircuit(pumpId: number): Observable<BoolValue> {
     let url_ = this.baseUrl + '/api/values/pump-status/{pumpId}';
     if (pumpId === undefined || pumpId === null)
@@ -2644,6 +2750,8 @@ export enum LogEntryType {
   BoilerLoadingPump = 'BoilerLoadingPump',
   BufferLoadingPump = 'BufferLoadingPump',
   AdvanceTemperature = 'AdvanceTemperature',
+  HeatingCircuit1AdvanceTemperature = 'HeatingCircuit1AdvanceTemperature',
+  HeatingCircuit2AdvanceTemperature = 'HeatingCircuit2AdvanceTemperature',
 }
 
 export interface DataEntry {
