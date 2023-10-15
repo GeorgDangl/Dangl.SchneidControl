@@ -20,6 +20,8 @@
 
         BoilerLoadingPump = 9,
 
-        BufferLoadingPump = 10
+        BufferLoadingPump = 10,
+
+        AdvanceTemperature = 11
     }
 }

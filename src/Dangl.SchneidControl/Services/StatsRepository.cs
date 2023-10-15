@@ -148,6 +148,7 @@ namespace Dangl.SchneidControl.Services
                 case LogEntryType.BoilerTemperature:
                 case LogEntryType.BufferTemperature:
                 case LogEntryType.OuterTemperature:
+                case LogEntryType.AdvanceTemperature:
                     return decimalValue / 10;
 
                 default:

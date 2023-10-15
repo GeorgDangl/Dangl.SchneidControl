@@ -102,6 +102,11 @@
     class="value-card"
     label="Vorlauf Wärmetauscher"
     [decimalPlaces]="1"
+    [canShowStats]="true"
+    [isActive]="visibleStats === logEntryTypes.AdvanceTemperature"
+    (onStatsRequested)="
+      showStats(logEntryTypes.AdvanceTemperature, 'Vorlauf Wärmetauscher')
+    "
     [value]="(dashboardValues$ | async)?.advanceTemperature || null"
   ></app-decimal-value>
   <app-decimal-value

@@ -108,6 +108,15 @@ namespace Dangl.SchneidControl.Services
                     }
                 });
 
+                await PerformAndIgnoreExceptionsAsync(async () =>
+                {
+                    var advanceTemperature = await _schneidReadRepository.GetAdvanceTemperatureAsync();
+                    if (advanceTemperature.IsSuccess)
+                    {
+                        _context.DataEntries.Add(new DataEntry { CreatedAtUtc = DateTime.UtcNow, LogEntryType = LogEntryType.AdvanceTemperature, Value = Convert.ToInt32(advanceTemperature.Value.Value * 10 )});
+                    }
+                });
+
                 await _context.SaveChangesAsync();
             }
             catch
