@@ -75,6 +75,10 @@ namespace Dangl.SchneidControl.Services
                 // We're sometimes getting really high or really low readings from the ModBus module
                 RemoveErrorenousTemperatures(stats);
             }
+            else if (type == LogEntryType.HeatingPowerDraw)
+            {
+                RemoveErrorenousHeatingPowerDraw(stats);
+            }
 
             ReduceEntriesIfRequired(stats, 1000);
 
@@ -86,6 +90,13 @@ namespace Dangl.SchneidControl.Services
             stats.Entries = stats
                 .Entries
                 .Where(e => e.Value > -100 && e.Value < 120)
+                .ToList();
+        }
+        private void RemoveErrorenousHeatingPowerDraw(Stats stats)
+        {
+            stats.Entries = stats
+                .Entries
+                .Where(e => e.Value > -100 && e.Value < 100_000)
                 .ToList();
         }
 
