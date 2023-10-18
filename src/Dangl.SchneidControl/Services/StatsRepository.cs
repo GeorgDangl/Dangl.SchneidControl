@@ -58,16 +58,29 @@ namespace Dangl.SchneidControl.Services
                 LogEntryType = type,
                 Unit = GetUnitForLogEntryType(type),
                 Entries = dbEntries.Select(dbEntry => new Models.Controllers.Stats.DataEntry
-                {
-                    CreatedAtUtc = dbEntry.CreatedAtUtc,
-                    Value = GetDataEntryValueForElement(type, dbEntry.Value)
-                })
+                    {
+                        CreatedAtUtc = dbEntry.CreatedAtUtc,
+                        Value = GetDataEntryValueForElement(type, dbEntry.Value)
+                    })
                     .ToList()
             };
+
+            if (type == LogEntryType.OuterTemperature)
+            {
+                RemoveErrorenousOuterTemperatures(stats);
+            }
 
             ReduceEntriesIfRequired(stats, 1000);
 
             return RepositoryResult<Stats>.Success(stats);
+        }
+
+        private void RemoveErrorenousOuterTemperatures(Stats stats)
+        {
+            stats.Entries = stats
+                .Entries
+                .Where(e => e.Value > -100 && e.Value < 100)
+                .ToList();
         }
 
         private void ReduceEntriesIfRequired(Stats stats, int maxEntries)
