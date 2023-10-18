@@ -2,6 +2,12 @@
 
 All notable changes to **Dangl.SchneidControl** are documented here.
 
+## v1.0.9:
+- Fixed getting stats for main advance temperature
+
+## v1.0.8:
+- When getting temperature stats, outliers are now removed. Sometimes, the Modbus protocol gave errorenous readings of multiple hundred negative degrees for e.g. the outside temperature
+
 ## v1.0.7:
 - Updated the internal mapping of the heating circuits
 - Added visualization for advance temperature of the heating circuits

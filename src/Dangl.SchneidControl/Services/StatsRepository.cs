@@ -65,9 +65,15 @@ namespace Dangl.SchneidControl.Services
                     .ToList()
             };
 
-            if (type == LogEntryType.OuterTemperature)
+            if (type == LogEntryType.OuterTemperature
+                || type == LogEntryType.BufferTemperature
+                || type == LogEntryType.AdvanceTemperature
+                || type == LogEntryType.HeatingCircuit1AdvanceTemperature
+                || type == LogEntryType.HeatingCircuit2AdvanceTemperature
+                || type == LogEntryType.BoilerTemperature)
             {
-                RemoveErrorenousOuterTemperatures(stats);
+                // We're sometimes getting really high or really low readings from the ModBus module
+                RemoveErrorenousTemperatures(stats);
             }
 
             ReduceEntriesIfRequired(stats, 1000);
@@ -75,11 +81,11 @@ namespace Dangl.SchneidControl.Services
             return RepositoryResult<Stats>.Success(stats);
         }
 
-        private void RemoveErrorenousOuterTemperatures(Stats stats)
+        private void RemoveErrorenousTemperatures(Stats stats)
         {
             stats.Entries = stats
                 .Entries
-                .Where(e => e.Value > -100 && e.Value < 100)
+                .Where(e => e.Value > -100 && e.Value < 120)
                 .ToList();
         }
 
@@ -131,6 +137,7 @@ namespace Dangl.SchneidControl.Services
                 case LogEntryType.OuterTemperature:
                 case LogEntryType.HeatingCircuit1AdvanceTemperature:
                 case LogEntryType.HeatingCircuit2AdvanceTemperature:
+                case LogEntryType.AdvanceTemperature:
                     return "°C";
 
                 case LogEntryType.ValveOpening:
