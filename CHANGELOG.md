@@ -2,6 +2,9 @@
 
 All notable changes to **Dangl.SchneidControl** are documented here.
 
+## v1.0.10:
+- When getting power stats, outliers are now removed. Sometimes, the Modbus protocol gave errorenous readings of hundreds of thousands of watts of thermal power draw
+
 ## v1.0.9:
 - Fixed getting stats for main advance temperature
 
