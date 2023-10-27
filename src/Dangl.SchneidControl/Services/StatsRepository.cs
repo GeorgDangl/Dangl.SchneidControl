@@ -109,15 +109,17 @@ namespace Dangl.SchneidControl.Services
             }
 
             stats.Entries = new List<Models.Controllers.Stats.DataEntry>(maxEntries);
-            var entriesToMerge = originalEntries.Count / maxEntries;
+            var entriesToMerge = Convert.ToDouble(originalEntries.Count) / maxEntries;
             var originalEntriesArray = originalEntries.ToArray();
             var lastIndex = 0;
             for (var i = 0; i < maxEntries; i++)
             {
-                var lengthToTake = originalEntriesArray.Length >= lastIndex + entriesToMerge
-                    ? entriesToMerge
-                    : originalEntriesArray.Length - lastIndex;
-                var endIndex = lastIndex + lengthToTake;
+                var endIndex = Convert.ToInt32(Math.Ceiling((i + 1) * entriesToMerge));
+                if (endIndex >= originalEntriesArray.Length)
+                {
+                    endIndex = originalEntriesArray.Length;
+                }
+
                 var entriesRange = originalEntriesArray[lastIndex..endIndex];
 
                 var newEntry = new Models.Controllers.Stats.DataEntry
@@ -126,7 +128,7 @@ namespace Dangl.SchneidControl.Services
                     Value = entriesRange.Average(e => e.Value)
                 };
                 stats.Entries.Add(newEntry);
-                lastIndex+= lengthToTake;
+                lastIndex = endIndex;
             }
         }
 
