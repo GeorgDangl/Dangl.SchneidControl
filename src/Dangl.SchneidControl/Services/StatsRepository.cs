@@ -80,7 +80,25 @@ namespace Dangl.SchneidControl.Services
                 RemoveErrorenousHeatingPowerDraw(stats);
             }
 
-            ReduceEntriesIfRequired(stats, 1000);
+            var roundingDecimalPrecision = type switch
+            {
+                LogEntryType.BufferLoadingPump => 0,
+                LogEntryType.BoilerLoadingPump => 0,
+                LogEntryType.HeatingCircuit1Pump => 0,
+                LogEntryType.HeatingCircuit2Pump => 0,
+                LogEntryType.ValveOpening => 0,
+                LogEntryType.TotalEnergyConsumption => 0,
+                LogEntryType.HeatingPowerDraw => 0,
+                LogEntryType.AdvanceTemperature => 1,
+                LogEntryType.HeatingCircuit1AdvanceTemperature => 1,
+                LogEntryType.HeatingCircuit2AdvanceTemperature => 1,
+                LogEntryType.BufferTemperature => 1,
+                LogEntryType.OuterTemperature => 1,
+                LogEntryType.BoilerTemperature => 1,
+                _ => 0
+            };
+
+            ReduceEntriesIfRequired(stats, 1000, roundingDecimalPrecision);
 
             return RepositoryResult<Stats>.Success(stats);
         }
@@ -100,7 +118,7 @@ namespace Dangl.SchneidControl.Services
                 .ToList();
         }
 
-        private void ReduceEntriesIfRequired(Stats stats, int maxEntries)
+        private void ReduceEntriesIfRequired(Stats stats, int maxEntries, int decimalPrecision)
         {
             var originalEntries = stats.Entries;
             if (originalEntries.Count <= maxEntries)
@@ -125,7 +143,7 @@ namespace Dangl.SchneidControl.Services
                 var newEntry = new Models.Controllers.Stats.DataEntry
                 {
                     CreatedAtUtc = entriesRange.First().CreatedAtUtc,
-                    Value = entriesRange.Average(e => e.Value)
+                    Value = Math.Round(entriesRange.Average(e => e.Value), decimalPrecision)
                 };
                 stats.Entries.Add(newEntry);
                 lastIndex = endIndex;
