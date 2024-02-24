@@ -2,6 +2,9 @@
 
 All notable changes to **Dangl.SchneidControl** are documented here.
 
+## v1.0.12:
+- The backend was updated to .NET 8
+
 ## v1.0.11:
 - Fixed a bug where reducing entries for stats somtimes failed to include the latest entries
 
