@@ -62,10 +62,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "dangl-schneid-control:build:production"
+              "buildTarget": "dangl-schneid-control:build:production"
             },
             "development": {
-              "browserTarget": "dangl-schneid-control:build:development"
+              "buildTarget": "dangl-schneid-control:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -73,7 +73,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "dangl-schneid-control:build"
+            "buildTarget": "dangl-schneid-control:build"
           }
         },
         "test": {
