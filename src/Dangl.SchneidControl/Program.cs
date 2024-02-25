@@ -52,6 +52,7 @@ namespace Dangl.SchneidControl
                 services.AddTransient<IHostedService, DataLoggingScheduler>();
                 services.AddTransient<IDataLoggingService, DataLoggingService>();
                 services.AddTransient<IStatsRepository, StatsRepository>();
+                services.AddTransient<IConsumptionRepository, ConsumptionRepository>();
             }
             else
             {

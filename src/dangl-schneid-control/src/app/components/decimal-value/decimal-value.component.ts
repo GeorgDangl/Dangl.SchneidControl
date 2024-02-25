@@ -15,7 +15,9 @@ export class DecimalValueComponent {
   @Input() isActive = false;
   @Output() onEditRequested = new EventEmitter<void>();
   @Output() onStatsRequested = new EventEmitter<void>();
+  @Output() onConsumptionRequested = new EventEmitter<void>();
   @Input() canShowStats = false;
+  @Input() canShowConsumption = false;
 
   get showActions(): boolean {
     return this.canEdit || !!this.value?.value || this.canShowStats;
@@ -31,5 +33,9 @@ export class DecimalValueComponent {
 
   showStatsEvent(): void {
     this.onStatsRequested.emit();
+  }
+
+  showConsumptionEvent(): void {
+    this.onConsumptionRequested.emit();
   }
 }
