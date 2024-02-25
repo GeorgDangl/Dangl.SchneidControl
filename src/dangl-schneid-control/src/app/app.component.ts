@@ -5,6 +5,7 @@ import {
 } from './generated-client/generated-client';
 
 import { Component } from '@angular/core';
+import { ConsumptionComponent } from './components/consumption/consumption.component';
 import { DashboardService } from './services/dashboard.service';
 import { DashboardValues } from './models/dashboard-values';
 import { MatDialog } from '@angular/material/dialog';
@@ -149,5 +150,11 @@ export class AppComponent {
       .subscribe(() => {
         this.visibleStats = null;
       });
+  }
+
+  showConsumption(): void {
+    this.matDialog.open(ConsumptionComponent, {
+      panelClass: 'stats-dialog',
+    });
   }
 }

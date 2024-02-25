@@ -52,6 +52,7 @@ namespace Dangl.SchneidControl
                 services.AddTransient<IHostedService, DataLoggingScheduler>();
                 services.AddTransient<IDataLoggingService, DataLoggingService>();
                 services.AddTransient<IStatsRepository, StatsRepository>();
+                services.AddTransient<IConsumptionRepository, ConsumptionRepository>();
             }
             else
             {
@@ -125,7 +126,7 @@ namespace Dangl.SchneidControl
                     doc.Schemes = new List<OpenApiSchema> { OpenApiSchema.Https, OpenApiSchema.Http };
                 };
             });
-            app.UseSwaggerUi3(settings =>
+            app.UseSwaggerUi(settings =>
             {
                 settings.DocumentTitle = "Dangl.SchneidControl API Swagger UI";
                 settings.DocumentPath = "/swagger/swagger.json";

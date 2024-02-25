@@ -18,5 +18,12 @@
     <button *ngIf="canShowStats" mat-button (click)="showStatsEvent()">
       <mat-icon>insert_chart</mat-icon>
     </button>
+    <button
+      *ngIf="canShowConsumption"
+      mat-button
+      (click)="showConsumptionEvent()"
+    >
+      <mat-icon>electric_meter</mat-icon>
+    </button>
   </mat-card-actions>
 </mat-card>

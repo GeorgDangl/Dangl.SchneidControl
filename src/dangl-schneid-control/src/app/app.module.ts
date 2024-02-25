@@ -10,6 +10,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { BoolValueComponent } from './components/bool-value/bool-value.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
+import { ConsumptionComponent } from './components/consumption/consumption.component';
 import { DecimalValueComponent } from './components/decimal-value/decimal-value.component';
 import { FormsModule } from '@angular/forms';
 import { HeatingCircuitStatusComponent } from './components/heating-circuit-status/heating-circuit-status.component';
@@ -44,6 +45,7 @@ import { TransferStationStatusPipe } from './pipes/transfer-station-status.pipe'
     SetTransferStationStatusComponent,
     SetNumericalValueComponent,
     StatsComponent,
+    ConsumptionComponent,
   ],
   imports: [
     BrowserModule,
