@@ -93,20 +93,26 @@ namespace Dangl.SchneidControl
         .DependsOn(GenerateVersion)
         .Executes(() =>
         {
-            DotNetBuild(s => s
-                .SetProcessArgumentConfigurator(a => a.Add("/nodeReuse:false"))
-                .SetProjectFile(Solution)
-                .SetConfiguration(Configuration)
-                .SetAssemblyVersion(GitVersion.AssemblySemVer)
-                .SetFileVersion(GitVersion.AssemblySemFileVer)
-                .SetInformationalVersion(GitVersion.InformationalVersion)
-                .EnableNoRestore());
+            CompileBackend();
         });
+
+    void CompileBackend()
+    {
+        DotNetBuild(s => s
+            .SetProcessArgumentConfigurator(a => a.Add("/nodeReuse:false"))
+            .SetProjectFile(Solution)
+            .SetConfiguration(Configuration)
+            .SetAssemblyVersion(GitVersion.AssemblySemVer)
+            .SetFileVersion(GitVersion.AssemblySemFileVer)
+            .SetInformationalVersion(GitVersion.InformationalVersion)
+            .EnableNoRestore());
+    }
 
     Target BuildFrontendSwaggerClient => _ => _
         .DependsOn(Restore)
         .Executes(() =>
         {
+            CompileBackend(); // Need that with newer NSwag so the project outputs are present
             var nSwagConfigPath = SourceDirectory / "dangl-schneid-control" / "src" / "nswag.json";
             var nSwagToolPath = NuGetToolPathResolver.GetPackageExecutable("NSwag.MSBuild", "tools/Net70/dotnet-nswag.dll");
             DotNet($"{nSwagToolPath} run /Input:\"{nSwagConfigPath}\"", SourceDirectory / "dangl-schneid-control" / "src");
