@@ -3,7 +3,6 @@ import {
   MatMomentDateModule,
 } from '@angular/material-moment-adapter';
 
-import { AngularMaterialSharedModule } from '@dangl/angular-material-shared';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { BoolValueComponent } from './components/bool-value/bool-value.component';
@@ -31,6 +30,7 @@ import { SetTransferStationStatusComponent } from './components/set-transfer-sta
 import { StatsComponent } from './components/stats/stats.component';
 import { TransferStationStatusComponent } from './components/transfer-station-status/transfer-station-status.component';
 import { TransferStationStatusPipe } from './pipes/transfer-station-status.pipe';
+import { HeaderComponent } from '@dangl/angular-material-shared';
 
 @NgModule({
     declarations: [
@@ -44,13 +44,12 @@ import { TransferStationStatusPipe } from './pipes/transfer-station-status.pipe'
         SetTransferStationStatusComponent,
         SetNumericalValueComponent,
         StatsComponent,
-        ConsumptionComponent,
+        ConsumptionComponent
     ],
     imports: [
         BrowserModule,
         AppRoutingModule,
         BrowserAnimationsModule,
-        AngularMaterialSharedModule,
         MatButtonModule,
         MatProgressBarModule,
         MatSelectModule,
@@ -62,7 +61,9 @@ import { TransferStationStatusPipe } from './pipes/transfer-station-status.pipe'
         MatDialogModule,
         NgxChartsModule,
         MatDatepickerModule,
-        MatMomentDateModule],
+        MatMomentDateModule,
+        HeaderComponent
+    ],
     providers: [
         { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } },
         provideHttpClient(withInterceptorsFromDi()),
