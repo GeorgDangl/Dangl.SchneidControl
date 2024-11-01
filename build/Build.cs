@@ -158,7 +158,7 @@ namespace Dangl.SchneidControl
                 configFileToDelete.DeleteFile();
             }
 
-            CopyFile(SourceDirectory / "Dangl.SchneidControl" / "Dockerfile", OutputDirectory / "Dockerfile", FileExistsPolicy.Overwrite);
+            (SourceDirectory / "Dangl.SchneidControl" / "Dockerfile").Copy(OutputDirectory / "Dockerfile", ExistsPolicy.FileOverwrite);
 
             DockerBuild(c => c
                 .SetFile(OutputDirectory / "Dockerfile")
