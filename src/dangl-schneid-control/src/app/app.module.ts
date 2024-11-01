@@ -3,8 +3,6 @@ import {
   MatMomentDateModule,
 } from '@angular/material-moment-adapter';
 
-import { APP_BASE_HREF } from '@angular/common';
-import { AngularMaterialSharedModule } from '@dangl/angular-material-shared';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { BoolValueComponent } from './components/bool-value/bool-value.component';
@@ -15,7 +13,7 @@ import { DecimalValueComponent } from './components/decimal-value/decimal-value.
 import { FormsModule } from '@angular/forms';
 import { HeatingCircuitStatusComponent } from './components/heating-circuit-status/heating-circuit-status.component';
 import { HeatingCircuitStatusPipe } from './pipes/heating-circuit-status.pipe';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -32,43 +30,44 @@ import { SetTransferStationStatusComponent } from './components/set-transfer-sta
 import { StatsComponent } from './components/stats/stats.component';
 import { TransferStationStatusComponent } from './components/transfer-station-status/transfer-station-status.component';
 import { TransferStationStatusPipe } from './pipes/transfer-station-status.pipe';
+import { HeaderComponent } from '@dangl/angular-material-shared';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    DecimalValueComponent,
-    BoolValueComponent,
-    TransferStationStatusComponent,
-    TransferStationStatusPipe,
-    HeatingCircuitStatusPipe,
-    HeatingCircuitStatusComponent,
-    SetTransferStationStatusComponent,
-    SetNumericalValueComponent,
-    StatsComponent,
-    ConsumptionComponent,
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    AngularMaterialSharedModule,
-    HttpClientModule,
-    MatButtonModule,
-    MatProgressBarModule,
-    MatSelectModule,
-    FormsModule,
-    MatInputModule,
-    MatCardModule,
-    MatProgressSpinnerModule,
-    MatIconModule,
-    MatDialogModule,
-    NgxChartsModule,
-    MatDatepickerModule,
-    MatMomentDateModule,
-  ],
-  providers: [
-    { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } },
-  ],
-  bootstrap: [AppComponent],
-})
+    declarations: [
+        AppComponent,
+        DecimalValueComponent,
+        BoolValueComponent,
+        TransferStationStatusComponent,
+        TransferStationStatusPipe,
+        HeatingCircuitStatusPipe,
+        HeatingCircuitStatusComponent,
+        SetTransferStationStatusComponent,
+        SetNumericalValueComponent,
+        StatsComponent,
+        ConsumptionComponent
+    ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MatButtonModule,
+        MatProgressBarModule,
+        MatSelectModule,
+        FormsModule,
+        MatInputModule,
+        MatCardModule,
+        MatProgressSpinnerModule,
+        MatIconModule,
+        MatDialogModule,
+        NgxChartsModule,
+        MatDatepickerModule,
+        MatMomentDateModule,
+        HeaderComponent
+    ],
+    providers: [
+        { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } },
+        provideHttpClient(withInterceptorsFromDi()),
+    ],
+    bootstrap: [AppComponent],
+  })
 export class AppModule {}
