@@ -2,6 +2,10 @@
 
 All notable changes to **Dangl.SchneidControl** are documented here.
 
+## v1.0.13:
+- The frontend was updated to Angular v18
+- Backend dependencies were updated
+
 ## v1.0.12:
 - The backend was updated to .NET 8
 - The frontend was updated to Angular v17

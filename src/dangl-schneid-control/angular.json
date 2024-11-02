@@ -28,6 +28,7 @@
             "stylePreprocessorOptions": {
               "includePaths": ["./node_modules"]
             },
+            "allowedCommonJsDependencies":["moment","rfdc"],
             "scripts": []
           },
           "configurations": {

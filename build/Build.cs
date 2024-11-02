@@ -114,8 +114,13 @@ namespace Dangl.SchneidControl
         {
             CompileBackend(); // Need that with newer NSwag so the project outputs are present
             var nSwagConfigPath = SourceDirectory / "dangl-schneid-control" / "src" / "nswag.json";
-            var nSwagToolPath = NuGetToolPathResolver.GetPackageExecutable("NSwag.MSBuild", "tools/Net70/dotnet-nswag.dll");
-            DotNet($"{nSwagToolPath} run /Input:\"{nSwagConfigPath}\"", SourceDirectory / "dangl-schneid-control" / "src");
+            var nSwagToolPath = NuGetToolPathResolver.GetPackageExecutable("NSwag.MSBuild", "tools/Net80/dotnet-nswag.dll");
+
+            DotNetRun(x => x
+                .SetProcessToolPath(nSwagToolPath)
+                .SetProcessWorkingDirectory(SourceDirectory / "dangl-schneid-control" / "src")
+                .SetProcessArgumentConfigurator(y => y
+                    .Add(nSwagConfigPath)));
         });
 
     Target FrontEndRestore => _ => _
@@ -158,7 +163,7 @@ namespace Dangl.SchneidControl
                 configFileToDelete.DeleteFile();
             }
 
-            CopyFile(SourceDirectory / "Dangl.SchneidControl" / "Dockerfile", OutputDirectory / "Dockerfile", FileExistsPolicy.Overwrite);
+            (SourceDirectory / "Dangl.SchneidControl" / "Dockerfile").Copy(OutputDirectory / "Dockerfile", ExistsPolicy.FileOverwrite);
 
             DockerBuild(c => c
                 .SetFile(OutputDirectory / "Dockerfile")
