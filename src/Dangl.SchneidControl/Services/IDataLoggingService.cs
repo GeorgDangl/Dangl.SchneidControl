@@ -1,7 +1,9 @@
-﻿namespace Dangl.SchneidControl.Services
+﻿using Dangl.SchneidControl.Models.Services;
+
+namespace Dangl.SchneidControl.Services
 {
     public interface IDataLoggingService
     {
-        Task ReadAndSaveValuesAsync();
+        Task<ValuesResult> ReadAndSaveValuesAsync();
     }
 }

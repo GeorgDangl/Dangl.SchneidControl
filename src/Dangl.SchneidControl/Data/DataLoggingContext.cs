@@ -5,6 +5,7 @@ namespace Dangl.SchneidControl.Data
     public class DataLoggingContext : DbContext
     {
         public DbSet<DataEntry> DataEntries { get; set; }
+        public DbSet<EmailEntry> EmailEntries { get; set; }
 
         public DataLoggingContext(DbContextOptions<DataLoggingContext> options) : base(options)
         {
@@ -13,6 +14,7 @@ namespace Dangl.SchneidControl.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             DataEntry.OnModelCreating(builder);
+            EmailEntry.OnModelCreating(builder);
         }
     }
 }
