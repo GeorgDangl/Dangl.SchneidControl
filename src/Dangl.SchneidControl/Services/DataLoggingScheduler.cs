@@ -44,9 +44,10 @@ namespace Dangl.SchneidControl.Services
                                 var emailLoggingService = scope.ServiceProvider.GetRequiredService<IEmailLoggingService>();
                                 foreach (var emailRecipient in schneidControlSettings.EmailRecipients)
                                 {
+                                    // TODO: add proper subject and message texts
                                     await emailSender.SendEmailAsync(emailRecipient,
-                                        "Too high temperature.",
-                                        "The temperature is too high and this message is really informative.");
+                                        "Too low temperature.",
+                                        "The temperature is too low and this message is really informative.");
                                     await emailLoggingService.SaveInformationAboutSentEmailAsync(EmailType.LowTemperatureWarning, emailRecipient);
                                 }
 
