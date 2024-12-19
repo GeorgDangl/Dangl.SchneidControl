@@ -1,7 +1,5 @@
 ﻿using Dangl.SchneidControl.Configuration;
 using MailKit.Net.Smtp;
-using Microsoft.ApplicationInsights;
-using Microsoft.ApplicationInsights.DataContracts;
 using Microsoft.Extensions.Options;
 using MimeKit;
 using MimeKit.Text;
@@ -11,17 +9,14 @@ namespace Dangl.SchneidControl.Services
     public class EmailSender : IEmailSender
     {
         public EmailSender(IOptions<SchneidControlSettings> optionsAccessor,
-            ILoggerFactory loggerFactory,
-            TelemetryClient telemetryClient)
+            ILoggerFactory loggerFactory)
         {
             _smtpSettings = optionsAccessor.Value.SmtpSettings;
             _logger = loggerFactory.CreateLogger<EmailSender>();
-            _telemetryClient = telemetryClient;
         }
 
         private readonly SmtpSettings _smtpSettings;
         private readonly ILogger _logger;
-        private readonly TelemetryClient _telemetryClient;
 
         public async Task SendEmailAsync(string email, string subject, string htmlBody)
         {
@@ -30,24 +25,7 @@ namespace Dangl.SchneidControl.Services
                 _logger.LogError("The SMTP settings for email sending are not configured correctly, can not send email" +
                     Environment.NewLine + "Recipient: " + email +
                     Environment.NewLine + "Subject: " + subject);
-                var appInsightsEvent = new EventTelemetry
-                {
-                    Name = "EmailSendFailure"
-                };
-                appInsightsEvent.Properties.Add("Recipient", email);
-                appInsightsEvent.Properties.Add("Subject", subject);
-                _telemetryClient.TrackEvent(appInsightsEvent);
                 return;
-            }
-            else
-            {
-                var appInsightsEvent = new EventTelemetry
-                {
-                    Name = "EmailSending"
-                };
-                appInsightsEvent.Properties.Add("Recipient", email);
-                appInsightsEvent.Properties.Add("Subject", subject);
-                _telemetryClient.TrackEvent(appInsightsEvent);
             }
 
             var message = new MimeMessage();
