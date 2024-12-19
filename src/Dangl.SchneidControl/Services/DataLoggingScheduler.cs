@@ -23,7 +23,6 @@ namespace Dangl.SchneidControl.Services
             Task.Run(async () =>
             {
                 DateTime lastStart;
-                DateTime? lastEmailSent = null;
                 while (_isRunning)
                 {
                     lastStart = DateTime.UtcNow;
@@ -38,20 +37,19 @@ namespace Dangl.SchneidControl.Services
                         var schneidControlSettings = _configuration.Get<SchneidControlSettings>();
                         if (schneidControlSettings?.EmailRecipients?.Count > 0)
                         {
-                            if (lastEmailSent == null || ((DateTime.UtcNow - lastEmailSent.Value) > TimeSpan.FromHours(12)))
+                            var emailSender = scope.ServiceProvider.GetRequiredService<IEmailSender>();
+                            var emailLoggingService = scope.ServiceProvider.GetRequiredService<IEmailLoggingService>();
+                            foreach (var emailRecipient in schneidControlSettings.EmailRecipients)
                             {
-                                var emailSender = scope.ServiceProvider.GetRequiredService<IEmailSender>();
-                                var emailLoggingService = scope.ServiceProvider.GetRequiredService<IEmailLoggingService>();
-                                foreach (var emailRecipient in schneidControlSettings.EmailRecipients)
+                                var lastEmailSentTime = await emailLoggingService.GetTimeOfLastSentEmailAsync(EmailType.LowTemperatureWarning, emailRecipient);
+                                if (lastEmailSentTime == null || ((DateTime.UtcNow - lastEmailSentTime.Value) > TimeSpan.FromHours(12)))
                                 {
+                                    await emailLoggingService.SaveInformationAboutSentEmailAsync(EmailType.LowTemperatureWarning, emailRecipient);
                                     // TODO: add proper subject and message texts
                                     await emailSender.SendEmailAsync(emailRecipient,
                                         "Too low temperature.",
                                         "The temperature is too low and this message is really informative.");
-                                    await emailLoggingService.SaveInformationAboutSentEmailAsync(EmailType.LowTemperatureWarning, emailRecipient);
                                 }
-
-                                lastEmailSent = DateTime.UtcNow;
                             }
                         }
                         else
