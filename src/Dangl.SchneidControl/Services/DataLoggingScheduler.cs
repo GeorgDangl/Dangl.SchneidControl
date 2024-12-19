@@ -43,7 +43,7 @@ namespace Dangl.SchneidControl.Services
                                     await emailSender.SendEmailAsync(emailRecipient,
                                         "Too high temperature.",
                                         "The temperature is too high and this message is really informative.");
-                                    await emailLoggingService.SaveInformationAboutSentEmailAsync(EmailType.Warning, emailRecipient);
+                                    await emailLoggingService.SaveInformationAboutSentEmailAsync(EmailType.LowTemperatureWarning, emailRecipient);
                                 }
 
                                 lastEmailSent = DateTime.UtcNow;
