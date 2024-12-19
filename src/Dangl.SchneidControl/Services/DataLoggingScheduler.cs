@@ -1,5 +1,6 @@
 ﻿using Dangl.SchneidControl.Configuration;
 using Dangl.SchneidControl.Data;
+using Dangl.SchneidControl.Models.Enums;
 
 namespace Dangl.SchneidControl.Services
 {
@@ -29,7 +30,10 @@ namespace Dangl.SchneidControl.Services
                     using var scope = _serviceProvider.CreateScope();
                     var dataLoggingService = scope.ServiceProvider.GetRequiredService<IDataLoggingService>();
                     var valuesResult = await dataLoggingService.ReadAndSaveValuesAsync();
-                    if (valuesResult.BufferTemperatureTop?.Value > 50 && valuesResult.BufferTemperatureTop?.Unit == "°C" && valuesResult.CurrentHeatingPowerDraw?.Value != 0)
+                    if (valuesResult.BufferTemperatureTop?.Value > 50 &&
+                        valuesResult.BufferTemperatureTop?.Unit == "°C" &&
+                        valuesResult.TransferStationStatus?.Value != TransferStationStatus.OffOrFrostControl &&
+                        valuesResult.TransferStationStatus?.Value != TransferStationStatus.Maintenance)
                     {
                         var schneidControlSettings = _configuration.Get<SchneidControlSettings>();
                         if (schneidControlSettings?.EmailRecipients?.Count > 0)

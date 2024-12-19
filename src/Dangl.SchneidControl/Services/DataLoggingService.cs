@@ -44,7 +44,6 @@ namespace Dangl.SchneidControl.Services
                     if (heatingPowerDraw.IsSuccess)
                     {
                         _context.DataEntries.Add(new DataEntry { CreatedAtUtc = DateTime.UtcNow, LogEntryType = LogEntryType.HeatingPowerDraw, Value = Convert.ToInt32(heatingPowerDraw.Value.Value) });
-                        valuesResult.CurrentHeatingPowerDraw = heatingPowerDraw.Value;
                     }
                 });
 
@@ -136,6 +135,15 @@ namespace Dangl.SchneidControl.Services
                     if (advanceTemperature.IsSuccess)
                     {
                         _context.DataEntries.Add(new DataEntry { CreatedAtUtc = DateTime.UtcNow, LogEntryType = LogEntryType.HeatingCircuit2AdvanceTemperature, Value = Convert.ToInt32(advanceTemperature.Value.Value * 10) });
+                    }
+                });
+
+                await PerformAndIgnoreExceptionsAsync(async () =>
+                {
+                    var transferStationStatus = await _schneidReadRepository.GetTransferStationStatusAsync();
+                    if (transferStationStatus.IsSuccess)
+                    {
+                        valuesResult.TransferStationStatus = transferStationStatus.Value;
                     }
                 });
 
