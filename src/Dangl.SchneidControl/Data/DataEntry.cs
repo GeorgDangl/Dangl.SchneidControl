@@ -19,6 +19,10 @@ namespace Dangl.SchneidControl.Data
 
             modelBuilder.Entity<DataEntry>()
                 .HasIndex(p => p.CreatedAtUtc);
+
+            modelBuilder.Entity<DataEntry>()
+                .Property(p => p.LogEntryType)
+                .HasConversion<string>();
         }
     }
 }

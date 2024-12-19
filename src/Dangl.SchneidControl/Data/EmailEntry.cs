@@ -19,6 +19,10 @@ namespace Dangl.SchneidControl.Data
 
             modelBuilder.Entity<EmailEntry>()
                 .HasIndex(p => p.CreatedAtUtc);
+
+            modelBuilder.Entity<EmailEntry>()
+                .Property(p => p.EmailType)
+                .HasConversion<string>();
         }
     }
 }
