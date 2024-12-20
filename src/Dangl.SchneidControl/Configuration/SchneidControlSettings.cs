@@ -14,7 +14,7 @@ namespace Dangl.SchneidControl.Configuration
 
         public List<string> EmailRecipients { get; set; }
 
-        public int MainBufferMaximumTemperature { get; set; }
+        public int MainBufferMinimumTemperature { get; set; }
 
         public void Validate()
         {
