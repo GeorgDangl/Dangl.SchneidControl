@@ -30,7 +30,6 @@ namespace Dangl.SchneidControl.Services
                     var dataLoggingService = scope.ServiceProvider.GetRequiredService<IDataLoggingService>();
                     var valuesResult = await dataLoggingService.ReadAndSaveValuesAsync();
                     if (valuesResult.BufferTemperatureTop?.Value > 50 &&
-                        valuesResult.BufferTemperatureTop?.Unit == "°C" &&
                         valuesResult.TransferStationStatus?.Value != TransferStationStatus.OffOrFrostControl &&
                         valuesResult.TransferStationStatus?.Value != TransferStationStatus.Maintenance)
                     {
