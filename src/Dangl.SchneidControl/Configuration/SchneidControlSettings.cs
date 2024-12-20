@@ -10,6 +10,12 @@ namespace Dangl.SchneidControl.Configuration
 
         public string DatabaseLoggingFilePath { get; set; }
 
+        public SmtpSettings SmtpSettings { get; set; }
+
+        public List<string> EmailRecipients { get; set; }
+
+        public int MainBufferMinimumTemperature { get; set; }
+
         public void Validate()
         {
             if (!IPAddress.TryParse(SchneidModbusIpAddress, out var _))

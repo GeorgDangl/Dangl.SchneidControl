@@ -53,6 +53,8 @@ namespace Dangl.SchneidControl
                 services.AddTransient<IDataLoggingService, DataLoggingService>();
                 services.AddTransient<IStatsRepository, StatsRepository>();
                 services.AddTransient<IConsumptionRepository, ConsumptionRepository>();
+                services.AddTransient<IEmailSender, EmailSender>();
+                services.AddTransient<IEmailLoggingService, EmailLoggingService>();
             }
             else
             {

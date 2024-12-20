@@ -1,4 +1,5 @@
 ﻿using Dangl.SchneidControl.Data;
+using Dangl.SchneidControl.Models.Services;
 
 namespace Dangl.SchneidControl.Services
 {
@@ -14,8 +15,9 @@ namespace Dangl.SchneidControl.Services
             _schneidReadRepository = schneidReadRepository;
         }
 
-        public async Task ReadAndSaveValuesAsync()
+        public async Task<ValuesResult> ReadAndSaveValuesAsync()
         {
+            var valuesResult = new ValuesResult();
             try
             {
                 await PerformAndIgnoreExceptionsAsync(async () =>
@@ -51,6 +53,7 @@ namespace Dangl.SchneidControl.Services
                     if (bufferTemperature.IsSuccess)
                     {
                         _context.DataEntries.Add(new DataEntry { CreatedAtUtc = DateTime.UtcNow, LogEntryType = LogEntryType.BufferTemperature, Value = Convert.ToInt32(bufferTemperature.Value.Value * 10) });
+                        valuesResult.BufferTemperatureTop = bufferTemperature.Value;
                     }
                 });
 
@@ -135,12 +138,23 @@ namespace Dangl.SchneidControl.Services
                     }
                 });
 
+                await PerformAndIgnoreExceptionsAsync(async () =>
+                {
+                    var transferStationStatus = await _schneidReadRepository.GetTransferStationStatusAsync();
+                    if (transferStationStatus.IsSuccess)
+                    {
+                        valuesResult.TransferStationStatus = transferStationStatus.Value;
+                    }
+                });
+
                 await _context.SaveChangesAsync();
             }
             catch
             {
                 // We're just ignoring failures here, don't want the task to crash
             }
+
+            return valuesResult;
         }
 
         private async Task PerformAndIgnoreExceptionsAsync(Func<Task> action)
