@@ -26,14 +26,14 @@ namespace Dangl.SchneidControl.Services
                 while (_isRunning)
                 {
                     lastStart = DateTime.UtcNow;
+                    var schneidControlSettings = _configuration.Get<SchneidControlSettings>();
                     using var scope = _serviceProvider.CreateScope();
                     var dataLoggingService = scope.ServiceProvider.GetRequiredService<IDataLoggingService>();
                     var valuesResult = await dataLoggingService.ReadAndSaveValuesAsync();
-                    if (valuesResult.BufferTemperatureTop?.Value > 50 &&
+                    if (valuesResult.BufferTemperatureTop?.Value > schneidControlSettings?.MainBufferMaximumTemperature &&
                         valuesResult.TransferStationStatus?.Value != TransferStationStatus.OffOrFrostControl &&
                         valuesResult.TransferStationStatus?.Value != TransferStationStatus.Maintenance)
                     {
-                        var schneidControlSettings = _configuration.Get<SchneidControlSettings>();
                         if (schneidControlSettings?.EmailRecipients?.Count > 0)
                         {
                             var emailSender = scope.ServiceProvider.GetRequiredService<IEmailSender>();

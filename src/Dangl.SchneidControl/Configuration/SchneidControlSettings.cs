@@ -14,6 +14,8 @@ namespace Dangl.SchneidControl.Configuration
 
         public List<string> EmailRecipients { get; set; }
 
+        public int MainBufferMaximumTemperature { get; set; }
+
         public void Validate()
         {
             if (!IPAddress.TryParse(SchneidModbusIpAddress, out var _))
