@@ -1,0 +1,110 @@
+<div class="settings-dialog">
+  <h1>Einstellung</h1>
+
+  <hr />
+
+  <h2>Wärmenmengenzähleraustausch</h2>
+
+  <button mat-raised-button (click)="showAddNew()">Hinzufügen</button>
+
+  @if(showAddNewUi) {
+  <div>
+    <mat-form-field>
+      <mat-label>Einbauwert</mat-label>
+      <input
+        matInput
+        placeholder="Einbauwert"
+        [(ngModel)]="newInitialValue"
+        type="number"
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Wert alter Zähler</mat-label>
+      <input
+        matInput
+        placeholder="Wert alter Zähler"
+        type="number"
+        [(ngModel)]="newOldMeterValue"
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Einbau</mat-label>
+      <input matInput [matDatepicker]="picker" [(ngModel)]="newReplacedAtUtc" />
+      <mat-hint>dd.MM.YYYY HH:mm</mat-hint>
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="picker"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Einbau (Uhrzeit)</mat-label>
+      <input
+        matInput
+        placeholder="Einbau (Uhrzeit)"
+        pattern="([0-1][0-9]|2[0-3]):[0-5][0-9]"
+        [(ngModel)]="newReplacedAtTime"
+      />
+    </mat-form-field>
+
+    <button mat-raised-button (click)="saveNewEntry()">Speichern</button>
+  </div>
+  }
+
+  <table mat-table [dataSource]="dataSource">
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef>Id</th>
+      <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="initialValue">
+      <th mat-header-cell *matHeaderCellDef>Einbauwert</th>
+      <td mat-cell *matCellDef="let element">{{ element.initialValue }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="oldMeterValue">
+      <th mat-header-cell *matHeaderCellDef>Wert alter Zähler</th>
+      <td mat-cell *matCellDef="let element">{{ element.oldMeterValue }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="replacedAtUtc">
+      <th mat-header-cell *matHeaderCellDef>Einbau</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.replacedAtUtc | date : "dd.MM.yyyy HH:mm" }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="delete">
+      <th mat-header-cell *matHeaderCellDef>Löschen</th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-fab (click)="deleteEntry(element.id)" color="warn">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr
+      mat-header-row
+      *matHeaderRowDef="[
+        'id',
+        'initialValue',
+        'oldMeterValue',
+        'replacedAtUtc',
+        'delete'
+      ]"
+    ></tr>
+    <tr
+      mat-row
+      *matRowDef="
+        let row;
+        columns: [
+          'id',
+          'initialValue',
+          'oldMeterValue',
+          'replacedAtUtc',
+          'delete'
+        ]
+      "
+    ></tr>
+  </table>
+</div>

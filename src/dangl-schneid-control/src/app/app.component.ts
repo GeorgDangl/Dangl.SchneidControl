@@ -10,6 +10,7 @@ import { DashboardService } from './services/dashboard.service';
 import { DashboardValues } from './models/dashboard-values';
 import { MatDialog } from '@angular/material/dialog';
 import { SetNumericalValueComponent } from './components/set-numerical-value/set-numerical-value.component';
+import { SettingsComponent } from './components/settings/settings.component';
 import { StatsComponent } from './components/stats/stats.component';
 import { Subject } from 'rxjs';
 
@@ -155,6 +156,13 @@ export class AppComponent {
   showConsumption(): void {
     this.matDialog.open(ConsumptionComponent, {
       panelClass: 'stats-dialog',
+    });
+  }
+
+  openSettings(): void {
+    // We want to open the settings component
+    this.matDialog.open(SettingsComponent, {
+      panelClass: 'settings-dialog',
     });
   }
 }

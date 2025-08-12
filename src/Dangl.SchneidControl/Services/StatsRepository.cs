@@ -79,6 +79,15 @@ namespace Dangl.SchneidControl.Services
             {
                 RemoveErrorenousHeatingPowerDraw(stats);
             }
+            else if (type == LogEntryType.TotalEnergyConsumption)
+            {
+                var replacements = await _context.HeatMeterReplacements
+                    .OrderBy(e => e.ReplacedAtUtc)
+                    .ToListAsync();
+                CorrectStatsForHeatMeterReplacements(replacements,
+                    stats.Entries,
+                    correctDecimalPlaces: true);
+            }
 
             var roundingDecimalPrecision = type switch
             {
@@ -101,6 +110,54 @@ namespace Dangl.SchneidControl.Services
             ReduceEntriesIfRequired(stats, 1000, roundingDecimalPrecision);
 
             return RepositoryResult<Stats>.Success(stats);
+        }
+
+        public static void CorrectStatsForHeatMeterReplacements(List<HeatMeterReplacement> replacements,
+            List<Models.Controllers.Stats.DataEntry> entries,
+            bool correctDecimalPlaces)
+        {
+            HeatMeterReplacement? currentReplacement = null;
+            HeatMeterReplacement? nextReplacement = null;
+            var totalToAdd = 0m;
+            if (replacements.Any())
+            {
+                foreach (var entry in entries)
+                {
+                    // If we don't have a current replacement, we'll set it, if required
+                    if (currentReplacement == null)
+                    {
+                        if (replacements[0].ReplacedAtUtc <= entry.CreatedAtUtc)
+                        {
+                            currentReplacement = replacements[0];
+                            totalToAdd -= correctDecimalPlaces ? currentReplacement.InitialValue / 10 : currentReplacement.InitialValue;
+                            totalToAdd += correctDecimalPlaces ? currentReplacement.OldMeterValue / 10 : currentReplacement.OldMeterValue;
+
+                            if (replacements.Count > 1)
+                            {
+                                nextReplacement = replacements[1];
+                            }
+                        }
+                    }
+                    else if (replacements.Count > 1 && nextReplacement != null)
+                    {
+                        if (nextReplacement.ReplacedAtUtc <= entry.CreatedAtUtc)
+                        {
+                            currentReplacement = nextReplacement;
+                            totalToAdd -= correctDecimalPlaces ? currentReplacement.InitialValue / 10 : currentReplacement.InitialValue;
+                            totalToAdd += correctDecimalPlaces ? currentReplacement.OldMeterValue / 10 : currentReplacement.OldMeterValue;
+                            nextReplacement = replacements
+                                .SkipWhile(e => e != currentReplacement)
+                                .Skip(1)
+                                .FirstOrDefault();
+                        }
+                    }
+
+                    if (currentReplacement != null)
+                    {
+                        entry.Value += totalToAdd;
+                    }
+                }
+            }
         }
 
         private void RemoveErrorenousTemperatures(Stats stats)
