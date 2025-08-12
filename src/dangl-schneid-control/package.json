@@ -7,7 +7,7 @@
     "build": "ng build",
     "build:prod": "ng build --configuration production --aot --no-progress --output-path ../Dangl.SchneidControl/wwwroot/dist",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test --no-watch"
   },
   "private": true,
   "dependencies": {
