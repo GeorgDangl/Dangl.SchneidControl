@@ -103,13 +103,13 @@ export class ConfigurationClient {
     }
     if (status === 204) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
-          return _observableOf<void>(null as any);
+        _observableMergeMap((_responseText: string) => {
+          return _observableOf(null as any);
         })
       );
     } else if (status === 400) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           let result400: any = null;
           result400 =
             _responseText === ''
@@ -126,7 +126,7 @@ export class ConfigurationClient {
       );
     } else if (status !== 200 && status !== 204) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           return throwException(
             'An unexpected server error occurred.',
             status,
@@ -136,7 +136,7 @@ export class ConfigurationClient {
         })
       );
     }
-    return _observableOf<void>(null as any);
+    return _observableOf(null as any);
   }
 
   setTargetBoilerTemperature(
@@ -197,13 +197,13 @@ export class ConfigurationClient {
     }
     if (status === 204) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
-          return _observableOf<void>(null as any);
+        _observableMergeMap((_responseText: string) => {
+          return _observableOf(null as any);
         })
       );
     } else if (status === 400) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           let result400: any = null;
           result400 =
             _responseText === ''
@@ -220,7 +220,7 @@ export class ConfigurationClient {
       );
     } else if (status !== 200 && status !== 204) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           return throwException(
             'An unexpected server error occurred.',
             status,
@@ -230,7 +230,7 @@ export class ConfigurationClient {
         })
       );
     }
-    return _observableOf<void>(null as any);
+    return _observableOf(null as any);
   }
 
   setTargetBufferTopTemperature(
@@ -293,13 +293,13 @@ export class ConfigurationClient {
     }
     if (status === 204) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
-          return _observableOf<void>(null as any);
+        _observableMergeMap((_responseText: string) => {
+          return _observableOf(null as any);
         })
       );
     } else if (status === 400) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           let result400: any = null;
           result400 =
             _responseText === ''
@@ -316,7 +316,7 @@ export class ConfigurationClient {
       );
     } else if (status !== 200 && status !== 204) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           return throwException(
             'An unexpected server error occurred.',
             status,
@@ -326,7 +326,7 @@ export class ConfigurationClient {
         })
       );
     }
-    return _observableOf<void>(null as any);
+    return _observableOf(null as any);
   }
 }
 
@@ -427,7 +427,7 @@ export class ConsumptionClient {
     }
     if (status === 200) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           let result200: any = null;
           result200 =
             _responseText === ''
@@ -441,7 +441,7 @@ export class ConsumptionClient {
       );
     } else if (status === 400) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           let result400: any = null;
           result400 =
             _responseText === ''
@@ -458,7 +458,7 @@ export class ConsumptionClient {
       );
     } else if (status !== 200 && status !== 204) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           return throwException(
             'An unexpected server error occurred.',
             status,
@@ -468,7 +468,7 @@ export class ConsumptionClient {
         })
       );
     }
-    return _observableOf<Consumption>(null as any);
+    return _observableOf(null as any);
   }
 }
 
@@ -545,7 +545,7 @@ export class HeatMeterReplacementsClient {
     }
     if (status === 200) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           let result200: any = null;
           result200 =
             _responseText === ''
@@ -559,7 +559,7 @@ export class HeatMeterReplacementsClient {
       );
     } else if (status !== 200 && status !== 204) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           return throwException(
             'An unexpected server error occurred.',
             status,
@@ -569,9 +569,7 @@ export class HeatMeterReplacementsClient {
         })
       );
     }
-    return _observableOf<HeatMeterReplacementViewModel[]>(
-      [] as HeatMeterReplacementViewModel[]
-    );
+    return _observableOf(null as any);
   }
 
   deleteHeatMeterReplacemenets(
@@ -634,13 +632,13 @@ export class HeatMeterReplacementsClient {
     }
     if (status === 204) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
-          return _observableOf<void>(null as any);
+        _observableMergeMap((_responseText: string) => {
+          return _observableOf(null as any);
         })
       );
     } else if (status === 400) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           let result400: any = null;
           result400 =
             _responseText === ''
@@ -660,7 +658,7 @@ export class HeatMeterReplacementsClient {
       );
     } else if (status !== 200 && status !== 204) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           return throwException(
             'An unexpected server error occurred.',
             status,
@@ -670,7 +668,7 @@ export class HeatMeterReplacementsClient {
         })
       );
     }
-    return _observableOf<void>(null as any);
+    return _observableOf(null as any);
   }
 
   createHeatMeterReplacemenet(
@@ -729,13 +727,13 @@ export class HeatMeterReplacementsClient {
     }
     if (status === 204) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
-          return _observableOf<void>(null as any);
+        _observableMergeMap((_responseText: string) => {
+          return _observableOf(null as any);
         })
       );
     } else if (status !== 200 && status !== 204) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           return throwException(
             'An unexpected server error occurred.',
             status,
@@ -745,7 +743,7 @@ export class HeatMeterReplacementsClient {
         })
       );
     }
-    return _observableOf<void>(null as any);
+    return _observableOf(null as any);
   }
 }
 
@@ -843,7 +841,7 @@ export class StatsClient {
     }
     if (status === 200) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           let result200: any = null;
           result200 =
             _responseText === ''
@@ -854,7 +852,7 @@ export class StatsClient {
       );
     } else if (status === 400) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           let result400: any = null;
           result400 =
             _responseText === ''
@@ -871,7 +869,7 @@ export class StatsClient {
       );
     } else if (status !== 200 && status !== 204) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           return throwException(
             'An unexpected server error occurred.',
             status,
@@ -881,7 +879,7 @@ export class StatsClient {
         })
       );
     }
-    return _observableOf<Stats>(null as any);
+    return _observableOf(null as any);
   }
 
   getExcel(
@@ -996,7 +994,7 @@ export class StatsClient {
       });
     } else if (status === 400) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           let result400: any = null;
           result400 =
             _responseText === ''
@@ -1013,7 +1011,7 @@ export class StatsClient {
       );
     } else if (status !== 200 && status !== 204) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           return throwException(
             'An unexpected server error occurred.',
             status,
@@ -1023,7 +1021,7 @@ export class StatsClient {
         })
       );
     }
-    return _observableOf<FileResponse>(null as any);
+    return _observableOf(null as any);
   }
 
   getCsv(
@@ -1138,7 +1136,7 @@ export class StatsClient {
       });
     } else if (status === 400) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           let result400: any = null;
           result400 =
             _responseText === ''
@@ -1155,7 +1153,7 @@ export class StatsClient {
       );
     } else if (status !== 200 && status !== 204) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           return throwException(
             'An unexpected server error occurred.',
             status,
@@ -1165,7 +1163,7 @@ export class StatsClient {
         })
       );
     }
-    return _observableOf<FileResponse>(null as any);
+    return _observableOf(null as any);
   }
 }
 
@@ -1236,7 +1234,7 @@ export class StatusClient {
     }
     if (status === 200) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           let result200: any = null;
           result200 =
             _responseText === ''
@@ -1247,7 +1245,7 @@ export class StatusClient {
       );
     } else if (status !== 200 && status !== 204) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           return throwException(
             'An unexpected server error occurred.',
             status,
@@ -1257,7 +1255,7 @@ export class StatusClient {
         })
       );
     }
-    return _observableOf<Status>(null as any);
+    return _observableOf(null as any);
   }
 }
 
@@ -1332,7 +1330,7 @@ export class ValuesClient {
     }
     if (status === 200) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           let result200: any = null;
           result200 =
             _responseText === ''
@@ -1346,7 +1344,7 @@ export class ValuesClient {
       );
     } else if (status === 400) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           let result400: any = null;
           result400 =
             _responseText === ''
@@ -1363,7 +1361,7 @@ export class ValuesClient {
       );
     } else if (status !== 200 && status !== 204) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           return throwException(
             'An unexpected server error occurred.',
             status,
@@ -1373,7 +1371,7 @@ export class ValuesClient {
         })
       );
     }
-    return _observableOf<DecimalValue>(null as any);
+    return _observableOf(null as any);
   }
 
   getTotalEnergyConsumption(): Observable<DecimalValue> {
@@ -1430,7 +1428,7 @@ export class ValuesClient {
     }
     if (status === 200) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           let result200: any = null;
           result200 =
             _responseText === ''
@@ -1444,7 +1442,7 @@ export class ValuesClient {
       );
     } else if (status === 400) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           let result400: any = null;
           result400 =
             _responseText === ''
@@ -1461,7 +1459,7 @@ export class ValuesClient {
       );
     } else if (status !== 200 && status !== 204) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           return throwException(
             'An unexpected server error occurred.',
             status,
@@ -1471,7 +1469,7 @@ export class ValuesClient {
         })
       );
     }
-    return _observableOf<DecimalValue>(null as any);
+    return _observableOf(null as any);
   }
 
   getCurrentHeatingPower(): Observable<DecimalValue> {
@@ -1528,7 +1526,7 @@ export class ValuesClient {
     }
     if (status === 200) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           let result200: any = null;
           result200 =
             _responseText === ''
@@ -1542,7 +1540,7 @@ export class ValuesClient {
       );
     } else if (status === 400) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           let result400: any = null;
           result400 =
             _responseText === ''
@@ -1559,7 +1557,7 @@ export class ValuesClient {
       );
     } else if (status !== 200 && status !== 204) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           return throwException(
             'An unexpected server error occurred.',
             status,
@@ -1569,7 +1567,7 @@ export class ValuesClient {
         })
       );
     }
-    return _observableOf<DecimalValue>(null as any);
+    return _observableOf(null as any);
   }
 
   getAdvanceTemperature(): Observable<DecimalValue> {
@@ -1626,7 +1624,7 @@ export class ValuesClient {
     }
     if (status === 200) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           let result200: any = null;
           result200 =
             _responseText === ''
@@ -1640,7 +1638,7 @@ export class ValuesClient {
       );
     } else if (status === 400) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           let result400: any = null;
           result400 =
             _responseText === ''
@@ -1657,7 +1655,7 @@ export class ValuesClient {
       );
     } else if (status !== 200 && status !== 204) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           return throwException(
             'An unexpected server error occurred.',
             status,
@@ -1667,7 +1665,7 @@ export class ValuesClient {
         })
       );
     }
-    return _observableOf<DecimalValue>(null as any);
+    return _observableOf(null as any);
   }
 
   getPrimaryRefluxTemperature(): Observable<DecimalValue> {
@@ -1724,7 +1722,7 @@ export class ValuesClient {
     }
     if (status === 200) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           let result200: any = null;
           result200 =
             _responseText === ''
@@ -1738,7 +1736,7 @@ export class ValuesClient {
       );
     } else if (status === 400) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           let result400: any = null;
           result400 =
             _responseText === ''
@@ -1755,7 +1753,7 @@ export class ValuesClient {
       );
     } else if (status !== 200 && status !== 204) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           return throwException(
             'An unexpected server error occurred.',
             status,
@@ -1765,7 +1763,7 @@ export class ValuesClient {
         })
       );
     }
-    return _observableOf<DecimalValue>(null as any);
+    return _observableOf(null as any);
   }
 
   getSecondaryRefluxTemperature(): Observable<DecimalValue> {
@@ -1824,7 +1822,7 @@ export class ValuesClient {
     }
     if (status === 200) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           let result200: any = null;
           result200 =
             _responseText === ''
@@ -1838,7 +1836,7 @@ export class ValuesClient {
       );
     } else if (status === 400) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           let result400: any = null;
           result400 =
             _responseText === ''
@@ -1855,7 +1853,7 @@ export class ValuesClient {
       );
     } else if (status !== 200 && status !== 204) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           return throwException(
             'An unexpected server error occurred.',
             status,
@@ -1865,7 +1863,7 @@ export class ValuesClient {
         })
       );
     }
-    return _observableOf<DecimalValue>(null as any);
+    return _observableOf(null as any);
   }
 
   getValveOpening(): Observable<DecimalValue> {
@@ -1922,7 +1920,7 @@ export class ValuesClient {
     }
     if (status === 200) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           let result200: any = null;
           result200 =
             _responseText === ''
@@ -1936,7 +1934,7 @@ export class ValuesClient {
       );
     } else if (status === 400) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           let result400: any = null;
           result400 =
             _responseText === ''
@@ -1953,7 +1951,7 @@ export class ValuesClient {
       );
     } else if (status !== 200 && status !== 204) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           return throwException(
             'An unexpected server error occurred.',
             status,
@@ -1963,7 +1961,7 @@ export class ValuesClient {
         })
       );
     }
-    return _observableOf<DecimalValue>(null as any);
+    return _observableOf(null as any);
   }
 
   getTransferStationStatus(): Observable<EnumValueOfTransferStationStatus> {
@@ -2022,7 +2020,7 @@ export class ValuesClient {
     }
     if (status === 200) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           let result200: any = null;
           result200 =
             _responseText === ''
@@ -2036,7 +2034,7 @@ export class ValuesClient {
       );
     } else if (status === 400) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           let result400: any = null;
           result400 =
             _responseText === ''
@@ -2053,7 +2051,7 @@ export class ValuesClient {
       );
     } else if (status !== 200 && status !== 204) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           return throwException(
             'An unexpected server error occurred.',
             status,
@@ -2063,7 +2061,7 @@ export class ValuesClient {
         })
       );
     }
-    return _observableOf<EnumValueOfTransferStationStatus>(null as any);
+    return _observableOf(null as any);
   }
 
   getBufferTemperatureTop(): Observable<DecimalValue> {
@@ -2120,7 +2118,7 @@ export class ValuesClient {
     }
     if (status === 200) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           let result200: any = null;
           result200 =
             _responseText === ''
@@ -2134,7 +2132,7 @@ export class ValuesClient {
       );
     } else if (status === 400) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           let result400: any = null;
           result400 =
             _responseText === ''
@@ -2151,7 +2149,7 @@ export class ValuesClient {
       );
     } else if (status !== 200 && status !== 204) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           return throwException(
             'An unexpected server error occurred.',
             status,
@@ -2161,7 +2159,7 @@ export class ValuesClient {
         })
       );
     }
-    return _observableOf<DecimalValue>(null as any);
+    return _observableOf(null as any);
   }
 
   getBufferTemperatureBottom(): Observable<DecimalValue> {
@@ -2218,7 +2216,7 @@ export class ValuesClient {
     }
     if (status === 200) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           let result200: any = null;
           result200 =
             _responseText === ''
@@ -2232,7 +2230,7 @@ export class ValuesClient {
       );
     } else if (status === 400) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           let result400: any = null;
           result400 =
             _responseText === ''
@@ -2249,7 +2247,7 @@ export class ValuesClient {
       );
     } else if (status !== 200 && status !== 204) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           return throwException(
             'An unexpected server error occurred.',
             status,
@@ -2259,7 +2257,7 @@ export class ValuesClient {
         })
       );
     }
-    return _observableOf<DecimalValue>(null as any);
+    return _observableOf(null as any);
   }
 
   getBoilerTemperatureTop(): Observable<DecimalValue> {
@@ -2316,7 +2314,7 @@ export class ValuesClient {
     }
     if (status === 200) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           let result200: any = null;
           result200 =
             _responseText === ''
@@ -2330,7 +2328,7 @@ export class ValuesClient {
       );
     } else if (status === 400) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           let result400: any = null;
           result400 =
             _responseText === ''
@@ -2347,7 +2345,7 @@ export class ValuesClient {
       );
     } else if (status !== 200 && status !== 204) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           return throwException(
             'An unexpected server error occurred.',
             status,
@@ -2357,7 +2355,7 @@ export class ValuesClient {
         })
       );
     }
-    return _observableOf<DecimalValue>(null as any);
+    return _observableOf(null as any);
   }
 
   getBoilerTemperatureBottom(): Observable<DecimalValue> {
@@ -2414,7 +2412,7 @@ export class ValuesClient {
     }
     if (status === 200) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           let result200: any = null;
           result200 =
             _responseText === ''
@@ -2428,7 +2426,7 @@ export class ValuesClient {
       );
     } else if (status === 400) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           let result400: any = null;
           result400 =
             _responseText === ''
@@ -2445,7 +2443,7 @@ export class ValuesClient {
       );
     } else if (status !== 200 && status !== 204) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           return throwException(
             'An unexpected server error occurred.',
             status,
@@ -2455,7 +2453,7 @@ export class ValuesClient {
         })
       );
     }
-    return _observableOf<DecimalValue>(null as any);
+    return _observableOf(null as any);
   }
 
   getTargetBufferTopTemperature(): Observable<DecimalValue> {
@@ -2514,7 +2512,7 @@ export class ValuesClient {
     }
     if (status === 200) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           let result200: any = null;
           result200 =
             _responseText === ''
@@ -2528,7 +2526,7 @@ export class ValuesClient {
       );
     } else if (status === 400) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           let result400: any = null;
           result400 =
             _responseText === ''
@@ -2545,7 +2543,7 @@ export class ValuesClient {
       );
     } else if (status !== 200 && status !== 204) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           return throwException(
             'An unexpected server error occurred.',
             status,
@@ -2555,7 +2553,7 @@ export class ValuesClient {
         })
       );
     }
-    return _observableOf<DecimalValue>(null as any);
+    return _observableOf(null as any);
   }
 
   getTargetBoilerTemperature(): Observable<DecimalValue> {
@@ -2612,7 +2610,7 @@ export class ValuesClient {
     }
     if (status === 200) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           let result200: any = null;
           result200 =
             _responseText === ''
@@ -2626,7 +2624,7 @@ export class ValuesClient {
       );
     } else if (status === 400) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           let result400: any = null;
           result400 =
             _responseText === ''
@@ -2643,7 +2641,7 @@ export class ValuesClient {
       );
     } else if (status !== 200 && status !== 204) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           return throwException(
             'An unexpected server error occurred.',
             status,
@@ -2653,7 +2651,7 @@ export class ValuesClient {
         })
       );
     }
-    return _observableOf<DecimalValue>(null as any);
+    return _observableOf(null as any);
   }
 
   getHeatingCircuitStatus(
@@ -2717,7 +2715,7 @@ export class ValuesClient {
     }
     if (status === 200) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           let result200: any = null;
           result200 =
             _responseText === ''
@@ -2731,7 +2729,7 @@ export class ValuesClient {
       );
     } else if (status === 400) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           let result400: any = null;
           result400 =
             _responseText === ''
@@ -2748,7 +2746,7 @@ export class ValuesClient {
       );
     } else if (status !== 200 && status !== 204) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           return throwException(
             'An unexpected server error occurred.',
             status,
@@ -2758,7 +2756,7 @@ export class ValuesClient {
         })
       );
     }
-    return _observableOf<EnumValueOfHeatingCircuitStatus>(null as any);
+    return _observableOf(null as any);
   }
 
   getHeatingCircuitAdvanceTemperature(
@@ -2823,7 +2821,7 @@ export class ValuesClient {
     }
     if (status === 200) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           let result200: any = null;
           result200 =
             _responseText === ''
@@ -2837,7 +2835,7 @@ export class ValuesClient {
       );
     } else if (status === 400) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           let result400: any = null;
           result400 =
             _responseText === ''
@@ -2854,7 +2852,7 @@ export class ValuesClient {
       );
     } else if (status !== 200 && status !== 204) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           return throwException(
             'An unexpected server error occurred.',
             status,
@@ -2864,7 +2862,7 @@ export class ValuesClient {
         })
       );
     }
-    return _observableOf<DecimalValue>(null as any);
+    return _observableOf(null as any);
   }
 
   getPumpStatusHeatingCircuit(pumpId: number): Observable<BoolValue> {
@@ -2922,7 +2920,7 @@ export class ValuesClient {
     }
     if (status === 200) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           let result200: any = null;
           result200 =
             _responseText === ''
@@ -2933,7 +2931,7 @@ export class ValuesClient {
       );
     } else if (status === 400) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           let result400: any = null;
           result400 =
             _responseText === ''
@@ -2950,7 +2948,7 @@ export class ValuesClient {
       );
     } else if (status !== 200 && status !== 204) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           return throwException(
             'An unexpected server error occurred.',
             status,
@@ -2960,7 +2958,7 @@ export class ValuesClient {
         })
       );
     }
-    return _observableOf<BoolValue>(null as any);
+    return _observableOf(null as any);
   }
 
   getBoilerLoadingPumpStatus(): Observable<BoolValue> {
@@ -3015,7 +3013,7 @@ export class ValuesClient {
     }
     if (status === 200) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           let result200: any = null;
           result200 =
             _responseText === ''
@@ -3026,7 +3024,7 @@ export class ValuesClient {
       );
     } else if (status === 400) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           let result400: any = null;
           result400 =
             _responseText === ''
@@ -3043,7 +3041,7 @@ export class ValuesClient {
       );
     } else if (status !== 200 && status !== 204) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           return throwException(
             'An unexpected server error occurred.',
             status,
@@ -3053,7 +3051,7 @@ export class ValuesClient {
         })
       );
     }
-    return _observableOf<BoolValue>(null as any);
+    return _observableOf(null as any);
   }
 
   getBufferLoadingPumpStatus(): Observable<BoolValue> {
@@ -3108,7 +3106,7 @@ export class ValuesClient {
     }
     if (status === 200) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           let result200: any = null;
           result200 =
             _responseText === ''
@@ -3119,7 +3117,7 @@ export class ValuesClient {
       );
     } else if (status === 400) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           let result400: any = null;
           result400 =
             _responseText === ''
@@ -3136,7 +3134,7 @@ export class ValuesClient {
       );
     } else if (status !== 200 && status !== 204) {
       return blobToText(responseBlob).pipe(
-        _observableMergeMap((_responseText) => {
+        _observableMergeMap((_responseText: string) => {
           return throwException(
             'An unexpected server error occurred.',
             status,
@@ -3146,7 +3144,7 @@ export class ValuesClient {
         })
       );
     }
-    return _observableOf<BoolValue>(null as any);
+    return _observableOf(null as any);
   }
 }
 
@@ -3284,7 +3282,7 @@ export interface FileResponse {
 }
 
 export class SwaggerException extends Error {
-  message: string;
+  override message: string;
   status: number;
   response: string;
   headers: { [key: string]: any };
