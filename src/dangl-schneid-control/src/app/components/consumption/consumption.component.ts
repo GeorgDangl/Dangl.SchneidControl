@@ -11,9 +11,10 @@ import { Moment } from 'moment';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-stats',
-  templateUrl: './consumption.component.html',
-  styleUrls: ['./consumption.component.scss'],
+    selector: 'app-stats',
+    templateUrl: './consumption.component.html',
+    styleUrls: ['./consumption.component.scss'],
+    standalone: false
 })
 export class ConsumptionComponent implements OnInit {
   colorScheme = {

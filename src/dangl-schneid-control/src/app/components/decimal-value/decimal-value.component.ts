@@ -3,9 +3,10 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { DecimalValue } from '../../generated-client/generated-client';
 
 @Component({
-  selector: 'app-decimal-value',
-  templateUrl: './decimal-value.component.html',
-  styleUrls: ['./decimal-value.component.scss'],
+    selector: 'app-decimal-value',
+    templateUrl: './decimal-value.component.html',
+    styleUrls: ['./decimal-value.component.scss'],
+    standalone: false
 })
 export class DecimalValueComponent {
   @Input() label: string | null = null;

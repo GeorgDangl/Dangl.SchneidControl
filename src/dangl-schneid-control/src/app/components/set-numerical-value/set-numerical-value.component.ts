@@ -2,9 +2,10 @@ import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-set-numerical-value',
-  templateUrl: './set-numerical-value.component.html',
-  styleUrls: ['./set-numerical-value.component.scss'],
+    selector: 'app-set-numerical-value',
+    templateUrl: './set-numerical-value.component.html',
+    styleUrls: ['./set-numerical-value.component.scss'],
+    standalone: false
 })
 export class SetNumericalValueComponent {
   get canSave(): boolean {

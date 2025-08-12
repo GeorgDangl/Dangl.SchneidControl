@@ -8,9 +8,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { SetTransferStationStatusComponent } from '../set-transfer-station-status/set-transfer-station-status.component';
 
 @Component({
-  selector: 'app-transfer-station-status',
-  templateUrl: './transfer-station-status.component.html',
-  styleUrls: ['./transfer-station-status.component.scss'],
+    selector: 'app-transfer-station-status',
+    templateUrl: './transfer-station-status.component.html',
+    styleUrls: ['./transfer-station-status.component.scss'],
+    standalone: false
 })
 export class TransferStationStatusComponent {
   @Input() label: string | null = null;

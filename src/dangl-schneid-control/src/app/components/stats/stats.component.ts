@@ -13,9 +13,10 @@ import * as moment from 'moment';
 import { saveAs } from '../../utilities/file-save';
 
 @Component({
-  selector: 'app-stats',
-  templateUrl: './stats.component.html',
-  styleUrls: ['./stats.component.scss'],
+    selector: 'app-stats',
+    templateUrl: './stats.component.html',
+    styleUrls: ['./stats.component.scss'],
+    standalone: false
 })
 export class StatsComponent implements OnInit {
   colorScheme = {
