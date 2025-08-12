@@ -9,7 +9,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Moment } from 'moment';
 import { Subscription } from 'rxjs';
 
-import * as moment from 'moment';
+import moment from 'moment';
 import { saveAs } from '../../utilities/file-save';
 
 @Component({
