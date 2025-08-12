@@ -113,7 +113,7 @@ namespace Dangl.SchneidControl
         {
             CompileBackend(); // Need that with newer NSwag so the project outputs are present
             var nSwagConfigPath = SourceDirectory / "dangl-schneid-control" / "src" / "nswag.json";
-            var nSwagToolPath = NuGetToolPathResolver.GetPackageExecutable("NSwag.MSBuild", "tools/Net80/dotnet-nswag.dll");
+            var nSwagToolPath = NuGetToolPathResolver.GetPackageExecutable("NSwag.MSBuild", "tools/Net90/dotnet-nswag.dll");
 
             DotNetRun(x => x
                 .SetProcessToolPath(nSwagToolPath)
