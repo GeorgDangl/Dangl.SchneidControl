@@ -6,9 +6,10 @@ import {
 } from '../../generated-client/generated-client';
 
 @Component({
-  selector: 'app-set-transfer-station-status',
-  templateUrl: './set-transfer-station-status.component.html',
-  styleUrls: ['./set-transfer-station-status.component.scss'],
+    selector: 'app-set-transfer-station-status',
+    templateUrl: './set-transfer-station-status.component.html',
+    styleUrls: ['./set-transfer-station-status.component.scss'],
+    standalone: false
 })
 export class SetTransferStationStatusComponent {
   constructor(

@@ -3,7 +3,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { TransferStationStatus } from '../generated-client/generated-client';
 
 @Pipe({
-  name: 'transferStationStatus',
+    name: 'transferStationStatus',
+    standalone: false
 })
 export class TransferStationStatusPipe implements PipeTransform {
   transform(value?: TransferStationStatus): string {

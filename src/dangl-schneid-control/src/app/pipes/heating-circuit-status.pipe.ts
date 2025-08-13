@@ -3,7 +3,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { HeatingCircuitStatus } from '../generated-client/generated-client';
 
 @Pipe({
-  name: 'heatingCircuitStatus',
+    name: 'heatingCircuitStatus',
+    standalone: false
 })
 export class HeatingCircuitStatusPipe implements PipeTransform {
   transform(value?: HeatingCircuitStatus): string {

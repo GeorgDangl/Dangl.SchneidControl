@@ -16,19 +16,18 @@ import { MatTableModule } from '@angular/material/table';
 import { Moment } from 'moment';
 
 @Component({
-  selector: 'app-settings',
-  standalone: true,
-  imports: [
-    MatTableModule,
-    DatePipe,
-    MatButtonModule,
-    MatIconModule,
-    FormsModule,
-    MatInputModule,
-    MatDatepickerModule,
-  ],
-  templateUrl: './settings.component.html',
-  styleUrl: './settings.component.scss',
+    selector: 'app-settings',
+    imports: [
+        MatTableModule,
+        DatePipe,
+        MatButtonModule,
+        MatIconModule,
+        FormsModule,
+        MatInputModule,
+        MatDatepickerModule,
+    ],
+    templateUrl: './settings.component.html',
+    styleUrl: './settings.component.scss'
 })
 export class SettingsComponent implements OnInit {
   constructor(
