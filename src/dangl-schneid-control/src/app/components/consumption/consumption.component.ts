@@ -1,4 +1,4 @@
-import * as moment from 'moment';
+import moment from 'moment';
 
 import { Component, OnInit } from '@angular/core';
 import {
@@ -6,7 +6,6 @@ import {
   ConsumptionResolution,
 } from '../../generated-client/generated-client';
 
-import { MatDialogRef } from '@angular/material/dialog';
 import { Moment } from 'moment';
 import { Subscription } from 'rxjs';
 
@@ -58,7 +57,6 @@ export class ConsumptionComponent implements OnInit {
   }
 
   constructor(
-    private matDialog: MatDialogRef<ConsumptionComponent>,
     private consumptionClient: ConsumptionClient
   ) {}
 

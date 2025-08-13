@@ -21,6 +21,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { NgModule } from '@angular/core';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 
 @NgModule({
   imports: [
@@ -58,6 +59,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } },
     { provide: MAT_DIALOG_DATA, useValue: [] },
     provideHttpClient(withInterceptorsFromDi()),
+    provideHttpClientTesting(),
   ]
 })
 export class SharedTestingModule {}
