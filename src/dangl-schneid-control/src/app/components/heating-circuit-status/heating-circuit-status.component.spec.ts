@@ -10,11 +10,11 @@ describe('HeatingCircuitStatusComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [HeatingCircuitStatusComponent, HeatingCircuitStatusPipe],
-      imports: [
-        SharedTestingModule
-      ]
-    });
+    imports: [
+        SharedTestingModule,
+        HeatingCircuitStatusComponent, HeatingCircuitStatusPipe
+    ]
+});
     fixture = TestBed.createComponent(HeatingCircuitStatusComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

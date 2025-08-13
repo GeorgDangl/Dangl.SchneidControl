@@ -1,11 +1,16 @@
 import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogContent } from '@angular/material/dialog';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { MatFormField, MatSuffix } from '@angular/material/select';
+import { MatInput } from '@angular/material/input';
+import { FormsModule } from '@angular/forms';
+import { MatButton } from '@angular/material/button';
 
 @Component({
     selector: 'app-set-numerical-value',
     templateUrl: './set-numerical-value.component.html',
     styleUrls: ['./set-numerical-value.component.scss'],
-    standalone: false
+    imports: [CdkScrollable, MatDialogContent, MatFormField, MatInput, FormsModule, MatSuffix, MatButton]
 })
 export class SetNumericalValueComponent {
   get canSave(): boolean {

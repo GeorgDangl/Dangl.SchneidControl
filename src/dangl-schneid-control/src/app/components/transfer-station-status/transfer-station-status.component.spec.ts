@@ -10,11 +10,11 @@ describe('TransferStationStatusComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [TransferStationStatusComponent, TransferStationStatusPipe],
-      imports: [
-        SharedTestingModule
-      ]
-    });
+    imports: [
+        SharedTestingModule,
+        TransferStationStatusComponent, TransferStationStatusPipe
+    ]
+});
     fixture = TestBed.createComponent(TransferStationStatusComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

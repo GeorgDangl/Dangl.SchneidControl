@@ -1,15 +1,20 @@
 import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogContent } from '@angular/material/dialog';
 import {
   ConfigurationClient,
   TransferStationStatus,
 } from '../../generated-client/generated-client';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { MatSelect, MatOption } from '@angular/material/select';
+import { FormsModule } from '@angular/forms';
+import { MatButton } from '@angular/material/button';
+import { TransferStationStatusPipe } from '../../pipes/transfer-station-status.pipe';
 
 @Component({
     selector: 'app-set-transfer-station-status',
     templateUrl: './set-transfer-station-status.component.html',
     styleUrls: ['./set-transfer-station-status.component.scss'],
-    standalone: false
+    imports: [CdkScrollable, MatDialogContent, MatSelect, FormsModule, MatOption, MatButton, TransferStationStatusPipe]
 })
 export class SetTransferStationStatusComponent {
   constructor(

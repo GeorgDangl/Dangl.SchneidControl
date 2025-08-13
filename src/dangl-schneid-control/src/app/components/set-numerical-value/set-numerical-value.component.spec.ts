@@ -10,14 +10,14 @@ describe('SetNumericalValueComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [SetNumericalValueComponent],
-      imports: [
-        SharedTestingModule
-      ],
-      providers: [
+    imports: [
+        SharedTestingModule,
+        SetNumericalValueComponent
+    ],
+    providers: [
         { provide: MatDialogRef, useValue: {} }
-      ]
-    });
+    ]
+});
     fixture = TestBed.createComponent(SetNumericalValueComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

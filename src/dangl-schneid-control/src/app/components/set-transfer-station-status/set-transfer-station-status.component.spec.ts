@@ -11,14 +11,14 @@ describe('SetTransferStationStatusComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [SetTransferStationStatusComponent, TransferStationStatusPipe],
-      imports: [
-        SharedTestingModule
-      ],
-      providers: [
+    imports: [
+        SharedTestingModule,
+        SetTransferStationStatusComponent, TransferStationStatusPipe
+    ],
+    providers: [
         { provide: MatDialogRef, useValue: {} }
-      ]
-    });
+    ]
+});
     fixture = TestBed.createComponent(SetTransferStationStatusComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

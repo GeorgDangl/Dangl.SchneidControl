@@ -9,11 +9,11 @@ describe('BoolValueComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [BoolValueComponent],
-      imports: [
-        SharedTestingModule
-      ]
-    });
+    imports: [
+        SharedTestingModule,
+        BoolValueComponent
+    ]
+});
     fixture = TestBed.createComponent(BoolValueComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

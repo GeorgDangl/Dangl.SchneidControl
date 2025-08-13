@@ -10,14 +10,14 @@ describe('ConsumptionComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ConsumptionComponent],
-      imports: [
-        SharedTestingModule
-      ],
-      providers: [
+    imports: [
+        SharedTestingModule,
+        ConsumptionComponent
+    ],
+    providers: [
         { provide: MatDialogRef, useValue: {} }
-      ]
-    });
+    ]
+});
     fixture = TestBed.createComponent(ConsumptionComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

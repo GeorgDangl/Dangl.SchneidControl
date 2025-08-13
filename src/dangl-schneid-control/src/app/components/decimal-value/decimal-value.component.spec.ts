@@ -9,11 +9,11 @@ describe('DecimalValueComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DecimalValueComponent ],
-      imports: [
-        SharedTestingModule
-      ]
-    })
+    imports: [
+        SharedTestingModule,
+        DecimalValueComponent
+    ]
+})
     .compileComponents();
 
     fixture = TestBed.createComponent(DecimalValueComponent);

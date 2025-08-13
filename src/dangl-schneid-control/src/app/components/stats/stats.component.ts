@@ -11,12 +11,19 @@ import { Subscription } from 'rxjs';
 
 import moment from 'moment';
 import { saveAs } from '../../utilities/file-save';
+import { MatFormField, MatSuffix } from '@angular/material/select';
+import { MatInput } from '@angular/material/input';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { FormsModule } from '@angular/forms';
+import { MatButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { AreaChartModule } from '@swimlane/ngx-charts';
 
 @Component({
     selector: 'app-stats',
     templateUrl: './stats.component.html',
     styleUrls: ['./stats.component.scss'],
-    standalone: false
+    imports: [MatFormField, MatInput, MatDatepickerInput, FormsModule, MatDatepickerToggle, MatSuffix, MatDatepicker, MatButton, MatIcon, AreaChartModule]
 })
 export class StatsComponent implements OnInit {
   colorScheme = {

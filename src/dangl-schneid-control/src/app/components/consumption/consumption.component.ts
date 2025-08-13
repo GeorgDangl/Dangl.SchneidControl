@@ -8,12 +8,17 @@ import {
 
 import { Moment } from 'moment';
 import { Subscription } from 'rxjs';
+import { MatFormField, MatSuffix, MatLabel, MatSelect, MatOption } from '@angular/material/select';
+import { MatInput } from '@angular/material/input';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { FormsModule } from '@angular/forms';
+import { AreaChartModule } from '@swimlane/ngx-charts';
 
 @Component({
     selector: 'app-stats',
     templateUrl: './consumption.component.html',
     styleUrls: ['./consumption.component.scss'],
-    standalone: false
+    imports: [MatFormField, MatInput, MatDatepickerInput, FormsModule, MatDatepickerToggle, MatSuffix, MatDatepicker, MatLabel, MatSelect, MatOption, AreaChartModule]
 })
 export class ConsumptionComponent implements OnInit {
   colorScheme = {

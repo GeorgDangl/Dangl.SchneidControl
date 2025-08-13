@@ -6,12 +6,16 @@ import {
 
 import { MatDialog } from '@angular/material/dialog';
 import { SetTransferStationStatusComponent } from '../set-transfer-station-status/set-transfer-station-status.component';
+import { MatCard, MatCardHeader, MatCardTitle, MatCardContent, MatCardActions } from '@angular/material/card';
+import { MatButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { TransferStationStatusPipe } from '../../pipes/transfer-station-status.pipe';
 
 @Component({
     selector: 'app-transfer-station-status',
     templateUrl: './transfer-station-status.component.html',
     styleUrls: ['./transfer-station-status.component.scss'],
-    standalone: false
+    imports: [MatCard, MatCardHeader, MatCardTitle, MatCardContent, MatCardActions, MatButton, MatIcon, TransferStationStatusPipe]
 })
 export class TransferStationStatusComponent {
   @Input() label: string | null = null;
