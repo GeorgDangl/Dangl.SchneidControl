@@ -3,7 +3,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SetTransferStationStatusComponent } from './set-transfer-station-status.component';
 import { SharedTestingModule } from 'src/app/shared-testing.module';
 import { MatDialogRef } from '@angular/material/dialog';
-import { TransferStationStatusPipe } from 'src/app/pipes/transfer-station-status.pipe';
 
 describe('SetTransferStationStatusComponent', () => {
   let component: SetTransferStationStatusComponent;
@@ -13,7 +12,7 @@ describe('SetTransferStationStatusComponent', () => {
     TestBed.configureTestingModule({
     imports: [
         SharedTestingModule,
-        SetTransferStationStatusComponent, TransferStationStatusPipe
+        SetTransferStationStatusComponent
     ],
     providers: [
         { provide: MatDialogRef, useValue: {} }

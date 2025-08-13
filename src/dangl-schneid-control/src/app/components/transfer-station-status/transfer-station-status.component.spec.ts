@@ -2,7 +2,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TransferStationStatusComponent } from './transfer-station-status.component';
 import { SharedTestingModule } from 'src/app/shared-testing.module';
-import { TransferStationStatusPipe } from 'src/app/pipes/transfer-station-status.pipe';
 
 describe('TransferStationStatusComponent', () => {
   let component: TransferStationStatusComponent;
@@ -12,7 +11,7 @@ describe('TransferStationStatusComponent', () => {
     TestBed.configureTestingModule({
     imports: [
         SharedTestingModule,
-        TransferStationStatusComponent, TransferStationStatusPipe
+        TransferStationStatusComponent
     ]
 });
     fixture = TestBed.createComponent(TransferStationStatusComponent);
