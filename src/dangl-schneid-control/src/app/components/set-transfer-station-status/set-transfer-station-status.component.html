@@ -2,9 +2,11 @@
   <h1>Betriebsart Ändern</h1>
 
   <mat-select [(ngModel)]="selectedStatus">
-    <mat-option *ngFor="let status of availableStati" [value]="status">
-      {{ status | transferStationStatus }}
-    </mat-option>
+    @for (status of availableStati; track status) {
+      <mat-option [value]="status">
+        {{ status | transferStationStatus }}
+      </mat-option>
+    }
   </mat-select>
 
   <div class="actions">

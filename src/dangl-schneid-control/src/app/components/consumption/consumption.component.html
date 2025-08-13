@@ -9,44 +9,45 @@
         [max]="endOfToday"
         placeholder="Von"
         [(ngModel)]="fromDate"
-      />
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
-    <mat-form-field>
-      <input
-        matInput
-        [matDatepicker]="picker2"
-        [max]="endOfToday"
-        placeholder="Bis"
-        [(ngModel)]="endDate"
-      />
-      <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-      <mat-datepicker #picker2></mat-datepicker>
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Zeitintervall</mat-label>
-      <mat-select [(ngModel)]="resolution">
-        <mat-option [value]="'Hourly'"> Stündlich </mat-option>
-        <mat-option [value]="'Daily'"> Täglich </mat-option>
-        <mat-option [value]="'Weekly'"> Wöchentlich </mat-option>
-        <mat-option [value]="'Monthly'"> Monatlich </mat-option>
-        <mat-option [value]="'Yearly'"> Jährlich </mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
+        />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field>
+        <input
+          matInput
+          [matDatepicker]="picker2"
+          [max]="endOfToday"
+          placeholder="Bis"
+          [(ngModel)]="endDate"
+          />
+          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+          <mat-datepicker #picker2></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Zeitintervall</mat-label>
+          <mat-select [(ngModel)]="resolution">
+            <mat-option [value]="'Hourly'"> Stündlich </mat-option>
+            <mat-option [value]="'Daily'"> Täglich </mat-option>
+            <mat-option [value]="'Weekly'"> Wöchentlich </mat-option>
+            <mat-option [value]="'Monthly'"> Monatlich </mat-option>
+            <mat-option [value]="'Yearly'"> Jährlich </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
 
-  <div class="charts-wrapper">
-    <ngx-charts-area-chart
-      *ngIf="dataSet && dataSet.length"
-      [scheme]="$any(colorScheme)"
-      [showYAxisLabel]="true"
-      [xAxis]="true"
-      [yAxis]="true"
-      [yAxisLabel]="unit || ''"
-      [timeline]="false"
-      [results]="dataSet"
-    >
-    </ngx-charts-area-chart>
-  </div>
-</div>
+      <div class="charts-wrapper">
+        @if (dataSet && dataSet.length) {
+          <ngx-charts-area-chart
+            [scheme]="$any(colorScheme)"
+            [showYAxisLabel]="true"
+            [xAxis]="true"
+            [yAxis]="true"
+            [yAxisLabel]="unit || ''"
+            [timeline]="false"
+            [results]="dataSet"
+            >
+          </ngx-charts-area-chart>
+        }
+      </div>
+    </div>

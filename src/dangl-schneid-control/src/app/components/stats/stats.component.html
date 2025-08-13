@@ -9,44 +9,45 @@
         [max]="endOfToday"
         placeholder="Von"
         [(ngModel)]="fromDate"
-      />
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
-    <mat-form-field>
-      <input
-        matInput
-        [matDatepicker]="picker2"
-        [max]="endOfToday"
-        placeholder="Bis"
-        [(ngModel)]="endDate"
-      />
-      <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-      <mat-datepicker #picker2></mat-datepicker>
-    </mat-form-field>
-  </div>
-  <div class="export-buttons">
-    <button mat-raised-button (click)="saveAsExcel()">
-      <mat-icon>format_align_justify</mat-icon>
-      Excel
-    </button>
-    <button mat-raised-button (click)="saveAsCsv()">
-      <mat-icon>list</mat-icon>
-      CSV
-    </button>
-  </div>
+        />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field>
+        <input
+          matInput
+          [matDatepicker]="picker2"
+          [max]="endOfToday"
+          placeholder="Bis"
+          [(ngModel)]="endDate"
+          />
+          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+          <mat-datepicker #picker2></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div class="export-buttons">
+        <button mat-raised-button (click)="saveAsExcel()">
+          <mat-icon>format_align_justify</mat-icon>
+          Excel
+        </button>
+        <button mat-raised-button (click)="saveAsCsv()">
+          <mat-icon>list</mat-icon>
+          CSV
+        </button>
+      </div>
 
-  <div class="charts-wrapper">
-    <ngx-charts-area-chart
-      *ngIf="dataSet && dataSet.length"
-      [scheme]="$any(colorScheme)"
-      [showYAxisLabel]="true"
-      [xAxis]="true"
-      [yAxis]="true"
-      [yAxisLabel]="unit || ''"
-      [timeline]="false"
-      [results]="dataSet"
-    >
-    </ngx-charts-area-chart>
-  </div>
-</div>
+      <div class="charts-wrapper">
+        @if (dataSet && dataSet.length) {
+          <ngx-charts-area-chart
+            [scheme]="$any(colorScheme)"
+            [showYAxisLabel]="true"
+            [xAxis]="true"
+            [yAxis]="true"
+            [yAxisLabel]="unit || ''"
+            [timeline]="false"
+            [results]="dataSet"
+            >
+          </ngx-charts-area-chart>
+        }
+      </div>
+    </div>
