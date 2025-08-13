@@ -1,12 +1,27 @@
 import { TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
+import { SharedTestingModule } from './shared-testing.module';
+import { HeaderComponent } from '@dangl/angular-material-shared';
+import { TransferStationStatusComponent } from './components/transfer-station-status/transfer-station-status.component';
+import { HeatingCircuitStatusComponent } from './components/heating-circuit-status/heating-circuit-status.component';
+import { BoolValueComponent } from './components/bool-value/bool-value.component';
+import { DecimalValueComponent } from './components/decimal-value/decimal-value.component';
+import { TransferStationStatusPipe } from './pipes/transfer-station-status.pipe';
+import { HeatingCircuitStatusPipe } from './pipes/heating-circuit-status.pipe';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
-      declarations: [AppComponent],
+      imports: [SharedTestingModule, HeaderComponent],
+      declarations: [
+        AppComponent,
+        TransferStationStatusComponent,
+        HeatingCircuitStatusComponent,
+        BoolValueComponent,
+        DecimalValueComponent,
+        TransferStationStatusPipe,
+        HeatingCircuitStatusPipe
+      ],
     }).compileComponents();
   });
 
@@ -14,20 +29,5 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
     expect(app).toBeTruthy();
-  });
-
-  it(`should have as title 'dangl-schneid-control'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('dangl-schneid-control');
-  });
-
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain(
-      'dangl-schneid-control app is running!'
-    );
   });
 });

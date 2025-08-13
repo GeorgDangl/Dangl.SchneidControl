@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { BoolValueComponent } from './bool-value.component';
+import { SharedTestingModule } from 'src/app/shared-testing.module';
 
 describe('BoolValueComponent', () => {
   let component: BoolValueComponent;
@@ -8,7 +9,10 @@ describe('BoolValueComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [BoolValueComponent]
+      declarations: [BoolValueComponent],
+      imports: [
+        SharedTestingModule
+      ]
     });
     fixture = TestBed.createComponent(BoolValueComponent);
     component = fixture.componentInstance;
