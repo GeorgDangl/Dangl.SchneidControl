@@ -9,11 +9,11 @@ describe('ConsumptionComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ConsumptionComponent],
-      imports: [
-        SharedTestingModule
-      ]
-    });
+    imports: [
+        SharedTestingModule,
+        ConsumptionComponent
+    ]
+});
     fixture = TestBed.createComponent(ConsumptionComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

@@ -9,11 +9,11 @@ describe('SetNumericalValueComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [SetNumericalValueComponent],
-      imports: [
-        SharedTestingModule
-      ]
-    });
+    imports: [
+        SharedTestingModule,
+        SetNumericalValueComponent
+    ]
+});
     fixture = TestBed.createComponent(SetNumericalValueComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

@@ -33,19 +33,7 @@ import { TransferStationStatusPipe } from './pipes/transfer-station-status.pipe'
 import { HeaderComponent } from '@dangl/angular-material-shared';
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        DecimalValueComponent,
-        BoolValueComponent,
-        TransferStationStatusComponent,
-        TransferStationStatusPipe,
-        HeatingCircuitStatusPipe,
-        HeatingCircuitStatusComponent,
-        SetTransferStationStatusComponent,
-        SetNumericalValueComponent,
-        StatsComponent,
-        ConsumptionComponent
-    ],
+    declarations: [AppComponent],
     imports: [
         BrowserModule,
         AppRoutingModule,
@@ -62,12 +50,22 @@ import { HeaderComponent } from '@dangl/angular-material-shared';
         NgxChartsModule,
         MatDatepickerModule,
         MatMomentDateModule,
-        HeaderComponent
+        HeaderComponent,
+        DecimalValueComponent,
+        BoolValueComponent,
+        TransferStationStatusComponent,
+        TransferStationStatusPipe,
+        HeatingCircuitStatusPipe,
+        HeatingCircuitStatusComponent,
+        SetTransferStationStatusComponent,
+        SetNumericalValueComponent,
+        StatsComponent,
+        ConsumptionComponent
     ],
     providers: [
         { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } },
         provideHttpClient(withInterceptorsFromDi()),
     ],
     bootstrap: [AppComponent],
-  })
+})
 export class AppModule {}

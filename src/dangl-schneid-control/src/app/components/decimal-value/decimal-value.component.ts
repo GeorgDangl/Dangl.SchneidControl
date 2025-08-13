@@ -1,12 +1,16 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { DecimalValue } from '../../generated-client/generated-client';
+import { MatCard, MatCardHeader, MatCardTitle, MatCardContent, MatCardActions } from '@angular/material/card';
+import { NgClass, DecimalPipe } from '@angular/common';
+import { MatButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
     selector: 'app-decimal-value',
     templateUrl: './decimal-value.component.html',
     styleUrls: ['./decimal-value.component.scss'],
-    standalone: false
+    imports: [MatCard, NgClass, MatCardHeader, MatCardTitle, MatCardContent, MatCardActions, MatButton, MatIcon, DecimalPipe]
 })
 export class DecimalValueComponent {
   @Input() label: string | null = null;

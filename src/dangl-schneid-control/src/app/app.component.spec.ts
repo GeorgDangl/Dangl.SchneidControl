@@ -12,17 +12,14 @@ import { HeatingCircuitStatusPipe } from './pipes/heating-circuit-status.pipe';
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SharedTestingModule, HeaderComponent],
-      declarations: [
-        AppComponent,
-        TransferStationStatusComponent,
+    imports: [SharedTestingModule, HeaderComponent, TransferStationStatusComponent,
         HeatingCircuitStatusComponent,
         BoolValueComponent,
         DecimalValueComponent,
         TransferStationStatusPipe,
-        HeatingCircuitStatusPipe
-      ],
-    }).compileComponents();
+        HeatingCircuitStatusPipe],
+    declarations: [AppComponent],
+}).compileComponents();
   });
 
   it('should create the app', () => {
