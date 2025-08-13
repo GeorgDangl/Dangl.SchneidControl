@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import {
   EnumValueOfTransferStationStatus,
   TransferStationStatus,
@@ -18,11 +18,11 @@ import { TransferStationStatusPipe } from '../../pipes/transfer-station-status.p
     imports: [MatCard, MatCardHeader, MatCardTitle, MatCardContent, MatCardActions, MatButton, MatIcon, TransferStationStatusPipe]
 })
 export class TransferStationStatusComponent {
+  private dialog = inject(MatDialog);
+
   @Input() label: string | null = null;
   @Input() value: EnumValueOfTransferStationStatus | null = null;
   @Output() onStatusChanged = new EventEmitter<void>();
-
-  constructor(private dialog: MatDialog) {}
 
   initiateTransferStationStatusChange(): void {
     if (this.value) {

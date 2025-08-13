@@ -4,7 +4,7 @@ import {
   StatusClient,
 } from './generated-client/generated-client';
 
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ConsumptionComponent } from './components/consumption/consumption.component';
 import { DashboardService } from './services/dashboard.service';
 import { DashboardValues } from './models/dashboard-values';
@@ -27,12 +27,11 @@ import { AsyncPipe } from '@angular/common';
     imports: [HeaderComponent, MatProgressSpinner, TransferStationStatusComponent, HeatingCircuitStatusComponent, BoolValueComponent, DecimalValueComponent, AsyncPipe]
 })
 export class AppComponent {
-  constructor(
-    private dashboardService: DashboardService,
-    private matDialog: MatDialog,
-    private configurationClient: ConfigurationClient,
-    private statusClient: StatusClient
-  ) {}
+  private dashboardService = inject(DashboardService);
+  private matDialog = inject(MatDialog);
+  private configurationClient = inject(ConfigurationClient);
+  private statusClient = inject(StatusClient);
+
 
   private lastValues: DashboardValues | null = null;
   public dashboardValues$ = new Subject<DashboardValues>();

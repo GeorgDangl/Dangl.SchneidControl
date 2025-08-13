@@ -1,12 +1,11 @@
 import moment from 'moment';
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   ConsumptionClient,
   ConsumptionResolution,
 } from '../../generated-client/generated-client';
 
-import { MatDialogRef } from '@angular/material/dialog';
 import { Moment } from 'moment';
 import { Subscription } from 'rxjs';
 import { MatFormField, MatSuffix, MatLabel, MatSelect, MatOption } from '@angular/material/select';
@@ -22,6 +21,8 @@ import { AreaChartModule } from '@swimlane/ngx-charts';
     imports: [MatFormField, MatInput, MatDatepickerInput, FormsModule, MatDatepickerToggle, MatSuffix, MatDatepicker, MatLabel, MatSelect, MatOption, AreaChartModule]
 })
 export class ConsumptionComponent implements OnInit {
+  private consumptionClient = inject(ConsumptionClient);
+
   colorScheme = {
     domain: ['#00acc1'],
   };
@@ -61,11 +62,6 @@ export class ConsumptionComponent implements OnInit {
   get resolution() {
     return this._resolution;
   }
-
-  constructor(
-    private matDialog: MatDialogRef<ConsumptionComponent>,
-    private consumptionClient: ConsumptionClient
-  ) {}
 
   ngOnInit(): void {
     this.queryData();

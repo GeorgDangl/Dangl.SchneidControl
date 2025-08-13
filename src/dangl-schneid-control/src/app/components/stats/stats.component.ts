@@ -1,11 +1,11 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   FileResponse,
   LogEntryType,
   Stats,
   StatsClient,
 } from '../../generated-client/generated-client';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Moment } from 'moment';
 import { Subscription } from 'rxjs';
 
@@ -26,6 +26,12 @@ import { AreaChartModule } from '@swimlane/ngx-charts';
     imports: [MatFormField, MatInput, MatDatepickerInput, FormsModule, MatDatepickerToggle, MatSuffix, MatDatepicker, MatButton, MatIcon, AreaChartModule]
 })
 export class StatsComponent implements OnInit {
+  data = inject<{
+    logEntryType: LogEntryType;
+    label: string;
+}>(MAT_DIALOG_DATA);
+  private statsClient = inject(StatsClient);
+
   colorScheme = {
     domain: ['#00acc1'],
   };
@@ -58,15 +64,9 @@ export class StatsComponent implements OnInit {
   label: string | null = null;
   unit: string | null = null;
 
-  constructor(
-    private matDialog: MatDialogRef<StatsComponent>,
-    @Inject(MAT_DIALOG_DATA)
-    public data: {
-      logEntryType: LogEntryType;
-      label: string;
-    },
-    private statsClient: StatsClient
-  ) {
+  constructor() {
+    const data = this.data;
+
     this.label = data.label;
   }
 
