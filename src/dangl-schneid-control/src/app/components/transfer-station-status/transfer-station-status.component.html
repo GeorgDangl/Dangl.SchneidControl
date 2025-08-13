@@ -7,12 +7,13 @@
   </mat-card-content>
 
   <mat-card-actions>
-    <button
-      *ngIf="value"
-      mat-button
-      (click)="initiateTransferStationStatusChange()"
-    >
-      <mat-icon fontIcon="settings"></mat-icon>
-    </button>
+    @if (value) {
+      <button
+        mat-button
+        (click)="initiateTransferStationStatusChange()"
+        >
+        <mat-icon fontIcon="settings"></mat-icon>
+      </button>
+    }
   </mat-card-actions>
 </mat-card>
