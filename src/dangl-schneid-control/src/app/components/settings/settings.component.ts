@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   HeatMeterReplacementViewModel,
   HeatMeterReplacementsClient,
@@ -30,9 +30,8 @@ import { Moment } from 'moment';
     styleUrl: './settings.component.scss'
 })
 export class SettingsComponent implements OnInit {
-  constructor(
-    private heatMeterReplacementsClient: HeatMeterReplacementsClient
-  ) {}
+  private heatMeterReplacementsClient = inject(HeatMeterReplacementsClient);
+
 
   public dataSource: HeatMeterReplacementViewModel[] = [];
   showAddNewUi = false;

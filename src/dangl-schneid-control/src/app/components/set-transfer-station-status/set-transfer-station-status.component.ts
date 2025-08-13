@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialogContent } from '@angular/material/dialog';
 import {
   ConfigurationClient,
@@ -17,12 +17,14 @@ import { TransferStationStatusPipe } from '../../pipes/transfer-station-status.p
     imports: [CdkScrollable, MatDialogContent, MatSelect, FormsModule, MatOption, MatButton, TransferStationStatusPipe]
 })
 export class SetTransferStationStatusComponent {
-  constructor(
-    private matDialogRef: MatDialogRef<SetTransferStationStatusComponent>,
-    private configurationClient: ConfigurationClient,
-    @Inject(MAT_DIALOG_DATA)
-    data: { currentValue: TransferStationStatus }
-  ) {
+  private matDialogRef = inject<MatDialogRef<SetTransferStationStatusComponent>>(MatDialogRef);
+  private configurationClient = inject(ConfigurationClient);
+
+  constructor() {
+    const data = inject<{
+    currentValue: TransferStationStatus;
+}>(MAT_DIALOG_DATA);
+
     this.selectedStatus = data.currentValue;
   }
 
