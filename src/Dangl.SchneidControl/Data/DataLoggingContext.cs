@@ -6,6 +6,8 @@ namespace Dangl.SchneidControl.Data
     {
         public DbSet<DataEntry> DataEntries { get; set; }
 
+        public DbSet<HeatMeterReplacement> HeatMeterReplacements { get; set; }
+
         public DataLoggingContext(DbContextOptions<DataLoggingContext> options) : base(options)
         {
         }

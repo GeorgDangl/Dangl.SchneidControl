@@ -1,22 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DecimalValueComponent } from './decimal-value.component';
+import { SettingsComponent } from './settings.component';
 import { SharedTestingModule } from 'src/app/shared-testing.module';
 
-describe('DecimalValueComponent', () => {
-  let component: DecimalValueComponent;
-  let fixture: ComponentFixture<DecimalValueComponent>;
+describe('SettingsComponent', () => {
+  let component: SettingsComponent;
+  let fixture: ComponentFixture<SettingsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    imports: [
-        SharedTestingModule,
-        DecimalValueComponent
-    ]
-})
+      imports: [SettingsComponent, SharedTestingModule]
+    })
     .compileComponents();
 
-    fixture = TestBed.createComponent(DecimalValueComponent);
+    fixture = TestBed.createComponent(SettingsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

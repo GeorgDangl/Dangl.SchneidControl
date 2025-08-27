@@ -2,6 +2,7 @@
 using Dangl.SchneidControl.Data;
 using Dangl.SchneidControl.Extensions;
 using Dangl.SchneidControl.Models.Controllers.Consumption;
+using Dangl.SchneidControl.Models.Controllers.Stats;
 using Dangl.SchneidControl.Models.Enums;
 using Microsoft.EntityFrameworkCore;
 
@@ -41,10 +42,10 @@ namespace Dangl.SchneidControl.Services
                     && (endUtc == null || e.CreatedAtUtc <= endUtc)
                     && e.LogEntryType == LogEntryType.TotalEnergyConsumption)
                 .OrderBy(e => e.CreatedAtUtc)
-                .Select(e => new
+                .Select(e => new Models.Controllers.Stats.DataEntry
                 {
-                    e.CreatedAtUtc,
-                    e.Value
+                    CreatedAtUtc = e.CreatedAtUtc,
+                    Value = e.Value
                 })
                 .ToListAsync();
 
@@ -52,6 +53,13 @@ namespace Dangl.SchneidControl.Services
             {
                 return RepositoryResult<Consumption>.Fail($"There are no entries for the selected duration.");
             }
+
+                var replacements = await _context.HeatMeterReplacements
+                    .OrderBy(e => e.ReplacedAtUtc)
+                    .ToListAsync();
+                StatsRepository.CorrectStatsForHeatMeterReplacements(replacements,
+                    dbEntries,
+                    correctDecimalPlaces: false);
 
             // Group by resolution
             var entries = new List<ConsumptionDataEntry>();

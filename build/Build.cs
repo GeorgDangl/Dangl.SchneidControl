@@ -10,7 +10,6 @@ using Nuke.Common.Tools.GitVersion;
 using Nuke.Common.Tools.Npm;
 using Nuke.Common.Utilities.Collections;
 using System;
-using static Nuke.Common.IO.FileSystemTasks;
 using static Nuke.Common.Tools.Docker.DockerTasks;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
 using static Nuke.Common.Tools.Npm.NpmTasks;
@@ -84,7 +83,7 @@ namespace Dangl.SchneidControl
         .Executes(() =>
         {
             DotNetRestore(s => s
-                .SetProcessArgumentConfigurator(a => a.Add("/nodeReuse:false"))
+                .AddProcessAdditionalArguments("/nodeReuse:false")
                 .SetProjectFile(Solution));
         });
 
@@ -99,7 +98,7 @@ namespace Dangl.SchneidControl
     void CompileBackend()
     {
         DotNetBuild(s => s
-            .SetProcessArgumentConfigurator(a => a.Add("/nodeReuse:false"))
+            .AddProcessAdditionalArguments("/nodeReuse:false")
             .SetProjectFile(Solution)
             .SetConfiguration(Configuration)
             .SetAssemblyVersion(GitVersion.AssemblySemVer)
@@ -114,13 +113,12 @@ namespace Dangl.SchneidControl
         {
             CompileBackend(); // Need that with newer NSwag so the project outputs are present
             var nSwagConfigPath = SourceDirectory / "dangl-schneid-control" / "src" / "nswag.json";
-            var nSwagToolPath = NuGetToolPathResolver.GetPackageExecutable("NSwag.MSBuild", "tools/Net80/dotnet-nswag.dll");
+            var nSwagToolPath = NuGetToolPathResolver.GetPackageExecutable("NSwag.MSBuild", "tools/Net90/dotnet-nswag.dll");
 
             DotNetRun(x => x
                 .SetProcessToolPath(nSwagToolPath)
                 .SetProcessWorkingDirectory(SourceDirectory / "dangl-schneid-control" / "src")
-                .SetProcessArgumentConfigurator(y => y
-                    .Add(nSwagConfigPath)));
+                .AddProcessAdditionalArguments(nSwagConfigPath));
         });
 
     Target FrontEndRestore => _ => _
@@ -153,7 +151,7 @@ namespace Dangl.SchneidControl
         .Executes(() =>
         {
             DotNetPublish(s => s
-                .SetProcessArgumentConfigurator(a => a.Add("/nodeReuse:false"))
+                .AddProcessAdditionalArguments("/nodeReuse:false")
                 .SetProject(SourceDirectory / "Dangl.SchneidControl")
                 .SetOutput(OutputDirectory)
                 .SetConfiguration(Configuration));
@@ -187,7 +185,7 @@ namespace Dangl.SchneidControl
                 .SetUsername(DockerRegistryUsername)
                 .SetServer(DockerRegistryUrl.ToLowerInvariant())
                 .SetPassword(DockerRegistryPassword)
-                .DisableProcessLogOutput());
+                .DisableProcessOutputLogging());
 
             PushDockerWithTag("dev", DockerRegistryUrl, DockerImageName);
 
@@ -204,7 +202,7 @@ namespace Dangl.SchneidControl
                 DockerLogin(x => x
                     .SetUsername(PublicDockerRegistryUsername)
                     .SetPassword(PublicDockerRegistryPassword)
-                    .DisableProcessLogOutput());
+                    .DisableProcessOutputLogging());
 
                 PushPublicDockerWithTag("dev", DockerImageName);
 

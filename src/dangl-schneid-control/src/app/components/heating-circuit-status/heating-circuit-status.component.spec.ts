@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HeatingCircuitStatusComponent } from './heating-circuit-status.component';
+import { SharedTestingModule } from 'src/app/shared-testing.module';
 
 describe('HeatingCircuitStatusComponent', () => {
   let component: HeatingCircuitStatusComponent;
@@ -8,8 +9,11 @@ describe('HeatingCircuitStatusComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [HeatingCircuitStatusComponent]
-    });
+    imports: [
+        SharedTestingModule,
+        HeatingCircuitStatusComponent
+    ]
+});
     fixture = TestBed.createComponent(HeatingCircuitStatusComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
