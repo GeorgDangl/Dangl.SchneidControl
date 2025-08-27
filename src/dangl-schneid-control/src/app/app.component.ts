@@ -4,7 +4,7 @@ import {
   StatusClient,
 } from './generated-client/generated-client';
 
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ConsumptionComponent } from './components/consumption/consumption.component';
 import { DashboardService } from './services/dashboard.service';
 import { DashboardValues } from './models/dashboard-values';
@@ -13,19 +13,38 @@ import { SetNumericalValueComponent } from './components/set-numerical-value/set
 import { SettingsComponent } from './components/settings/settings.component';
 import { StatsComponent } from './components/stats/stats.component';
 import { Subject } from 'rxjs';
+import { HeaderComponent } from '@dangl/angular-material-shared';
+import { MatFabButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { TransferStationStatusComponent } from './components/transfer-station-status/transfer-station-status.component';
+import { HeatingCircuitStatusComponent } from './components/heating-circuit-status/heating-circuit-status.component';
+import { BoolValueComponent } from './components/bool-value/bool-value.component';
+import { DecimalValueComponent } from './components/decimal-value/decimal-value.component';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
+  imports: [
+    HeaderComponent,
+    MatFabButton,
+    MatIcon,
+    MatProgressSpinner,
+    TransferStationStatusComponent,
+    HeatingCircuitStatusComponent,
+    BoolValueComponent,
+    DecimalValueComponent,
+    AsyncPipe,
+  ],
 })
 export class AppComponent {
-  constructor(
-    private dashboardService: DashboardService,
-    private matDialog: MatDialog,
-    private configurationClient: ConfigurationClient,
-    private statusClient: StatusClient
-  ) {}
+  private dashboardService = inject(DashboardService);
+  private matDialog = inject(MatDialog);
+  private configurationClient = inject(ConfigurationClient);
+  private statusClient = inject(StatusClient);
+
 
   private lastValues: DashboardValues | null = null;
   public dashboardValues$ = new Subject<DashboardValues>();

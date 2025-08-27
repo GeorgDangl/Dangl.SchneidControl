@@ -1,14 +1,15 @@
 import { Observable, combineLatest, map } from 'rxjs';
 
 import { DashboardValues } from '../models/dashboard-values';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ValuesClient } from '../generated-client/generated-client';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DashboardService {
-  constructor(private valuesClient: ValuesClient) {}
+  private valuesClient = inject(ValuesClient);
+
 
   public getDashboardValues(): Observable<DashboardValues> {
     const dashboardValuesObservable = combineLatest([

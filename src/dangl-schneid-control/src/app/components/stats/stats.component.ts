@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   FileResponse,
   LogEntryType,
@@ -9,15 +9,30 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Moment } from 'moment';
 import { Subscription } from 'rxjs';
 
-import * as moment from 'moment';
+import moment from 'moment';
 import { saveAs } from '../../utilities/file-save';
+import { MatFormField, MatSuffix } from '@angular/material/select';
+import { MatInput } from '@angular/material/input';
+import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker';
+import { FormsModule } from '@angular/forms';
+import { MatButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { AreaChartModule } from '@swimlane/ngx-charts';
 
 @Component({
-  selector: 'app-stats',
-  templateUrl: './stats.component.html',
-  styleUrls: ['./stats.component.scss'],
+    selector: 'app-stats',
+    templateUrl: './stats.component.html',
+    styleUrls: ['./stats.component.scss'],
+    imports: [MatFormField, MatInput, MatDatepickerInput, FormsModule, MatDatepickerToggle, MatSuffix, MatDatepicker, MatButton, MatIcon, AreaChartModule]
 })
 export class StatsComponent implements OnInit {
+  private matDialog = inject<MatDialogRef<StatsComponent>>(MatDialogRef);
+  data = inject<{
+    logEntryType: LogEntryType;
+    label: string;
+}>(MAT_DIALOG_DATA);
+  private statsClient = inject(StatsClient);
+
   colorScheme = {
     domain: ['#00acc1'],
   };
@@ -50,15 +65,9 @@ export class StatsComponent implements OnInit {
   label: string | null = null;
   unit: string | null = null;
 
-  constructor(
-    private matDialog: MatDialogRef<StatsComponent>,
-    @Inject(MAT_DIALOG_DATA)
-    public data: {
-      logEntryType: LogEntryType;
-      label: string;
-    },
-    private statsClient: StatsClient
-  ) {
+  constructor() {
+    const data = this.data;
+
     this.label = data.label;
   }
 

@@ -1,6 +1,6 @@
-import * as moment from 'moment';
+import moment from 'moment';
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   HeatMeterReplacementViewModel,
   HeatMeterReplacementsClient,
@@ -16,24 +16,22 @@ import { MatTableModule } from '@angular/material/table';
 import { Moment } from 'moment';
 
 @Component({
-  selector: 'app-settings',
-  standalone: true,
-  imports: [
-    MatTableModule,
-    DatePipe,
-    MatButtonModule,
-    MatIconModule,
-    FormsModule,
-    MatInputModule,
-    MatDatepickerModule,
-  ],
-  templateUrl: './settings.component.html',
-  styleUrl: './settings.component.scss',
+    selector: 'app-settings',
+    imports: [
+        MatTableModule,
+        DatePipe,
+        MatButtonModule,
+        MatIconModule,
+        FormsModule,
+        MatInputModule,
+        MatDatepickerModule,
+    ],
+    templateUrl: './settings.component.html',
+    styleUrl: './settings.component.scss'
 })
 export class SettingsComponent implements OnInit {
-  constructor(
-    private heatMeterReplacementsClient: HeatMeterReplacementsClient
-  ) {}
+  private heatMeterReplacementsClient = inject(HeatMeterReplacementsClient);
+
 
   public dataSource: HeatMeterReplacementViewModel[] = [];
   showAddNewUi = false;

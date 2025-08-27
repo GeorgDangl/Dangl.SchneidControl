@@ -2,9 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 import { TransferStationStatus } from '../generated-client/generated-client';
 
-@Pipe({
-  name: 'transferStationStatus',
-})
+@Pipe({ name: 'transferStationStatus' })
 export class TransferStationStatusPipe implements PipeTransform {
   transform(value?: TransferStationStatus): string {
     if (value) {

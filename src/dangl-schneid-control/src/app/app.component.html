@@ -2,11 +2,12 @@
   <button mat-fab (click)="openSettings()">
     <mat-icon>settings</mat-icon>
   </button>
-  <mat-progress-spinner
-    *ngIf="isLoading"
-    mode="indeterminate"
-    color="accent"
-  ></mat-progress-spinner>
+  @if (isLoading) {
+    <mat-progress-spinner
+      mode="indeterminate"
+      color="accent"
+    ></mat-progress-spinner>
+  }
 </dangl-header>
 
 <div class="main-content">
