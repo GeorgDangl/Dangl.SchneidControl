@@ -2,6 +2,9 @@
 
 All notable changes to **Dangl.SchneidControl** are documented here.
 
+## v1.0.16:
+- Updated the UI dependency for graphs and charts to the latest version
+
 ## v1.0.15:
 - Fixed the frontend path, so the UI can actually be displayed again😀
 
