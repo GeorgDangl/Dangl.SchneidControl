@@ -1,6 +1,9 @@
-# Changelog
+﻿# Changelog
 
 All notable changes to **Dangl.SchneidControl** are documented here.
+
+## v1.0.15:
+- Fixed the frontend path, so the UI can actually be displayed again😀
 
 ## v1.0.14:
 - Add option to set exchanged heat meters

@@ -141,13 +141,17 @@ namespace Dangl.SchneidControl
             NpmRun(x => x
                 .SetCommand("build:prod")
                 .SetProcessWorkingDirectory(SourceDirectory / "dangl-schneid-control"));
+
+            foreach (var file in (SourceDirectory / "Dangl.SchneidControl" / "wwwroot" / "dist" / "browser").GlobFiles("*"))
+            {
+                file.MoveToDirectory(SourceDirectory / "Dangl.SchneidControl" / "wwwroot" / "dist");
+            }
         });
 
-    Target BuildDocker => _ => _
+    Target Publish => _ => _
         .DependsOn(Restore)
         .DependsOn(GenerateVersion)
         .DependsOn(BuildFrontend)
-        .Requires(() => Configuration == "Release")
         .Executes(() =>
         {
             DotNetPublish(s => s
@@ -160,6 +164,13 @@ namespace Dangl.SchneidControl
             {
                 configFileToDelete.DeleteFile();
             }
+        });
+
+    Target BuildDocker => _ => _
+        .DependsOn(Publish)
+        .Requires(() => Configuration == "Release")
+        .Executes(() =>
+        {
 
             (SourceDirectory / "Dangl.SchneidControl" / "Dockerfile").Copy(OutputDirectory / "Dockerfile", ExistsPolicy.FileOverwrite);
 
