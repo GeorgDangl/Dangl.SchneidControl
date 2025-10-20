@@ -1,6 +1,6 @@
 # DanglSchneidControl
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.1.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 20.1.6.
 
 ## Development server
 
