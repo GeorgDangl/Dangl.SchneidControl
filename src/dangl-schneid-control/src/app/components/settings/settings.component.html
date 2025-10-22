@@ -30,7 +30,7 @@
     <mat-form-field>
       <mat-label>Einbau</mat-label>
       <input matInput [matDatepicker]="picker" [(ngModel)]="newReplacedAtUtc" />
-      <mat-hint>dd.MM.YYYY HH:mm</mat-hint>
+      <mat-hint>dd.MM.YYYY</mat-hint>
       <mat-datepicker-toggle
         matIconSuffix
         [for]="picker"
@@ -45,6 +45,7 @@
         pattern="([0-1][0-9]|2[0-3]):[0-5][0-9]"
         [(ngModel)]="newReplacedAtTime"
       />
+      <mat-hint>HH:mm</mat-hint>
     </mat-form-field>
 
     <button mat-raised-button (click)="saveNewEntry()">Speichern</button>
